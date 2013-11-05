@@ -25,7 +25,7 @@ from pygame.locals import *
 
 # ==============================================================================
 def load_image(name, colorkey=None):
-	fullname = os.path.join('resources', 'images', name)
+	fullname = os.path.join('..', 'resources', 'images', name)
 	try:
 		image = pygame.image.load(fullname)
 	except pygame.error, message:
@@ -44,7 +44,7 @@ def load_sound(name):
 		def play(self): pass
 	if not pygame.mixer:
 		return NoneSound()
-	fullname = os.path.join('data', 'sounds', name)
+	fullname = os.path.join('..', 'data', 'sounds', name)
 	try:
 		sound = pygame.mixer.Sound(fullname)
 	except pygame.error, message:

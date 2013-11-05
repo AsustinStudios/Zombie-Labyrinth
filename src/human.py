@@ -21,16 +21,35 @@
 
 import pygame
 from pygame.locals import *
+from resources import *
 
 # ==============================================================================
 class Human(pygame.sprite.Sprite):
 	"""moves a clenched fist on the screen, following the mouse"""
 	def __init__(self):
 		pygame.sprite.Sprite.__init__(self) # call Sprite initializer
-		self.image, self.rect = load_image('hand.png', -1)
+		self.image, self.rect = load_image('human.png', -1)
 		self.punching = 0
 
+		self.rect = self.rect.move((200, 200))
+
 	def update(self):
+		pass
+
+	def move(self, key):
+		move = (0, 0)
+		if key == K_RIGHT:
+			move = (10, 0)
+		elif key == K_LEFT:
+			move = (-10, 0)
+		elif key == K_DOWN:
+			move = (0, 10)
+		elif key == K_UP:
+			move = (0, -10)
+		newpos = self.rect.move(move)
+		self.rect = newpos
+
+	def update_res(self):
 		"move the fist based on the mouse position"
 		pos = pygame.mouse.get_pos()
 		self.rect.midtop = pos
