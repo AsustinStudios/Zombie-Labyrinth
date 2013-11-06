@@ -29,6 +29,7 @@ from human import Human
 # ==============================================================================
 def main():
 	preferences = process_cli_options()
+
 	status = main_loop()
 
 	return status
@@ -37,7 +38,7 @@ def main():
 def main_loop():
 	# Initialize Everything
 	pygame.init()
-	screen = pygame.display.set_mode((600, 400))
+	screen = pygame.display.set_mode((1280, 720))
 	pygame.display.set_caption('Zombie Labyrinth')
 	pygame.mouse.set_visible(True)
 
@@ -61,6 +62,7 @@ def main_loop():
 	human = Human()
 	allsprites = pygame.sprite.RenderPlain((human))
 	clock = pygame.time.Clock()
+	pygame.key.set_repeat(10, 20)
 
 	global score
 	score = 0
@@ -75,18 +77,10 @@ def main_loop():
 			elif event.type == KEYDOWN:
 				if event.key == K_ESCAPE:
 					return 0
-				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN):
+				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					human.move(event.key)
-			elif event.type == MOUSEBUTTONDOWN:
-				pass
-				# if fist.punch(chimp):
-				# 	punch_sound.play() #punch
-				# 	chimp.punched()
-				# else:
-				# 	pass
-				# 	#whiff_sound.play() #miss
-			elif event.type == MOUSEBUTTONUP:
-				pass
+			elif event.type == MOUSEMOTION:
+				human.look(event.pos)
 
 		# Update all the sprites
 		allsprites.update()

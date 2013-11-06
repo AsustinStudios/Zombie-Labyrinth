@@ -20,6 +20,7 @@
 #    For more information send an e-mail to topo@asustin.net.
 
 import pygame
+import geometry
 from pygame.locals import *
 from resources import *
 
@@ -30,6 +31,7 @@ class Human(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self) # call Sprite initializer
 		self.image, self.rect = load_image('human.png', -1)
 		self.punching = 0
+		self.speed = 3
 
 		self.rect = self.rect.move((200, 200))
 
@@ -38,20 +40,20 @@ class Human(pygame.sprite.Sprite):
 
 	def move(self, key):
 		move = (0, 0)
-		if key == K_RIGHT:
-			move = (10, 0)
-		elif key == K_LEFT:
-			move = (-10, 0)
-		elif key == K_DOWN:
-			move = (0, 10)
-		elif key == K_UP:
-			move = (0, -10)
+		if key in (K_d, K_RIGHT):
+			move = (self.speed, 0)
+		elif key in (K_a, K_LEFT):
+			move = (-self.speed, 0)
+		elif key in (K_s, K_DOWN):
+			move = (0, self.speed)
+		elif key in (K_w, K_UP):
+			move = (0, -self.speed)
 		newpos = self.rect.move(move)
 		self.rect = newpos
 
 	def update_res(self):
 		"move the fist based on the mouse position"
-		pos = pygame.mouse.get_pos()
+
 		self.rect.midtop = pos
 		if self.punching:
 			self.rect.move_ip(5, 10)
@@ -66,3 +68,17 @@ class Human(pygame.sprite.Sprite):
 	def unpunch(self):
 		"called to pull the fist back"
 		self.punching = 0
+
+	def look(self, target):
+		print self.rect, target
+		print geometry.delta(self.rect, target)
+		print geometry.angle_between(self.rect, target)
+		angle = geometry.angle_between(self.rect, target)
+		if angle >= 45 and angle <= 135:
+			self.image, a = load_image('human_north.png', -1)
+		elif angle > 135 or angle < -135:
+			self.image, a = load_image('human_west.png', -1)
+		elif angle >= -135 and angle <= -45:
+			self.image, a = load_image('human_south.png', -1)
+		elif angle > -45 and angle < 45:
+			self.image, a = load_image('human_east.png', -1)
