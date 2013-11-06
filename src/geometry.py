@@ -19,37 +19,20 @@
 #
 #    For more information send an e-mail to topo@asustin.net.
 
-import sys, os
-import pygame
-from pygame.locals import *
+import math
 
 # ==============================================================================
-def load_image(name, colorkey=None):
-	path = os.path.dirname(os.path.abspath(sys.argv[0]))
-	fullname = os.path.join(path, '..', 'resources', 'images', name)
-	try:
-		image = pygame.image.load(fullname)
-	except pygame.error, message:
-		print 'Cannot load image:', name
-		raise SystemExit, message
-	image = image.convert()
-	if colorkey is not None:
-		if colorkey is -1:
-			colorkey = image.get_at((0,0))
-		image.set_colorkey(colorkey, RLEACCEL)
-	return image, image.get_rect()
+def delta(p1, p2):
+	""" """
+	delta_x = p2[0] - p1[0]
+	delta_y = p2[1] - p1[1]
+
+	return (delta_x, delta_y)
 
 # ==============================================================================
-def load_sound(name):
-	class NoneSound:
-		def play(self): pass
-	if not pygame.mixer:
-		return NoneSound()
-	path = os.path.dirname(os.path.abspath(sys.argv[0]))
-	fullname = os.path.join(path, '..', 'data', 'sounds', name)
-	try:
-		sound = pygame.mixer.Sound(fullname)
-	except pygame.error, message:
-		print 'Cannot load sound:', wav
-		raise SystemExit, message
-	return sound
+def angle_between(p1, p2):
+	""" """
+	x, y = delta(p1, p2)
+	angle = math.degrees(math.atan2(y, x))
+	return - angle
+
