@@ -51,8 +51,8 @@ def main_loop():
 	background.fill((250, 250, 250))
 
 	# Text
-	font = pygame.font.Font(None, 36)
-	text = font.render("Survive!", 1, (10, 10, 10))
+	font = pygame.font.Font(None, 20)
+	text = font.render("FPS: 0", 1, (10, 10, 10))
 	textpos = text.get_rect(centerx=background.get_width()/2)
 	background.blit(text, textpos)
 
@@ -76,7 +76,7 @@ def main_loop():
 
 	while True:
 		clock.tick(60)
-		fps = clock.get_fps
+		fps = clock.get_fps()
 
 		# Handle Input Events
 		for event in pygame.event.get():
@@ -93,6 +93,12 @@ def main_loop():
 
 		# Update all the sprites
 		allsprites.update()
+
+		# Display Current FPS
+		background.fill((250, 250, 250))
+		text = font.render("FPS: %i" % fps, 1, (10, 10, 10))
+		textpos = text.get_rect(centerx=background.get_width()/2)
+		background.blit(text, textpos)
 
 		# Draw the entire scene
 		screen.blit(background, (0, 0))
