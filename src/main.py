@@ -61,9 +61,13 @@ def main_loop():
 	pygame.display.flip()
 
 	# Prepare Game Objects
-	#punch_sound = load_sound('punch.wav')
 	human = Human()
-	allsprites = pygame.sprite.RenderPlain((human))
+
+	wall = Human((200,200))
+	walls_group = pygame.sprite.Group()
+	walls_group.add(wall)
+
+	allsprites = pygame.sprite.RenderPlain((human, wall))
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
 
@@ -72,6 +76,7 @@ def main_loop():
 
 	while True:
 		clock.tick(60)
+		fps = clock.get_fps
 
 		# Handle Input Events
 		for event in pygame.event.get():
