@@ -20,11 +20,15 @@
 #    For more information send an e-mail to topo@asustin.net.
 
 import sys, os
+
 import pygame
 from pygame.locals import *
 
 # ==============================================================================
 def load_image(name, colorkey=None):
+	""" This Functions loads a png image and returns the image object and the
+	image rect"""
+	name = '%s.png' % name
 	path = os.path.dirname(os.path.abspath(sys.argv[0]))
 	fullname = os.path.join(path, '..', 'resources', 'images', name)
 	try:
