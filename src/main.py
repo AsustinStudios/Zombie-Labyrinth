@@ -20,10 +20,13 @@
 #    For more information send an e-mail to topo@asustin.net.
 
 import sys
-import pygame
-import preferences
-from pygame.locals import *
 from optparse import OptionParser
+
+import pygame
+from pygame.locals import *
+
+import input
+import preferences
 from human import Human
 
 # ==============================================================================
@@ -79,7 +82,7 @@ def main_loop():
 					return 0
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
-					human.move(keys)
+					human.move(input.get_directions(keys))
 			elif event.type == MOUSEMOTION:
 				human.look(event.pos)
 
