@@ -78,7 +78,8 @@ def main_loop():
 				if event.key == K_ESCAPE:
 					return 0
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
-					human.move(event.key)
+					keys = pygame.key.get_pressed()
+					human.move(keys)
 			elif event.type == MOUSEMOTION:
 				human.look(event.pos)
 

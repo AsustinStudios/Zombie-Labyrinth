@@ -38,16 +38,20 @@ class Human(pygame.sprite.Sprite):
 	def update(self):
 		pass
 
-	def move(self, key):
-		move = (0, 0)
-		if key in (K_d, K_RIGHT):
-			move = (self.speed, 0)
-		elif key in (K_a, K_LEFT):
-			move = (-self.speed, 0)
-		elif key in (K_s, K_DOWN):
-			move = (0, self.speed)
-		elif key in (K_w, K_UP):
-			move = (0, -self.speed)
+	def move(self, keys):
+		move = [0, 0]
+		keys = pygame.key.get_pressed()
+
+		if keys[K_d] or keys[K_RIGHT]:
+			move[0] += self.speed
+		if keys[K_a] or keys[K_LEFT]:
+			move[0] -= self.speed
+		if keys[K_s] or keys[K_DOWN]:
+			move[1] += self.speed
+		if keys[K_w] or keys[K_UP]:
+			move[1] -= self.speed
+
+		move = tuple(move)
 		newpos = self.rect.move(move)
 		self.rect = newpos
 
