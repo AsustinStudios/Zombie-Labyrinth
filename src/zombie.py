@@ -27,7 +27,7 @@ from abstract_game_objects import Living_being
 # ==============================================================================
 class Zombie(pygame.sprite.Sprite):
 	""" The class that represents the human player on the game"""
-	def __init__(self, start_location=(600, 300), sprite_prefix='human', speed=3):
+	def __init__(self, start_location=(600, 300), sprite_prefix='zombie', speed=3):
 		Living_being.__init__(self, start_location, sprite_prefix, speed)
 
 	# ==========================================================================
