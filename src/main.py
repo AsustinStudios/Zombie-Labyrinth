@@ -88,8 +88,9 @@ def main_loop():
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
 					human.move(input.get_directions(keys), walls_group)
-			elif event.type == MOUSEMOTION:
-				human.look(event.pos)
+
+		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to a
+		human.look(pos)					# device or a target must be specifyable.
 
 		# Update all the sprites
 		allsprites.update()
