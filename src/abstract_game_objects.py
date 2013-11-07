@@ -53,7 +53,7 @@ class Living_being(Game_object):
 		pass
 
 	# ==========================================================================
-	def move(self, directions):
+	def move(self, directions, collision_group=None):
 		""" Move around the being depending on the direction"""
 		move = [0, 0]
 
@@ -68,6 +68,13 @@ class Living_being(Game_object):
 
 		move = tuple(move)
 		newpos = self.rect.move_ip(move)
+
+		if collision_group:
+			collision_list = pygame.sprite.spritecollide(self, collision_group, False)
+			for object in collision_list:
+				print object.rect
+
+
 
 	# ==========================================================================
 	def look(self, target):

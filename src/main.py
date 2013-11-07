@@ -63,7 +63,7 @@ def main_loop():
 	# Prepare Game Objects
 	human = Human()
 
-	wall = Human((200,200))
+	wall = Human((400,400))
 	walls_group = pygame.sprite.Group()
 	walls_group.add(wall)
 
@@ -87,7 +87,7 @@ def main_loop():
 					return 0
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
-					human.move(input.get_directions(keys))
+					human.move(input.get_directions(keys), walls_group)
 			elif event.type == MOUSEMOTION:
 				human.look(event.pos)
 
