@@ -25,12 +25,7 @@ from pygame.locals import *
 from abstract_game_objects import Living_being
 
 # ==============================================================================
-class Zombie(pygame.sprite.Sprite):
+class Zombie(Living_being):
 	""" The class that represents the human player on the game"""
-	def __init__(self, start_location=(600, 300), sprite_prefix='zombie', speed=3):
-		Living_being.__init__(self, start_location, sprite_prefix, speed)
-
-	# ==========================================================================
-	def update(self):
-		""" Update the Object"""
-		pass
+	def __init__(self, start_location=(600, 300), colission_group=None, object_type='ZOMBIE', sprite_prefix='zombie', speed=3):
+		Living_being.__init__(self, start_location, colission_group, object_type, sprite_prefix, speed)

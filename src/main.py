@@ -61,10 +61,10 @@ def main_loop():
 	pygame.display.flip()
 
 	# Prepare Game Objects
-	human = Human()
+	walls_group = pygame.sprite.Group()
+	human = Human((600, 300), walls_group)
 
 	wall = Human((400,400))
-	walls_group = pygame.sprite.Group()
 	walls_group.add(wall)
 
 	allsprites = pygame.sprite.RenderPlain((human, wall))
@@ -87,7 +87,7 @@ def main_loop():
 					return 0
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
-					human.move(input.get_directions(keys), walls_group)
+					human.move(input.get_directions(keys))
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to a
 		human.look(pos)					# device or a target must be specifyable.

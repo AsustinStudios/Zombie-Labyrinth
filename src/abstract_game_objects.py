@@ -29,11 +29,12 @@ from resources import *
 # ==============================================================================
 class Game_object(pygame.sprite.Sprite):
 	""" The class that represents the human player on the game"""
-	def __init__(self, location, sprite_prefix):
+	def __init__(self, location, object_type, sprite_prefix):
 		pygame.sprite.Sprite.__init__(self) # call Sprite initializer
 		self.image, self.rect = load_image(sprite_prefix, -1)
 		self.sprite_prefix = sprite_prefix
 		self.rect = self.rect.move(location)
+		self.object_type = object_type
 
 	# ==========================================================================
 	def update(self):
@@ -43,17 +44,18 @@ class Game_object(pygame.sprite.Sprite):
 # ==============================================================================
 class Living_being(Game_object):
 	""" The class that represents all the living entities in the game"""
-	def __init__(self, start_location, sprite_prefix='living_being', speed=3):
-		Game_object.__init__(self, start_location, sprite_prefix)
+	def __init__(self, start_location, collision_group, object_type, sprite_prefix='living_being', speed=3):
+		Game_object.__init__(self, start_location, object_type, sprite_prefix)
 		self.speed = speed
+		self.collision_group = collision_group
 
 	# ==========================================================================
 	def update(self):
 		""" Update the Object"""
-		pass
+		self.process_collisions()
 
 	# ==========================================================================
-	def move(self, directions, collision_group=None):
+	def move(self, directions):
 		""" Move around the being depending on the direction"""
 		move = [0, 0]
 
@@ -67,14 +69,31 @@ class Living_being(Game_object):
 			move[1] -= self.speed
 
 		move = tuple(move)
-		newpos = self.rect.move_ip(move)
 
-		if collision_group:
-			collision_list = pygame.sprite.spritecollide(self, collision_group, False)
-			for object in collision_list:
-				print object.rect
+		if self.valid_movement(move):
+			new_position = self.rect.move_ip(move) # Obtain position after movement
+		else:
+			pass
 
+	# ==========================================================================
+	def valid_movement(self, coordenates):
+		if self.collision_group:
+			old_position = self.rect
+			new_position = self.rect.move(coordenates)
+			self.rect = new_position
 
+			collision_list = pygame.sprite.spritecollide(self, self.collision_group, False)
+			if len(collision_list) == 0:
+				return True
+			else:
+				self.rect = old_position
+				return False
+		else:
+			return True
+
+	# ==========================================================================
+	def process_collisions(self):
+		pass
 
 	# ==========================================================================
 	def look(self, target):
