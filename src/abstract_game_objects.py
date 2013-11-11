@@ -55,6 +55,7 @@ class Living_being(Game_object):
 	def update(self):
 		""" Update the Object"""
 		self.process_collisions()
+		self.monitor_life()
 
 	# ==========================================================================
 	def move(self, directions):
@@ -75,7 +76,7 @@ class Living_being(Game_object):
 		if self.valid_movement(move):
 			new_position = self.rect.move_ip(move) # Obtain position after movement
 		else:
-			pass
+			self.life -= 1
 
 	# ==========================================================================
 	def valid_movement(self, coordenates):
@@ -97,6 +98,15 @@ class Living_being(Game_object):
 	# ==========================================================================
 	def process_collisions(self):
 		pass
+
+	# ==========================================================================
+	def monitor_life(self):
+		if self.life == 0:
+			self.die()
+
+	# ==========================================================================
+	def die(self):
+		self.kill()
 
 	# ==========================================================================
 	def look(self, target):
