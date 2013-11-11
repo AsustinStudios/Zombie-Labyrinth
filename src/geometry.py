@@ -38,3 +38,13 @@ def angle_between(p1, p2):
 
 	return - angle
 
+# ==============================================================================
+def distance(p1, p2):
+	"Returns the distance between p1 and p2"
+	x, y = delta(p1, p2)
+	a = y * y
+	b = x * x
+	c = math.sqrt(a + b)
+
+	return c
+
