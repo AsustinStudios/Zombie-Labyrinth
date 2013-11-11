@@ -89,8 +89,8 @@ def main_loop():
 					keys = pygame.key.get_pressed()
 					human.move(input.get_directions(keys))
 
-		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to a
-		human.look(pos)					# device or a target must be specifyable.
+		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
+		human.look(pos)					# a device or a target must be specifyable.
 
 		# Update all the sprites
 		allsprites.update()
@@ -130,10 +130,6 @@ def process_cli_options():
 					  default=False,
 					  help='Si una función tiene o no un header')
 	options, args = parser.parse_args()
-
-	# Check for command line options
-	#if not (options.tabla and options.PWD and (options.encabezado or options.num_campos)) and (options.parsear and (options.tipo_archivo == None)):
-	#	sys.exit(parser.error(rojo + 'Parametros incompletos'))
 
 	# Assign options to preferences
 	preferencess = preferences.Preferences()

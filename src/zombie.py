@@ -29,4 +29,5 @@ class Zombie(Living_being):
 	""" The class that represents the human player on the game"""
 	def __init__(self, start_location=(600, 300), colission_group=None,
 				object_type='ZOMBIE', sprite_prefix='zombie', speed=1, life=5):
-		Living_being.__init__(self, start_location, colission_group, object_type, sprite_prefix, speed)
+		Living_being.__init__(self, start_location, colission_group,
+									object_type, sprite_prefix, speed)

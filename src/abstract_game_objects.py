@@ -84,7 +84,8 @@ class Living_being(Game_object):
 			new_position = self.rect.move(coordenates)
 			self.rect = new_position
 
-			collision_list = pygame.sprite.spritecollide(self, self.collision_group, False)
+			collision_list = pygame.sprite.spritecollide(self,
+													self.collision_group, False)
 			if len(collision_list) == 0:
 				return True
 			else:
@@ -111,5 +112,6 @@ class Living_being(Game_object):
 		elif angle > -45 and angle < 45:
 			direction = 'east'
 
-		image_name = '%(sprite)s_%(direction)s' % {'sprite':self.sprite_prefix, 'direction':direction}
+		image_name = '%(sprite)s_%(direction)s' % {'sprite':self.sprite_prefix,
+														'direction':direction}
 		self.image, a = load_image(image_name, -1)
