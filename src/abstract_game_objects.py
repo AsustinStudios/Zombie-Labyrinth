@@ -44,10 +44,12 @@ class Game_object(pygame.sprite.Sprite):
 # ==============================================================================
 class Living_being(Game_object):
 	""" The class that represents all the living entities in the game"""
-	def __init__(self, start_location, collision_group, object_type, sprite_prefix='living_being', speed=3):
+	def __init__(self, start_location, collision_group, object_type,
+								sprite_prefix='living_being', speed=3, life=10):
 		Game_object.__init__(self, start_location, object_type, sprite_prefix)
 		self.speed = speed
 		self.collision_group = collision_group
+		self.life = life
 
 	# ==========================================================================
 	def update(self):
