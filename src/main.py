@@ -52,7 +52,7 @@ def main_loop():
 
 	# Text
 	font = pygame.font.Font(None, 20)
-	text = font.render("FPS: 0", 1, (10, 10, 10))
+	text = font.render("FPS:   | Life: ", 1, (10, 10, 10))
 	textpos = text.get_rect(centerx=background.get_width()/2)
 	background.blit(text, textpos)
 
@@ -97,7 +97,7 @@ def main_loop():
 
 		# Display Current FPS
 		background.fill((250, 250, 250))
-		text = font.render("FPS: %i" % fps, 1, (10, 10, 10))
+		text = font.render("FPS: %i | Life: %i" % (fps, human.life), 1, (10, 10, 10))
 		textpos = text.get_rect(centerx=background.get_width()/2)
 		background.blit(text, textpos)
 
