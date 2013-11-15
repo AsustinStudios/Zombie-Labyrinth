@@ -84,7 +84,7 @@ class Living_being(Game_object):
 		if self.valid_movement(move):
 			new_position = self.rect.move_ip(move) # Obtain position after movement
 		else:
-			self.life -= 1
+			pass
 
 	# ==========================================================================
 	def valid_movement(self, coordenates):
