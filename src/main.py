@@ -28,6 +28,7 @@ from pygame.locals import *
 import input
 import preferences
 from human import Human
+from zombie import Zombie
 
 # ==============================================================================
 def main():
@@ -61,14 +62,14 @@ def main_loop():
 	pygame.display.flip()
 
 	# Prepare Game Objects
-	walls_group = pygame.sprite.Group()
+	enemys_group = pygame.sprite.Group()
 	human = Human()
-	human.collision_group = walls_group
+	human.collision_group = enemys_group
 
-	wall = Human((400,400))
-	walls_group.add(wall)
+	zombie = Zombie((400,400))
+	enemys_group.add(zombie)
 
-	allsprites = pygame.sprite.RenderPlain((wall, human))
+	allsprites = pygame.sprite.RenderPlain((zombie, human))
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
 
