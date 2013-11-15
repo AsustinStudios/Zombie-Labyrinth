@@ -31,3 +31,12 @@ class Zombie(Living_being):
 	# ==========================================================================
 	def __init__(self, start_location=(600, 300), sprite_prefix='zombie', object_type='ZOMBIE'):
 		Living_being.__init__(self, start_location, sprite_prefix, object_type)
+
+		# ======================================================================
+		""" Stats"""
+		self.handedness = 0
+		self.life = 50
+		self.speed = 10
+		self.strength = 40
+		self.programming = 0
+		self.data_sciencing = 0
