@@ -62,12 +62,13 @@ def main_loop():
 
 	# Prepare Game Objects
 	walls_group = pygame.sprite.Group()
-	human = Human((600, 300), walls_group)
+	human = Human()
+	human.collision_group = walls_group
 
 	wall = Human((400,400))
 	walls_group.add(wall)
 
-	allsprites = pygame.sprite.RenderPlain((human, wall))
+	allsprites = pygame.sprite.RenderPlain((wall, human))
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
 
