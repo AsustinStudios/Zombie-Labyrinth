@@ -28,6 +28,12 @@ from resources import *
 from abstract_game_objects import Game_object
 
 # ==============================================================================
+global RIGHT, LEFT
+
+RIGHT = 0
+LEFT = 1
+
+# ==============================================================================
 class Living_being(Game_object):
 	""" The class that represents all the living entities in the game"""
 
@@ -38,11 +44,12 @@ class Living_being(Game_object):
 
 		# ======================================================================
 		""" Stats"""
-		self.life = 10
-		self.speed = 2
-		self.strength = 10
-		self.programming = 2
-		self.data_sciencing = 2
+		self.handedness = 0
+		self.life = 100
+		self.speed = 20
+		self.strength = 20
+		self.programming = 0
+		self.data_sciencing = 0
 
 		# ======================================================================
 		""" Inventory"""
@@ -53,7 +60,7 @@ class Living_being(Game_object):
 	def update(self):
 		""" Update the Object"""
 		self.process_collisions()
-		#self.monitor_life()
+		self.monitor_life()
 
 	# ==========================================================================
 	def move(self, directions):
@@ -61,13 +68,13 @@ class Living_being(Game_object):
 		move = [0, 0]
 
 		if directions[RIGHT]:
-			move[0] += self.speed
+			move[0] += self.speed/10
 		if directions[LEFT]:
-			move[0] -= self.speed
+			move[0] -= self.speed/10
 		if directions[DOWN]:
-			move[1] += self.speed
+			move[1] += self.speed/10
 		if directions[UP]:
-			move[1] -= self.speed
+			move[1] -= self.speed/10
 
 		move = tuple(move)
 
@@ -127,4 +134,8 @@ class Living_being(Game_object):
 	# ==========================================================================
 	def attack(self, weapon):
 		""" Call the attack method of the default weapon"""
-		pass
+
+	# ==========================================================================
+	def melee_attack(self):
+		""" Attack with your own hands"""
+
