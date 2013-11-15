@@ -43,9 +43,12 @@ class Living_being(Game_object):
 		self.collision_group = None
 
 		# ======================================================================
-		""" Stats"""
+		""" Permanent Stats"""
 		self.handedness = 0
+		self.melee_range = 10
 		self.life = 100
+
+		""" Trainable Stats"""
 		self.speed = 20
 		self.strength = 20
 		self.programming = 0
@@ -134,8 +137,11 @@ class Living_being(Game_object):
 	# ==========================================================================
 	def attack(self, weapon):
 		""" Call the attack method of the default weapon"""
+		if not weapon:
+			melee_attack()
 
 	# ==========================================================================
 	def melee_attack(self):
 		""" Attack with your own hands"""
+		pass
 

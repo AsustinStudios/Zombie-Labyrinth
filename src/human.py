@@ -33,9 +33,12 @@ class Human(Living_being):
 		Living_being.__init__(self, start_location, sprite_prefix, object_type)
 
 		# ======================================================================
-		""" Stats"""
+		""" Permanent Stats"""
 		self.handedness = 0
+		self.melee_range = 10
 		self.life = 100
+
+		""" Trainable Stats"""
 		self.speed = 20
 		self.strength = 50
 		self.programming = 15

@@ -33,9 +33,12 @@ class Zombie(Living_being):
 		Living_being.__init__(self, start_location, sprite_prefix, object_type)
 
 		# ======================================================================
-		""" Stats"""
+		""" Permanent Stats"""
 		self.handedness = 0
+		self.melee_range = 10
 		self.life = 50
+
+		""" Trainable Stats"""
 		self.speed = 10
 		self.strength = 40
 		self.programming = 0
