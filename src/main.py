@@ -20,10 +20,13 @@
 #    For more information send an e-mail to topo@asustin.net.
 
 import sys
-import pygame
-import preferences
-from pygame.locals import *
 from optparse import OptionParser
+
+import pygame
+from pygame.locals import *
+
+import input
+import preferences
 from human import Human
 
 # ==============================================================================
@@ -48,8 +51,8 @@ def main_loop():
 	background.fill((250, 250, 250))
 
 	# Text
-	font = pygame.font.Font(None, 36)
-	text = font.render("Survive!", 1, (10, 10, 10))
+	font = pygame.font.Font(None, 20)
+	text = font.render("FPS:   | Life: ", 1, (10, 10, 10))
 	textpos = text.get_rect(centerx=background.get_width()/2)
 	background.blit(text, textpos)
 
@@ -58,9 +61,14 @@ def main_loop():
 	pygame.display.flip()
 
 	# Prepare Game Objects
-	#punch_sound = load_sound('punch.wav')
+	walls_group = pygame.sprite.Group()
 	human = Human()
-	allsprites = pygame.sprite.RenderPlain((human))
+	human.collision_group = walls_group
+
+	wall = Human((400,400))
+	walls_group.add(wall)
+
+	allsprites = pygame.sprite.RenderPlain((wall, human))
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
 
@@ -69,6 +77,7 @@ def main_loop():
 
 	while True:
 		clock.tick(60)
+		fps = clock.get_fps()
 
 		# Handle Input Events
 		for event in pygame.event.get():
@@ -79,12 +88,19 @@ def main_loop():
 					return 0
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
-					human.move(keys)
-			elif event.type == MOUSEMOTION:
-				human.look(event.pos)
+					human.move(input.get_directions(keys))
+
+		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
+		human.look(pos)					# a device or a target must be specifyable.
 
 		# Update all the sprites
 		allsprites.update()
+
+		# Display Current FPS
+		background.fill((250, 250, 250))
+		text = font.render("FPS: %i | Life: %i" % (fps, human.life), 1, (10, 10, 10))
+		textpos = text.get_rect(centerx=background.get_width()/2)
+		background.blit(text, textpos)
 
 		# Draw the entire scene
 		screen.blit(background, (0, 0))
@@ -115,10 +131,6 @@ def process_cli_options():
 					  default=False,
 					  help='Si una función tiene o no un header')
 	options, args = parser.parse_args()
-
-	# Check for command line options
-	#if not (options.tabla and options.PWD and (options.encabezado or options.num_campos)) and (options.parsear and (options.tipo_archivo == None)):
-	#	sys.exit(parser.error(rojo + 'Parametros incompletos'))
 
 	# Assign options to preferences
 	preferencess = preferences.Preferences()

@@ -19,15 +19,25 @@
 #
 #    For more information send an e-mail to topo@asustin.net.
 
-import pygame
 from pygame.locals import *
 
-from living_being import Living_being
+# ==============================================================================
+global RIGHT, LEFT, UP, DOWN
+
+RIGHT = 0
+LEFT = 1
+UP = 2
+DOWN = 3
 
 # ==============================================================================
-class Human(Living_being):
-	""" The class that represents the human player on the game"""
-
-	# ==========================================================================
-	def __init__(self, start_location=(600, 300), sprite_prefix='human', object_type='HUMAN'):
-		Living_being.__init__(self, start_location, sprite_prefix, object_type)
+def get_directions(pressed_keys):
+	directions = {RIGHT:False, LEFT:False, UP:False, DOWN:False, }
+	if pressed_keys[K_d] or pressed_keys[K_RIGHT]:
+		directions[RIGHT] = True
+	if pressed_keys[K_a] or pressed_keys[K_LEFT]:
+		directions[LEFT] = True
+	if pressed_keys[K_s] or pressed_keys[K_DOWN]:
+		directions[DOWN] = True
+	if pressed_keys[K_w] or pressed_keys[K_UP]:
+		directions[UP] = True
+	return directions

@@ -19,63 +19,15 @@
 #
 #    For more information send an e-mail to topo@asustin.net.
 
-import os, sys
 import pygame
 from pygame.locals import *
 
+from living_being import Living_being
+
 # ==============================================================================
-class Zombie(pygame.sprite.Sprite):
-	"""moves a monkey critter across the screen. it can spin the
-	   monkey when it is punched."""
-	def __init__(self):
-		pygame.sprite.Sprite.__init__(self) # Call Sprite intializer
-		self.image, self.rect = load_image('chimp.png', -1)
-		screen = pygame.display.get_surface()
-		self.area = screen.get_rect()
-		self.rect.topleft = 10, 10
-		self.l_move = 1
-		self.r_move = 1
-		self.dizzy = 0
+class Zombie(Living_being):
+	""" The class that represents the zombies on the game"""
 
-	def update(self):
-		"walk or spin, depending on the monkeys state"
-		if self.dizzy:
-			self._spin()
-		else:
-			self._walk()
-
-	def _walk(self):
-		"move the monkey across the screen, and turn at the ends"
-		newpos = self.rect.move((self.l_move, self.r_move))
-		if not self.area.contains(newpos):
-			if self.rect.left < self.area.left or self.rect.right > self.area.right:
-				self.l_move = -self.l_move
-			if self.rect.top < self.area.top or self.rect.bottom > self.area.bottom:
-				self.r_move = -self.r_move
-			newpos = self.rect.move((self.l_move, self.r_move))
-			self.image = pygame.transform.flip(self.image, 1, 0)
-		self.rect = newpos
-
-	def _spin(self):
-		"spin the monkey image"
-		center = self.rect.center
-		self.dizzy += 12
-		if self.dizzy >= 360:
-			self.dizzy = 0
-			self.image = self.original
-		else:
-			rotate = pygame.transform.rotate
-			self.image = rotate(self.original, self.dizzy)
-		self.rect = self.image.get_rect(center=center)
-
-	def punched(self):
-		"this will cause the monkey to start spinning"
-		global score
-
-		if not self.dizzy:
-			score += 1
-			self.l_move += 1
-			self.r_move += 1
-			self.dizzy = 1
-			self.original = self.image
-			self.l_move = -self.l_move
+	# ==========================================================================
+	def __init__(self, start_location=(600, 300), sprite_prefix='zombie', object_type='ZOMBIE'):
+		Living_being.__init__(self, start_location, sprite_prefix, object_type)

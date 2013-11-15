@@ -22,12 +22,21 @@
 import pygame
 from pygame.locals import *
 
-from living_being import Living_being
+from resources import *
 
 # ==============================================================================
-class Human(Living_being):
+class Game_object(pygame.sprite.Sprite):
 	""" The class that represents the human player on the game"""
 
 	# ==========================================================================
-	def __init__(self, start_location=(600, 300), sprite_prefix='human', object_type='HUMAN'):
-		Living_being.__init__(self, start_location, sprite_prefix, object_type)
+	def __init__(self, location, sprite_prefix, object_type):
+		pygame.sprite.Sprite.__init__(self) # call Sprite initializer
+		self.image, self.rect = load_image(sprite_prefix, -1)
+		self.sprite_prefix = sprite_prefix
+		self.rect = self.rect.move(location)
+		self.object_type = object_type
+
+	# ==========================================================================
+	def update(self):
+		""" Update the Object"""
+		pass
