@@ -11,6 +11,7 @@ Colaborate
 ----------
 
 We are looking for help in this project. If you want to help us in any way (programming, art, music, etc...) just follow this steps:
+
 1. Start by downloading the git repo `git@github.com:AsustinStudios/Zombie-Labyrinth.git`
 2. Create a new git branch with your name or the name of the changes you are goning to do (eg. 'snoopy' or 'sound effects') `git checkout -b branch-name`
 3. Put your changes in the corresponding file or folder
