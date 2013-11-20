@@ -15,6 +15,6 @@ We are looking for help in this project. If you want to help us in any way (prog
 1. Start by downloading the git repo `git@github.com:AsustinStudios/Zombie-Labyrinth.git`
 2. Create a new git branch with your name or the name of the changes you are goning to do (eg. 'snoopy' or 'sound effects') `git checkout -b branch-name`
 3. Put your changes in the corresponding file or folder
-4. Add and Commit you changes to the git repo `git add new-or-modified-file` and the `git commit -m "Explain your changes here"`
+4. Add and Commit you changes to the git repo `git add new-or-modified-file` and then `git commit -m "Explain your changes here"`
 5. Push your branch back to the main repo `git push -u origin branch-name`
 6. In Github, browse you new branch, and click on the "Pull Request" icon, to ask me to merge your changes to the master branch.
