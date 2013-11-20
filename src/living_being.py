@@ -28,10 +28,14 @@ from resources import *
 from abstract_game_objects import Game_object
 
 # ==============================================================================
-global RIGHT, LEFT
+global RIGHT, LEFT, NORTH, SOUTH, EAST, WEST
 
 RIGHT = 0
 LEFT = 1
+NORTH = 'north'
+EAST = 'east'
+SOUTH = 'south'
+WEST = 'west'
 
 # ==============================================================================
 class Living_being(Game_object):
@@ -41,6 +45,7 @@ class Living_being(Game_object):
 	def __init__(self, start_location=(50, 50), sprite_prefix='living_being', object_type='LIVING'):
 		Game_object.__init__(self, start_location, sprite_prefix, object_type)
 		self.collision_group = None
+		self.direction = NORTH
 
 		# ======================================================================
 		""" Permanent Stats"""
@@ -64,6 +69,11 @@ class Living_being(Game_object):
 		""" Update the Object"""
 		self.process_collisions()
 		self.monitor_life()
+
+		# Adjust direction Sprite
+		image_name = '%(sprite)s_%(direction)s' % {'sprite':self.sprite_prefix,
+													'direction':self.direction}
+		self.image, a = load_image(image_name, -1)
 
 	# ==========================================================================
 	def move(self, directions):
@@ -122,17 +132,13 @@ class Living_being(Game_object):
 		angle = geometry.angle_between(self.rect, target)
 
 		if angle >= 45 and angle <= 135:
-			direction = 'north'
+			self.direction = NORTH
 		elif angle > 135 or angle < -135:
-			direction = 'west'
+			self.direction = WEST
 		elif angle >= -135 and angle <= -45:
-			direction = 'south'
+			self.direction = SOUTH
 		elif angle > -45 and angle < 45:
-			direction = 'east'
-
-		image_name = '%(sprite)s_%(direction)s' % {'sprite':self.sprite_prefix,
-														'direction':direction}
-		self.image, a = load_image(image_name, -1)
+			self.direction = EAST
 
 	# ==========================================================================
 	def attack(self, weapon):
@@ -143,5 +149,76 @@ class Living_being(Game_object):
 	# ==========================================================================
 	def melee_attack(self):
 		""" Attack with your own hands"""
-		pass
+		if self.collision_group:
+			sprite_position = self.rect
+			melee_rect = create_melee_rect()
+			self.rect = melee_rect
 
+			collision_list = pygame.sprite.spritecollide(self,
+													self.collision_group, False)
+			self.rect = sprite_position
+			for sprite in collision_list:
+				sprite.receive_damage(self.strength)
+
+	# ==========================================================================
+	def create_melee_rect(self):
+		""" Create a new rect object that represents the range in which you can
+		do melee damage"""
+		# Original Values
+		original_x = self.rect[0]
+		original_y = self.rect[1]
+		original_width = self.rect[2]
+		original_height = self.rect[3]
+
+		# Melee Rect Values Adjusted to char Rotation
+		if self.direction == NORTH:
+			if self.handedness == RIGHT:
+				x = original_x + (original_width/2)
+				y = original_y - self.melee_range
+				width = original_width/2
+				height = self.melee_range
+			elif self.handedness == LEFT:
+				x = original_x
+				y = original_y - self.melee_range
+				width = original_width/2
+				height = self.melee_range
+		elif self.direction == EAST:
+			if self.handedness == RIGHT:
+				x = original_x + original_width + self.melee_range
+				y = original_y + original_height/2
+				width = self.melee_range
+				height = original_height/2
+			elif self.handedness == LEFT:
+				x = original_x + original_width + self.melee_range
+				y = original_y
+				width = self.melee_range
+				height = original_height/2
+		elif self.direction == SOUTH:
+			if self.handedness == RIGHT:
+				x = original_x
+				y = original_y + original_height + self.melee_range
+				width = original_width/2
+				height = self.melee_range
+			elif self.handedness == LEFT:
+				x = original_x + (original_width/2)
+				y = original_y + original_height + self.melee_range
+				width = original_width/2
+				height = self.melee_range
+		elif self.direction == WEST:
+			if self.handedness == RIGHT:
+				x = original_x - self.melee_range
+				y = original_y
+				width = self.melee_range
+				height = original_height/2
+			elif self.handedness == LEFT:
+				x = original_x - self.melee_range
+				y = original_y + original_height/2
+				width = self.melee_range
+				height = original_height/2
+
+		return pygame.Rect(x, y, width, height)
+
+	# ==========================================================================
+	def receive_damage(self, damage):
+		""" Receive damage, process it and apply it to life"""
+		pass
