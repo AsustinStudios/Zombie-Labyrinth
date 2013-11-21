@@ -1,5 +1,4 @@
-Zombie-Labyrinth
-================
+# Zombie-Labyrinth
 
 Zombie Labyrinth is a 2D TPS (Third Person Shooter) with a perspective similar to the one found on a Pokemon or Zelda game for Game Boy. It's about a software programmer (you can play with multiple characters) that is working on the central office of a bank (BBUVA) in Mexico City, when the Zombie apocalipsis begins. He must hack his way through BBUVA corporate office and fight against countles zombies, bank employees and bank bureaucracy in order to get out alive.
 
@@ -7,14 +6,39 @@ Zombie Labyrinth aims to bring the epicness and awesomness of Metal Slug and mer
 
 Zombie Labyrinth is where futuristic gameplay meets state of the art technology.
 
-Colaborate
-----------
+## Contributing
 
-We are looking for help in this project. If you want to help us in any way (programming, art, music, etc...) just follow this steps:
+At this moment there are so many ways someone can contribute to the project. Not only the programming is important, we also are looking for people to help with the icons, the art, the music, the documentation, and optimizing the code. If you are interested in helping out in any way please contact us at studios@asustin.net explaining how do you want to help and we'll get in touch with you as soon as possible or just follow this steps:
 
-1. Start by downloading the git repo `git@github.com:AsustinStudios/Zombie-Labyrinth.git`
-2. Create a new git branch with your name or the name of the changes you are goning to do (eg. 'snoopy' or 'sound effects') `git checkout -b branch-name`
-3. Put your changes in the corresponding file or folder
-4. Add and Commit you changes to the git repo `git add new-or-modified-file` and then `git commit -m "Explain your changes here"`
-5. Push your branch back to the main repo `git push -u origin branch-name`
-6. In Github, browse you new branch, and click on the "Pull Request" icon, to ask me to merge your changes to the master branch.
+1. Choose or create an [issue](https://github.com/AsustinStudios/Zombie-Labyrinth/issues).
+2. Start by downloading the git repo `git clone git@github.com:AsustinStudios/Zombie-Labyrinth.git`.
+3. Create a new git branch with your name or the name of the changes you are going to do (eg. 'snoopy' or 'sound effects') `git checkout -b branch-name`.
+4. Put your changes in the corresponding file or folder.
+5. Add and Commit you changes to the git repo `git add new-or-modified-file` and then `git commit -m "Explain your changes here"`.
+6. Push your branch back to the main repo `git push -u origin branch-name`.
+7. In Github, browse you new branch, and click on the "Pull Request" icon.
+8. Enjoy a refreshing Coke and wait for us to merge your changes to the main branch.
+
+For more information about contributing to the project or creating an Issue, please visit the [Contribute](https://github.com/AsustinStudios/Zombie-Labyrinth/wiki/Contribute) page of our wiki.
+
+## Licensing
+
+    Zombie Labyrinth
+    Copyright (C) 2013 Asustin Studios studios@asustin.net
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+Zombie Labyrinth is currently licensed under the [GNU GPL v3](https://github.com/AsustinStudios/Zombie-Labyrinth/blob/master/LICENSE) but it may be licensed in other ways upon request. All the artwork(Icons, Sprites, Logos, etc...) is property of their authors and could be licensed with other conditions.
+
+For more information please e-mail us at: studios@asustin.net

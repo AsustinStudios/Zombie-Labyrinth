@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
-#    Copyright (C) 2013 Roberto Lapuente topo@asustin.net
+#    Copyright (C) 2013 Asustin Studios studios@asustin.net
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,8 +16,12 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-#    For more information send an e-mail to topo@asustin.net.
+
+"""
+Author: Roberto Lapuente Romo
+E-mail: topo@asustin.net
+Date: 2013-11-05
+"""
 
 import sys, os
 
