@@ -40,6 +40,6 @@ class Human(Living_being):
 
 		""" Trainable Stats"""
 		self.speed = 20
-		self.strength = 50
+		self.strength = 20
 		self.programming = 15
 		self.data_sciencing = 15

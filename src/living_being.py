@@ -54,8 +54,8 @@ class Living_being(Game_object):
 		self.life = 100
 
 		""" Trainable Stats"""
-		self.speed = 20
-		self.strength = 20
+		self.speed = 10
+		self.strength = 10
 		self.programming = 0
 		self.data_sciencing = 0
 
@@ -144,20 +144,22 @@ class Living_being(Game_object):
 	def attack(self, weapon):
 		""" Call the attack method of the default weapon"""
 		if not weapon:
-			melee_attack()
+			self.melee_attack()
 
 	# ==========================================================================
 	def melee_attack(self):
 		""" Attack with your own hands"""
 		if self.collision_group:
 			sprite_position = self.rect
-			melee_rect = create_melee_rect()
+			melee_rect = self.create_melee_rect()
 			self.rect = melee_rect
 
 			collision_list = pygame.sprite.spritecollide(self,
 													self.collision_group, False)
 			self.rect = sprite_position
 			for sprite in collision_list:
+				print self
+				print "Inflicting %i" % self.strength
 				sprite.receive_damage(self.strength)
 
 	# ==========================================================================
@@ -221,4 +223,6 @@ class Living_being(Game_object):
 	# ==========================================================================
 	def receive_damage(self, damage):
 		""" Receive damage, process it and apply it to life"""
-		pass
+		print self
+		print "Receiving %i" % damage
+		self.life -= damage

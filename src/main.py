@@ -90,6 +90,9 @@ def main_loop():
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
 					human.move(input.get_directions(keys))
+			elif event.type == MOUSEBUTTONDOWN:
+				if event.button == 1:
+					human.attack(human.weapons[0])
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
 		human.look(pos)					# a device or a target must be specifyable.

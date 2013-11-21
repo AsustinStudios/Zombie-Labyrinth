@@ -40,6 +40,6 @@ class Zombie(Living_being):
 
 		""" Trainable Stats"""
 		self.speed = 10
-		self.strength = 40
+		self.strength = 10
 		self.programming = 0
 		self.data_sciencing = 0
