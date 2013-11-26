@@ -24,18 +24,10 @@ from pygame.locals import *
 
 import geometry
 from input import *
+from global_variables import *
 from resources import *
 from abstract_game_objects import Game_object
-
-# ==============================================================================
-global RIGHT, LEFT, NORTH, SOUTH, EAST, WEST
-
-RIGHT = 0
-LEFT = 1
-NORTH = 'north'
-EAST = 'east'
-SOUTH = 'south'
-WEST = 'west'
+from weapons import *
 
 # ==============================================================================
 class Living_being(Game_object):
@@ -61,7 +53,7 @@ class Living_being(Game_object):
 
 		# ======================================================================
 		""" Inventory"""
-		self.weapons = {0:None, 1:None}
+		self.weapons = [None, None]
 		self.inventory = []
 
 	# ==========================================================================
@@ -79,6 +71,8 @@ class Living_being(Game_object):
 	def move(self, directions):
 		""" Move around the being depending on the direction"""
 		move = [0, 0]
+		print self.rect
+		print self.speed
 
 		if directions[RIGHT]:
 			move[0] += self.speed/10
@@ -141,29 +135,35 @@ class Living_being(Game_object):
 			self.direction = EAST
 
 	# ==========================================================================
-	def attack(self, weapon):
+	def attack(self, current_weapon=0):
 		""" Call the attack method of the default weapon"""
-		if not weapon:
-			self.melee_attack()
+		weapon = self.weapons[current_weapon]
+
+		if weapon == None:
+			self.melee_attack(self.strength, self.melee_range)
+		elif weapon.type == COLD_WEAPON:
+			self.melee_attack(weapon.strength, weapon.range)
+		elif weapon.type == FIREARM:
+			weapon.attack(self.rect, self.direction, self.collision_group)
 
 	# ==========================================================================
-	def melee_attack(self):
+	def melee_attack(self, strength, range):
 		""" Attack with your own hands"""
 		if self.collision_group:
 			sprite_position = self.rect
-			melee_rect = self.create_melee_rect()
+			melee_rect = self.create_melee_rect(range)
 			self.rect = melee_rect
 
 			collision_list = pygame.sprite.spritecollide(self,
 													self.collision_group, False)
 			self.rect = sprite_position
-			for sprite in collision_list:
+			for enemy in collision_list:
 				print self
-				print "Inflicting %i" % self.strength
-				sprite.receive_damage(self.strength)
+				print "Inflicting %i" % strength
+				enemy.receive_damage(strength)
 
 	# ==========================================================================
-	def create_melee_rect(self):
+	def create_melee_rect(self, range):
 		""" Create a new rect object that represents the range in which you can
 		do melee damage"""
 		# Original Values
@@ -176,46 +176,46 @@ class Living_being(Game_object):
 		if self.direction == NORTH:
 			if self.handedness == RIGHT:
 				x = original_x + (original_width/2)
-				y = original_y - self.melee_range
+				y = original_y - range
 				width = original_width/2
-				height = self.melee_range
+				height = range
 			elif self.handedness == LEFT:
 				x = original_x
-				y = original_y - self.melee_range
+				y = original_y - range
 				width = original_width/2
-				height = self.melee_range
+				height = range
 		elif self.direction == EAST:
 			if self.handedness == RIGHT:
-				x = original_x + original_width + self.melee_range
+				x = original_x + original_width + range
 				y = original_y + original_height/2
-				width = self.melee_range
+				width = range
 				height = original_height/2
 			elif self.handedness == LEFT:
-				x = original_x + original_width + self.melee_range
+				x = original_x + original_width + range
 				y = original_y
-				width = self.melee_range
+				width = range
 				height = original_height/2
 		elif self.direction == SOUTH:
 			if self.handedness == RIGHT:
 				x = original_x
-				y = original_y + original_height + self.melee_range
+				y = original_y + original_height + range
 				width = original_width/2
-				height = self.melee_range
+				height = range
 			elif self.handedness == LEFT:
 				x = original_x + (original_width/2)
-				y = original_y + original_height + self.melee_range
+				y = original_y + original_height + range
 				width = original_width/2
-				height = self.melee_range
+				height = range
 		elif self.direction == WEST:
 			if self.handedness == RIGHT:
-				x = original_x - self.melee_range
+				x = original_x - range
 				y = original_y
-				width = self.melee_range
+				width = range
 				height = original_height/2
 			elif self.handedness == LEFT:
-				x = original_x - self.melee_range
+				x = original_x - range
 				y = original_y + original_height/2
-				width = self.melee_range
+				width = range
 				height = original_height/2
 
 		return pygame.Rect(x, y, width, height)
@@ -224,5 +224,5 @@ class Living_being(Game_object):
 	def receive_damage(self, damage):
 		""" Receive damage, process it and apply it to life"""
 		print self
-		print "Receiving %i" % damage
 		self.life -= damage
+		print "Receiving %i, Remaining life %i" % (damage, self.life)

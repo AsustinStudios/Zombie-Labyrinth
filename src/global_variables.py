@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
-#    Copyright (C) 2013 Roberto Lapuente topo@asustin.net
+#    Copyright (C) 2013 Asustin Studios studios@asustin.net
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,22 +16,36 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-#    For more information send an e-mail to topo@asustin.net.
 
-from pygame.locals import *
+"""
+Author: Roberto Lapuente Romo
+E-mail: topo@asustin.net
+Date: 2013-11-26
+"""
 
-from global_variables import *
+import pygame
+
+global allsprites
+allsprites = pygame.sprite.RenderPlain()
 
 # ==============================================================================
-def get_directions(pressed_keys):
-	directions = {RIGHT:False, LEFT:False, UP:False, DOWN:False, }
-	if pressed_keys[K_d] or pressed_keys[K_RIGHT]:
-		directions[RIGHT] = True
-	if pressed_keys[K_a] or pressed_keys[K_LEFT]:
-		directions[LEFT] = True
-	if pressed_keys[K_s] or pressed_keys[K_DOWN]:
-		directions[DOWN] = True
-	if pressed_keys[K_w] or pressed_keys[K_UP]:
-		directions[UP] = True
-	return directions
+global RIGHT, LEFT, NORTH, SOUTH, EAST, WEST
+
+RIGHT = 0
+LEFT = 1
+NORTH = 'north'
+EAST = 'east'
+SOUTH = 'south'
+WEST = 'west'
+
+# ==============================================================================
+global GUN, NOT_GUN
+
+COLD_WEAPON = 0
+FIREARM = 1
+
+# ==============================================================================
+global UP, DOWN
+
+UP = 2
+DOWN = 3

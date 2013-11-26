@@ -40,3 +40,8 @@ class Game_object(pygame.sprite.Sprite):
 	def update(self):
 		""" Update the Object"""
 		pass
+
+	# ==========================================================================
+	def receive_damage(self, damage):
+		print self
+		print "Receiving %i, but nothing happens" % damage
