@@ -29,7 +29,7 @@ from pygame.locals import *
 import geometry
 from global_variables import *
 from resources import *
-from abstract_game_objects import Game_object
+from game_object import Game_object
 
 # ==============================================================================
 class Weapon():

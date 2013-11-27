@@ -30,7 +30,7 @@ import preferences
 from global_variables import *
 from human import Human
 from zombie import Zombie
-from abstract_game_objects import Game_object
+from game_object import Game_object
 from weapons import *
 
 # ==============================================================================
