@@ -25,13 +25,7 @@ Date: 2013-11-06
 
 from pygame.locals import *
 
-# ==============================================================================
-global RIGHT, LEFT, UP, DOWN
-
-RIGHT = 0
-LEFT = 1
-UP = 2
-DOWN = 3
+from global_variables import *
 
 # ==============================================================================
 def get_directions(pressed_keys):

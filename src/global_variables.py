@@ -20,30 +20,32 @@
 """
 Author: Roberto Lapuente Romo
 E-mail: topo@asustin.net
-Date: 2013-11-05
+Date: 2013-11-26
 """
 
 import pygame
-from pygame.locals import *
 
-from living_being import Living_being
+global allsprites
+allsprites = pygame.sprite.RenderPlain()
 
 # ==============================================================================
-class Zombie(Living_being):
-	""" The class that represents the zombies on the game"""
+global RIGHT, LEFT, NORTH, SOUTH, EAST, WEST
 
-	# ==========================================================================
-	def __init__(self, start_location=(600, 300), sprite_prefix='zombie', object_type='ZOMBIE'):
-		Living_being.__init__(self, start_location, sprite_prefix, object_type)
+RIGHT = 0
+LEFT = 1
+NORTH = 'north'
+EAST = 'east'
+SOUTH = 'south'
+WEST = 'west'
 
-		# ======================================================================
-		""" Permanent Stats"""
-		self.handedness = 0
-		self.melee_range = 10
-		self.life = 50
+# ==============================================================================
+global GUN, NOT_GUN
 
-		""" Trainable Stats"""
-		self.speed = 10
-		self.strength = 10
-		self.programming = 0
-		self.data_sciencing = 0
+COLD_WEAPON = 0
+FIREARM = 1
+
+# ==============================================================================
+global UP, DOWN
+
+UP = 2
+DOWN = 3

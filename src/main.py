@@ -31,7 +31,11 @@ from pygame.locals import *
 
 import input
 import preferences
+from global_variables import *
 from human import Human
+from zombie import Zombie
+from game_object import Game_object
+from weapons import *
 
 # ==============================================================================
 def main():
@@ -65,19 +69,21 @@ def main_loop():
 	pygame.display.flip()
 
 	# Prepare Game Objects
-	walls_group = pygame.sprite.Group()
+	objects_group = pygame.sprite.Group()
 	human = Human()
-	human.collision_group = walls_group
+	human.weapons[0] = Cold_weapon(40, 50)
+	human.weapons[1] = Firearm(40)
+	human.collision_group = objects_group
 
-	wall = Human((400,400))
-	walls_group.add(wall)
+	zombie = Zombie((400,400))
+	objects_group.add(zombie)
 
-	allsprites = pygame.sprite.RenderPlain((wall, human))
+	wall = Game_object((300,300), 'wall', 'WALL')
+	objects_group.add(wall)
+
+	allsprites.add(zombie, human, wall)
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
-
-	global score
-	score = 0
 
 	while True:
 		clock.tick(60)
@@ -93,6 +99,11 @@ def main_loop():
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
 					human.move(input.get_directions(keys))
+			elif event.type == MOUSEBUTTONDOWN:
+				if event.button == 1:
+					human.attack(0)
+				elif event.button == 3:
+					human.attack(1)
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
 		human.look(pos)					# a device or a target must be specifyable.

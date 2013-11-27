@@ -35,3 +35,15 @@ class Human(Living_being):
 	# ==========================================================================
 	def __init__(self, start_location=(600, 300), sprite_prefix='human', object_type='HUMAN'):
 		Living_being.__init__(self, start_location, sprite_prefix, object_type)
+
+		# ======================================================================
+		""" Permanent Stats"""
+		self.handedness = 0
+		self.melee_range = 10
+		self.life = 100
+
+		""" Trainable Stats"""
+		self.speed = 20
+		self.strength = 20
+		self.programming = 15
+		self.data_sciencing = 15
