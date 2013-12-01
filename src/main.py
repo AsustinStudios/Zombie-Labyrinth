@@ -72,7 +72,7 @@ def main_loop():
 
 	# Prepare Game Objects
 	objects_group = pygame.sprite.Group()
-	topo = topo((600,300), 'topo')
+	topo = Human((600,300), 'topo')
 	topo.weapons[0] = Cold_weapon(40, 50)
 	topo.weapons[1] = Firearm(40)
 	topo.collision_group = objects_group
@@ -111,12 +111,7 @@ def main_loop():
 		topo.look(pos)					# a device or a target must be specifyable.
 
 		# Mantener la cámara en el centro del nivel
-		newpos = (topo.rect[0], topo.rect[1])
-		distance = geometry.delta((600,300), newpos)
-		if distance != (0,0):
-			distance = (-distance[0], -distance[1])
-			for spr in allsprites.sprites():
-				spr.rect.move_ip(distance)
+		camera_effects(topo)
 
 		# Update all the sprites
 		allsprites.update()
@@ -133,6 +128,15 @@ def main_loop():
 		pygame.display.flip()
 
 	# Game Over
+
+# ==============================================================================
+def camera_effects(player):
+	newpos = (player.rect[0], player.rect[1])
+	distance = geometry.delta((600,300), newpos)
+	if distance != (0,0):
+		distance = (-distance[0], -distance[1])
+		for spr in allsprites.sprites():
+			spr.rect.move_ip(distance)
 
 # ==============================================================================
 def process_cli_options():
@@ -158,7 +162,7 @@ def process_cli_options():
 	options, args = parser.parse_args()
 
 	# Assign options to preferences
-	preferencess = preferences.Preferences()
+	#preferences.thing = new_thing
 
 	return preferences
 
