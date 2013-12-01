@@ -71,10 +71,10 @@ def main_loop():
 
 	# Prepare Game Objects
 	objects_group = pygame.sprite.Group()
-	human = Human()
-	human.weapons[0] = Cold_weapon(40, 50)
-	human.weapons[1] = Firearm(40)
-	human.collision_group = objects_group
+	topo = topo((600,300), 'topo')
+	topo.weapons[0] = Cold_weapon(40, 50)
+	topo.weapons[1] = Firearm(40)
+	topo.collision_group = objects_group
 
 	zombie = Zombie((400,400))
 	objects_group.add(zombie)
@@ -82,7 +82,7 @@ def main_loop():
 	wall = Game_object((300,300), 'wall', 'WALL')
 	objects_group.add(wall)
 
-	allsprites.add(zombie, human, wall)
+	allsprites.add(zombie, topo, wall)
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
 
@@ -99,18 +99,18 @@ def main_loop():
 					return 0
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
-					human.move(input.get_directions(keys))
+					topo.move(input.get_directions(keys))
 			elif event.type == MOUSEBUTTONDOWN:
 				if event.button == 1:
-					human.attack(0)
+					topo.attack(0)
 				elif event.button == 3:
-					human.attack(1)
+					topo.attack(1)
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
-		human.look(pos)					# a device or a target must be specifyable.
+		topo.look(pos)					# a device or a target must be specifyable.
 
 		# Mantener la cámara en el centro del nivel
-		newpos = (human.rect[0], human.rect[1])
+		newpos = (topo.rect[0], topo.rect[1])
 		distance = geometry.delta((600,300), newpos)
 		if distance != (0,0):
 			distance = (-distance[0], -distance[1])
@@ -122,7 +122,7 @@ def main_loop():
 
 		# Display Current FPS
 		background.fill((205, 133, 63))
-		text = font.render("FPS: %i | Life: %i" % (fps, human.life), 1, (10, 10, 10))
+		text = font.render("FPS: %i | Life: %i" % (fps, topo.life), 1, (10, 10, 10))
 		textpos = text.get_rect(centerx=background.get_width()/2)
 		background.blit(text, textpos)
 
