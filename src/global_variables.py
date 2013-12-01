@@ -24,9 +24,11 @@ Date: 2013-11-26
 """
 
 import pygame
+import preferences
 
-global allsprites
+global allsprites, preferences
 allsprites = pygame.sprite.RenderPlain()
+preferences = preferences.Preferences()
 
 # ==============================================================================
 global RIGHT, LEFT, NORTH, SOUTH, EAST, WEST

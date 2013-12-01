@@ -40,6 +40,7 @@ from weapons import *
 
 # ==============================================================================
 def main():
+	global preferences
 	preferences = process_cli_options()
 
 	status = main_loop()
