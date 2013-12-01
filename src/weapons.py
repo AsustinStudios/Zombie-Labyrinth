@@ -68,7 +68,7 @@ class Firearm(Weapon):
 class Bullet(Game_object):
 
 	# ==========================================================================
-	def __init__(self, start_location, direction, collision_group, speed=5,
+	def __init__(self, start_location, direction, collision_group, speed=50,
 					strength=10, sprite_prefix='bullet', object_type='BULLET'):
 		Game_object.__init__(self, start_location,
 							'%s_%s' % (sprite_prefix, direction), object_type)
@@ -91,8 +91,6 @@ class Bullet(Game_object):
 		if len(collision_list) != 0:
 			self.kill()
 			for obj in collision_list:
-				print self
-				print "Inflicting %i" % self.strength
 				obj.receive_damage(self.strength)
 
 	# ==========================================================================
@@ -105,13 +103,13 @@ class Bullet(Game_object):
 		x, y = 0, 0
 
 		if direction == NORTH:
-			y = -speed
+			y = -speed/10
 		elif direction == EAST:
-			x = speed
+			x = speed/10
 		elif direction == SOUTH:
-			y = speed
+			y = speed/10
 		elif direction == WEST:
-			x = -speed
+			x = -speed/10
 
 		return (x, y)
 

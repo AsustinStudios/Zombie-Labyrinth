@@ -31,6 +31,7 @@ from pygame.locals import *
 
 import input
 import preferences
+import geometry
 from global_variables import *
 from human import Human
 from zombie import Zombie
@@ -39,6 +40,7 @@ from weapons import *
 
 # ==============================================================================
 def main():
+	global preferences
 	preferences = process_cli_options()
 
 	status = main_loop()
@@ -56,7 +58,7 @@ def main_loop():
 	# Create Background
 	background = pygame.Surface(screen.get_size())
 	background = background.convert()
-	background.fill((250, 250, 250))
+	background.fill((205, 133, 63))
 
 	# Text
 	font = pygame.font.Font(None, 20)
@@ -70,10 +72,10 @@ def main_loop():
 
 	# Prepare Game Objects
 	objects_group = pygame.sprite.Group()
-	human = Human()
-	human.weapons[0] = Cold_weapon(40, 50)
-	human.weapons[1] = Firearm(40)
-	human.collision_group = objects_group
+	topo = Human((600,300), 'topo')
+	topo.weapons[0] = Cold_weapon(40, 50)
+	topo.weapons[1] = Firearm(40)
+	topo.collision_group = objects_group
 
 	zombie = Zombie((400,400))
 	objects_group.add(zombie)
@@ -81,7 +83,7 @@ def main_loop():
 	wall = Game_object((300,300), 'wall', 'WALL')
 	objects_group.add(wall)
 
-	allsprites.add(zombie, human, wall)
+	allsprites.add(zombie, topo, wall)
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
 
@@ -98,22 +100,25 @@ def main_loop():
 					return 0
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
-					human.move(input.get_directions(keys))
+					topo.move(input.get_directions(keys))
 			elif event.type == MOUSEBUTTONDOWN:
 				if event.button == 1:
-					human.attack(0)
+					topo.attack(0)
 				elif event.button == 3:
-					human.attack(1)
+					topo.attack(1)
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
-		human.look(pos)					# a device or a target must be specifyable.
+		topo.look(pos)					# a device or a target must be specifyable.
+
+		# Mantener la cámara en el centro del nivel
+		camera_effects(topo)
 
 		# Update all the sprites
 		allsprites.update()
 
 		# Display Current FPS
-		background.fill((250, 250, 250))
-		text = font.render("FPS: %i | Life: %i" % (fps, human.life), 1, (10, 10, 10))
+		background.fill((205, 133, 63))
+		text = font.render("FPS: %i | Life: %i" % (fps, topo.life), 1, (10, 10, 10))
 		textpos = text.get_rect(centerx=background.get_width()/2)
 		background.blit(text, textpos)
 
@@ -123,6 +128,15 @@ def main_loop():
 		pygame.display.flip()
 
 	# Game Over
+
+# ==============================================================================
+def camera_effects(player):
+	newpos = (player.rect[0], player.rect[1])
+	distance = geometry.delta((600,300), newpos)
+	if distance != (0,0):
+		distance = (-distance[0], -distance[1])
+		for spr in allsprites.sprites():
+			spr.rect.move_ip(distance)
 
 # ==============================================================================
 def process_cli_options():
@@ -148,7 +162,7 @@ def process_cli_options():
 	options, args = parser.parse_args()
 
 	# Assign options to preferences
-	preferencess = preferences.Preferences()
+	#preferences.thing = new_thing
 
 	return preferences
 
