@@ -15,7 +15,7 @@ Zombie Labyrinth is supoused to support Linux, Windows and OSX, however at this 
 4. Enter the project directory and run python `src/main.py`.
 5. Play the game! :D
   * Use `WASD` to move around, left-click for melee attack & righ-click to shoot.
-  * `ESC` to exit the game
+  * `ESC` to exit the game.
 6. Please report any [issue or bug](https://github.com/AsustinStudios/Zombie-Labyrinth/issues) you fing to our [issues](https://github.com/AsustinStudios/Zombie-Labyrinth/issues) page or via e-mail to: studios@asustin.net
 
 
