@@ -75,8 +75,6 @@ class Living_being(Game_object):
 	def move(self, directions):
 		""" Move around the being depending on the direction"""
 		move = [0, 0]
-		print self.rect
-		print self.speed
 
 		if directions[RIGHT]:
 			move[0] += self.speed/10
@@ -162,8 +160,6 @@ class Living_being(Game_object):
 													self.collision_group, False)
 			self.rect = sprite_position
 			for enemy in collision_list:
-				print self
-				print "Inflicting %i" % strength
 				enemy.receive_damage(strength)
 
 	# ==========================================================================
@@ -227,6 +223,4 @@ class Living_being(Game_object):
 	# ==========================================================================
 	def receive_damage(self, damage):
 		""" Receive damage, process it and apply it to life"""
-		print self
 		self.life -= damage
-		print "Receiving %i, Remaining life %i" % (damage, self.life)

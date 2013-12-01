@@ -57,7 +57,7 @@ def main_loop():
 	# Create Background
 	background = pygame.Surface(screen.get_size())
 	background = background.convert()
-	background.fill((250, 250, 250))
+	background.fill((205, 133, 63))
 
 	# Text
 	font = pygame.font.Font(None, 20)
@@ -121,7 +121,7 @@ def main_loop():
 		allsprites.update()
 
 		# Display Current FPS
-		background.fill((250, 250, 250))
+		background.fill((205, 133, 63))
 		text = font.render("FPS: %i | Life: %i" % (fps, human.life), 1, (10, 10, 10))
 		textpos = text.get_rect(centerx=background.get_width()/2)
 		background.blit(text, textpos)

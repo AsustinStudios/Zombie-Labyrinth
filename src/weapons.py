@@ -91,8 +91,6 @@ class Bullet(Game_object):
 		if len(collision_list) != 0:
 			self.kill()
 			for obj in collision_list:
-				print self
-				print "Inflicting %i" % self.strength
 				obj.receive_damage(self.strength)
 
 	# ==========================================================================
