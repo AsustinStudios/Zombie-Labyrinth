@@ -6,7 +6,7 @@ Zombie Labyrinth aims to bring the epicness and awesomness of Metal Slug and mer
 
 Zombie Labyrinth is where futuristic gameplay meets state of the art technology.
 
-## Playing &Testing the Game
+## Playing & Testing the Game
 Zombie Labyrinth is supoused to support Linux, Windows and OSX, however at this point I do the development on Linux (amd64) and I haven't tested it in any other platform or architecture. It's easy to test the game, just follow this steps:
 
 1. Start by [downloading the code](https://github.com/AsustinStudios/Zombie-Labyrinth/archive/master.zip) or cloning the git repo: `git clone git@github.com:AsustinStudios/Zombie-Labyrinth.git`.
