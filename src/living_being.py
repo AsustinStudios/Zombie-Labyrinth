@@ -219,8 +219,3 @@ class Living_being(Game_object):
 				height = original_height/2
 
 		return pygame.Rect(x, y, width, height)
-
-	# ==========================================================================
-	def receive_damage(self, damage):
-		""" Receive damage, process it and apply it to life"""
-		self.life -= damage

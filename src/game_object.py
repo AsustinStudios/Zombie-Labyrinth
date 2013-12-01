@@ -39,6 +39,7 @@ class Game_object(pygame.sprite.Sprite):
 		self.sprite_prefix = sprite_prefix
 		self.rect = self.rect.move(location)
 		self.object_type = object_type
+		self.life = 100
 
 	# ==========================================================================
 	def update(self):
@@ -47,5 +48,5 @@ class Game_object(pygame.sprite.Sprite):
 
 	# ==========================================================================
 	def receive_damage(self, damage):
-		print self
-		print "Receiving %i, but nothing happens" % damage
+		""" Receive damage, process it and apply it to life"""
+		self.life -= damage
