@@ -6,6 +6,19 @@ Zombie Labyrinth aims to bring the epicness and awesomness of Metal Slug and mer
 
 Zombie Labyrinth is where futuristic gameplay meets state of the art technology.
 
+## Playing &Testing the Game
+Zombie Labyrinth is supoused to support Linux, Windows and OSX, however at this point I do the development on Linux (amd64) and I haven't tested it in any other platform or architecture. It's easy to test the game, just follow this steps:
+
+1. Start by [downloading the code](https://github.com/AsustinStudios/Zombie-Labyrinth/archive/master.zip) or cloning the git repo: `git clone git@github.com:AsustinStudios/Zombie-Labyrinth.git`.
+2. Install [Python 2.7](http://www.python.org/download) and the [Pygame](http://www.pygame.org/download.shtml) version corresponding to your OS and Python version. On most debian-based Linux just do `sudo apt-get install python-pygame`.
+3. Make sure you know how to call python from the command line.
+4. Enter the project directory and run python `src/main.py`.
+5. Play the game! :D
+..* Use `WASD` to move around, left-click for melee attack & righ-click to shoot.
+..* `ESC` to exit the game
+6. Please report any [issue or bug](https://github.com/AsustinStudios/Zombie-Labyrinth/issues) you fing to our [issues](https://github.com/AsustinStudios/Zombie-Labyrinth/issues) page or via e-mail to: studios@asustin.net
+
+
 ## Contributing
 
 At this moment there are so many ways someone can contribute to the project. Not only the programming is important, we also are looking for people to help with the icons, the art, the music, the documentation, and optimizing the code. If you are interested in helping out in any way please contact us at studios@asustin.net explaining how do you want to help and we'll get in touch with you as soon as possible or just follow this steps:
