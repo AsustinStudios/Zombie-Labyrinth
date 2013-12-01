@@ -31,6 +31,7 @@ from pygame.locals import *
 
 import input
 import preferences
+import geometry
 from global_variables import *
 from human import Human
 from zombie import Zombie
@@ -107,6 +108,14 @@ def main_loop():
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
 		human.look(pos)					# a device or a target must be specifyable.
+
+		# Mantener la cámara en el centro del nivel
+		newpos = (human.rect[0], human.rect[1])
+		distance = geometry.delta((600,300), newpos)
+		if distance != (0,0):
+			distance = (-distance[0], -distance[1])
+			for spr in allsprites.sprites():
+				spr.rect.move_ip(distance)
 
 		# Update all the sprites
 		allsprites.update()
