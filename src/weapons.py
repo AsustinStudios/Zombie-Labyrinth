@@ -36,7 +36,7 @@ class Weapon():
 	""" The class that represents the weapons in the game"""
 
 	# ==========================================================================
-	def __init__(self, type):
+	def __init__(self, type, strength):
 		self.type = type
 		self.strength = strength
 
