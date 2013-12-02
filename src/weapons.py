@@ -38,6 +38,7 @@ class Weapon():
 	# ==========================================================================
 	def __init__(self, type):
 		self.type = type
+		self.strength = strength
 
 # ==============================================================================
 class Cold_weapon(Weapon):
@@ -45,9 +46,8 @@ class Cold_weapon(Weapon):
 
 	# ==========================================================================
 	def __init__(self, strength=10, range=20):
-		Weapon.__init__(self, COLD_WEAPON)
+		Weapon.__init__(self, COLD_WEAPON, strength)
 		self.range = range
-		self.strength = strength
 
 # ==============================================================================
 class Firearm(Weapon):
@@ -55,8 +55,7 @@ class Firearm(Weapon):
 
 	# ==========================================================================
 	def __init__(self, strength=10):
-		Weapon.__init__(self, FIREARM)
-		self.strength = strength
+		Weapon.__init__(self, FIREARM, strength)
 
 	# ==========================================================================
 	def attack(self, rect, direction, collision_group):
