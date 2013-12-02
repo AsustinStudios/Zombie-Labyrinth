@@ -41,7 +41,7 @@ class Living_being(Game_object):
 	def __init__(self, start_location=(50, 50), sprite_prefix='living_being', object_type='LIVING'):
 		Game_object.__init__(self, start_location, sprite_prefix, object_type)
 		self.collision_group = None
-		self.direction = NORTH
+		self.direction = SOUTH
 
 		# ======================================================================
 		""" Permanent Stats"""

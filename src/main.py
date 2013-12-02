@@ -72,6 +72,7 @@ def main_loop():
 
 	# Prepare Game Objects
 	objects_group = pygame.sprite.Group()
+
 	topo = Human((600,300), 'topo')
 	topo.weapons[0] = Cold_weapon(40, 50)
 	topo.weapons[1] = Firearm(40)
@@ -109,6 +110,7 @@ def main_loop():
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
 		topo.look(pos)					# a device or a target must be specifyable.
+		zombie.look((topo.rect[0], topo.rect[1]))
 
 		# Mantener la cámara en el centro del nivel
 		camera_effects(topo)
