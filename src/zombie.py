@@ -33,8 +33,8 @@ class Zombie(Living_being):
 	""" The class that represents the zombies on the game"""
 
 	# ==========================================================================
-	def __init__(self, start_location=(600, 300), sprite_prefix='zombie', object_type='ZOMBIE'):
-		Living_being.__init__(self, start_location, sprite_prefix, object_type)
+	def __init__(self, start_location=(600, 300), object_type='zombie'):
+		Living_being.__init__(self, start_location, object_type)
 
 		# ======================================================================
 		""" Permanent Stats"""

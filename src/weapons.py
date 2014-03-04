@@ -27,8 +27,8 @@ import pygame
 from pygame.locals import *
 
 import geometry
+import resources
 from global_variables import *
-from resources import *
 from game_object import Game_object
 
 # ==============================================================================
@@ -68,9 +68,9 @@ class Bullet(Game_object):
 
 	# ==========================================================================
 	def __init__(self, start_location, direction, collision_group, speed=50,
-					strength=10, sprite_prefix='bullet', object_type='BULLET'):
+					strength=10, object_type='bullet'):
 		Game_object.__init__(self, start_location,
-							'%s_%s' % (sprite_prefix, direction), object_type)
+							'%s_%s' % (object_type, direction))
 
 		position = start_location
 		self.speed = self.get_coordinate_speed(direction, speed)

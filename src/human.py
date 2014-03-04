@@ -33,8 +33,8 @@ class Human(Living_being):
 	""" The class that represents the human player on the game"""
 
 	# ==========================================================================
-	def __init__(self, start_location=(600, 300), sprite_prefix='human', object_type='HUMAN'):
-		Living_being.__init__(self, start_location, sprite_prefix, object_type)
+	def __init__(self, start_location=(600, 300), object_type='human'):
+		Living_being.__init__(self, start_location, object_type)
 
 		# ======================================================================
 		""" Permanent Stats"""

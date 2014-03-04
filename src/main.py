@@ -29,6 +29,7 @@ from optparse import OptionParser
 import pygame
 from pygame.locals import *
 
+import resources
 import input
 import preferences
 import geometry
@@ -62,7 +63,7 @@ def main_loop():
 
 	# Text
 	font = pygame.font.Font(None, 20)
-	text = font.render("FPS:   | Life: ", 1, (10, 10, 10))
+	text = font.render('FPS:   | Life: ', 1, (10, 10, 10))
 	textpos = text.get_rect(centerx=background.get_width()/2)
 	background.blit(text, textpos)
 
@@ -71,7 +72,8 @@ def main_loop():
 	pygame.display.flip()
 
 	# Prepare Game Objects
-	objects_group = pygame.sprite.Group()
+
+	resources.load_level('nivel')
 
 	topo = Human((600,300), 'topo')
 	topo.weapons[0] = Cold_weapon(40, 50)
@@ -81,10 +83,8 @@ def main_loop():
 	zombie = Zombie((400,400))
 	objects_group.add(zombie)
 
-	wall = Game_object((300,300), 'wall', 'WALL')
-	objects_group.add(wall)
+	allsprites.add(zombie, topo)
 
-	allsprites.add(zombie, topo, wall)
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
 
@@ -120,7 +120,7 @@ def main_loop():
 
 		# Display Current FPS
 		background.fill((205, 133, 63))
-		text = font.render("FPS: %i | Life: %i" % (fps, topo.life), 1, (10, 10, 10))
+		text = font.render('FPS: %i | Life: %i' % (fps, topo.life), 1, (10, 10, 10))
 		textpos = text.get_rect(centerx=background.get_width()/2)
 		background.blit(text, textpos)
 

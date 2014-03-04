@@ -27,9 +27,9 @@ import pygame
 from pygame.locals import *
 
 import geometry
+import resources
 from input import *
 from global_variables import *
-from resources import *
 from game_object import Game_object
 from weapons import *
 
@@ -38,8 +38,8 @@ class Living_being(Game_object):
 	""" The class that represents all the living entities in the game"""
 
 	# ==========================================================================
-	def __init__(self, start_location=(50, 50), sprite_prefix='living_being', object_type='LIVING'):
-		Game_object.__init__(self, start_location, sprite_prefix, object_type)
+	def __init__(self, start_location=(50, 50), object_type='living_being'):
+		Game_object.__init__(self, start_location, object_type)
 		self.collision_group = None
 		self.direction = SOUTH
 
@@ -67,9 +67,9 @@ class Living_being(Game_object):
 		self.monitor_life()
 
 		# Adjust direction Sprite
-		image_name = '%(sprite)s_%(direction)s' % {'sprite':self.sprite_prefix,
+		image_name = '%(sprite)s_%(direction)s' % {'sprite':self.object_type,
 													'direction':self.direction}
-		self.image, a = load_image(image_name, -1)
+		self.image, a = resources.load_image(image_name, -1)
 
 	# ==========================================================================
 	def move(self, directions):

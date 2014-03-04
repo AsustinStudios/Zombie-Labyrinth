@@ -28,6 +28,9 @@ import sys, os
 import pygame
 from pygame.locals import *
 
+from global_variables import *
+from game_object import Game_object
+
 # ==============================================================================
 def load_image(name, colorkey=None):
 	""" This Functions loads a png image and returns the image object and the
@@ -61,3 +64,34 @@ def load_sound(name):
 		print 'Cannot load sound:', wav
 		raise SystemExit, message
 	return sound
+
+# ==============================================================================
+def load_level(name):
+	""" This Function loads all the level construction, create the objects and
+	get them in their respective groups."""
+	name = '%s.lvl' % name
+	path = os.path.dirname(os.path.abspath(sys.argv[0]))
+	fullname = os.path.join(path, '..', 'resources', 'levels', name)
+	terrain_type = {	'F':'floor',
+						'W':'wall'}
+
+	file = open(fullname, 'r')
+	line = file.readline()
+	i = 0
+
+	while line:
+		list = line.strip('\n').split('|')
+		j = 0
+		for elem in list:
+			elem = elem.split(':')
+			type = elem[0]
+			life = elem[1]
+			pos = (j*64, i*64+20)
+			new_obj = Game_object(pos, terrain_type[type])
+			new_obj.life = life
+			allsprites.add(new_obj)
+			if type == 'W':
+				objects_group.add(new_obj)
+			j += 1
+		line = file.readline()
+		i += 1

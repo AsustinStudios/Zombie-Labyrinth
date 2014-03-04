@@ -27,7 +27,8 @@ import pygame
 import preferences
 
 global allsprites, preferences
-allsprites = pygame.sprite.RenderPlain()
+allsprites = pygame.sprite.OrderedUpdates()
+objects_group = pygame.sprite.Group()
 preferences = preferences.Preferences()
 
 # ==============================================================================

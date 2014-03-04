@@ -26,17 +26,17 @@ Date: 2013-11-06
 import pygame
 from pygame.locals import *
 
-from resources import *
+#from resources import *
+import resources
 
 # ==============================================================================
 class Game_object(pygame.sprite.Sprite):
 	""" The super class that represents all objects on the game on the game"""
 
 	# ==========================================================================
-	def __init__(self, location, sprite_prefix, object_type):
+	def __init__(self, location, object_type):
 		pygame.sprite.Sprite.__init__(self) # call Sprite initializer
-		self.image, self.rect = load_image(sprite_prefix, None)
-		self.sprite_prefix = sprite_prefix
+		self.image, self.rect = resources.load_image(object_type, None)
 		self.rect = self.rect.move(location)
 		self.object_type = object_type
 		self.life = 100
