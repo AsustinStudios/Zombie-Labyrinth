@@ -30,7 +30,7 @@ from resources import *
 
 # ==============================================================================
 class Game_object(pygame.sprite.Sprite):
-	""" The class that represents the human player on the game"""
+	""" The super class that represents all objects on the game on the game"""
 
 	# ==========================================================================
 	def __init__(self, location, sprite_prefix, object_type):
