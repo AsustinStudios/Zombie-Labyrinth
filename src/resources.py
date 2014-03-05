@@ -85,7 +85,7 @@ def load_level(name):
 		for elem in list:
 			elem = elem.split(':')
 			type = elem[0]
-			life = elem[1]
+			life = int(elem[1])
 			pos = (j*64, i*64+20)
 			new_obj = Game_object(pos, terrain_type[type])
 			new_obj.life = life

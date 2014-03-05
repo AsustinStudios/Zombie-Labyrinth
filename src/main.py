@@ -80,10 +80,11 @@ def main_loop():
 	topo.weapons[1] = Firearm(40)
 	topo.collision_group = objects_group
 
-	zombie = Zombie((400,400))
-	objects_group.add(zombie)
+	zombies = (Zombie((400,400)),Zombie((200,200)),Zombie((600,600)),Zombie((600,400)),Zombie((600,200)))
+	objects_group.add(zombies)
 
-	allsprites.add(zombie, topo)
+	allsprites.add(zombies, topo)
+	allsprites.add(topo)
 
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
@@ -102,6 +103,10 @@ def main_loop():
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
 					topo.move(input.get_directions(keys))
+				elif event.key == K_F1:
+					screen = pygame.display.set_mode((1920, 1080))
+				elif event.key == K_F2:
+					pygame.display.toggle_fullscreen()
 			elif event.type == MOUSEBUTTONDOWN:
 				if event.button == 1:
 					topo.attack(0)
@@ -110,7 +115,8 @@ def main_loop():
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
 		topo.look(pos)					# a device or a target must be specifyable.
-		zombie.look((topo.rect[0], topo.rect[1]))
+		for zombie in zombies:
+			zombie.look((topo.rect[0], topo.rect[1]))
 
 		# Mantener la cámara en el centro del nivel
 		camera_effects(topo)
