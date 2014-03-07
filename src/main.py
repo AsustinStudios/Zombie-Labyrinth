@@ -33,12 +33,14 @@ import resources
 import input
 import preferences
 import geometry
+import camera
+import ai
+import engine
 from global_variables import *
 from human import Human
 from zombie import Zombie
 from game_object import Game_object
 from weapons import *
-from ai import *
 
 from pygame.examples import movieplayer
 
@@ -47,17 +49,17 @@ def main():
 	global preferences
 	preferences = process_cli_options()
 
-	screen, background = prepare_engine()
+	screen, background = engine.prepare_engine()
 
 	player = resources.load_level('Prueba')
-	ai = main_ai
-	camera = camera_effects
-	status = main_loop(screen, background, player, ai, camera)
+	run_ai = ai.main_ai
+	camera_effect = camera.follow_char
+	status = main_loop(screen, background, player, run_ai, camera_effect)
 
 	return status
 
 # ==============================================================================
-def main_loop(screen, background, player, ai, camera):
+def main_loop(screen, background, player, run_ai, camera_effect):
 	font = pygame.font.Font(None, 20)
 
 	clock = pygame.time.Clock()
@@ -90,10 +92,10 @@ def main_loop(screen, background, player, ai, camera):
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
 		player.look(pos)					# a device or a target must be specifyable.
 
-		ai()
+		run_ai()
 
 		# Mantener la cámara en el centro del nivel
-		camera(player)
+		camera_effect(player)
 
 		# Update all the sprites
 		allsprites.update()
@@ -110,15 +112,6 @@ def main_loop(screen, background, player, ai, camera):
 		pygame.display.flip()
 
 	# Game Over
-
-# ==============================================================================
-def camera_effects(player):
-	newpos = (player.rect[0], player.rect[1])
-	distance = geometry.delta((600,300), newpos)
-	if distance != (0,0):
-		distance = (-distance[0], -distance[1])
-		for spr in allsprites.sprites():
-			spr.rect.move_ip(distance)
 
 # ==============================================================================
 def process_cli_options():
@@ -147,24 +140,6 @@ def process_cli_options():
 	#preferences.thing = new_thing
 
 	return preferences
-
-# ==============================================================================
-def prepare_engine():
-	# Initialize the engine, screen && background
-	pygame.init() # Initialize Engine
-	pygame.display.set_caption('Zombie Labyrinth')
-	pygame.mouse.set_visible(True)
-
-	# Play intro video
-	#movieplayer.main('/home/roberto/Videos/Banned Commercials - Microsoft Office XP (Banned Too Sexy).mpeg')
-
-	# Initialize screen && drawing area
-	screen = pygame.display.set_mode((1280, 720))
-	background = pygame.Surface(screen.get_size())
-	background = background.convert()
-	background.fill((205, 133, 63))
-
-	return screen, background
 
 # ==============================================================================
 if __name__ == '__main__':
