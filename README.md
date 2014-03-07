@@ -21,7 +21,7 @@ Zombie Labyrinth is supoused to support Linux, Windows and OSX, however at this 
 
 ## Contributing
 
-At this moment there are so many ways someone can contribute to the project. Not only the programming is important, we also are looking for people to help with the icons, the art, the music, the documentation, and optimizing the code. If you are interested in helping out in any way please contact us at studios@asustin.net explaining how do you want to help and we'll get in touch with you as soon as possible or just follow this steps:
+At this moment there are so many ways someone can contribute to the project. Not only the programming is important, we also are looking for people to help with the game design, icons, the art, the music, the documentation, and optimizing the code. If you are interested in helping out in any way please contact us at studios@asustin.net explaining how do you want to help and we'll get in touch with you as soon as possible or just follow this steps:
 
 1. Choose or create an [issue](https://github.com/AsustinStudios/Zombie-Labyrinth/issues).
 2. Start by downloading the git repo `git clone git@github.com:AsustinStudios/Zombie-Labyrinth.git`.
