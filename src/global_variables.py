@@ -27,6 +27,7 @@ import pygame
 
 import preferences
 
+# ==============================================================================
 global screen_center, allsprites, objects_group, preferences
 screen_center = (600,300)
 allsprites = pygame.sprite.OrderedUpdates()

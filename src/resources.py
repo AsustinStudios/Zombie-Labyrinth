@@ -117,4 +117,4 @@ def load_level(name):
 
 	allsprites.add(zombies, topo)
 
-	return topo
+	preferences.player = topo

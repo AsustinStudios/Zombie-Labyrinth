@@ -23,8 +23,11 @@ E-mail: topo@asustin.net
 Date: 2014-03-06
 """
 
+from global_variables import preferences
+from global_variables import allsprites
+
 # ==============================================================================
 def main_ai():
-	pass
-	#for zombie in zombies:
-		#	zombie.look((player.rect[0], player.rect[1]))
+	for dude in allsprites:
+		if dude.object_type == 'zombie':
+			dude.look((preferences.player.rect[0], preferences.player.rect[1]))

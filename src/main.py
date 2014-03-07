@@ -29,6 +29,7 @@ from optparse import OptionParser
 import pygame
 from pygame.locals import *
 
+from global_variables import *
 import resources
 import input
 import preferences
@@ -36,7 +37,7 @@ import geometry
 import camera
 import ai
 import engine
-from global_variables import *
+
 from human import Human
 from zombie import Zombie
 from game_object import Game_object
@@ -49,15 +50,16 @@ def main():
 
 	screen, background = engine.prepare_engine()
 
-	player = resources.load_level('Prueba')
+	resources.load_level('Prueba')
+
 	run_ai = ai.main_ai
 	camera_effect = camera.follow_char
-	status = main_loop(screen, background, player, run_ai, camera_effect)
+	status = main_loop(screen, background, run_ai, camera_effect)
 
 	return status
 
 # ==============================================================================
-def main_loop(screen, background, player, run_ai, camera_effect):
+def main_loop(screen, background, run_ai, camera_effect):
 	font = pygame.font.Font(None, 20)
 
 	clock = pygame.time.Clock()
@@ -76,31 +78,31 @@ def main_loop(screen, background, player, run_ai, camera_effect):
 					return 0
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
-					player.move(input.get_directions(keys))
+					preferences.player.move(input.get_directions(keys))
 				elif event.key == K_F1:
 					screen = pygame.display.set_mode((1920, 1080))
 				elif event.key == K_F2:
 					pygame.display.toggle_fullscreen()
 			elif event.type == MOUSEBUTTONDOWN:
 				if event.button == 1:
-					player.attack(0)
+					preferences.player.attack(0)
 				elif event.button == 3:
-					player.attack(1)
+					preferences.player.attack(1)
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
-		player.look(pos)					# a device or a target must be specifyable.
+		preferences.player.look(pos)					# a device or a target must be specifyable.
 
 		run_ai()
 
 		# Mantener la cámara en el centro del nivel
-		camera_effect(player)
+		camera_effect(preferences.player)
 
 		# Update all the sprites
 		allsprites.update()
 
 		# Display Current FPS
 		background.fill((205, 133, 63))
-		text = font.render('FPS: %i | Life: %i' % (fps, player.life), 1, (10, 10, 10))
+		text = font.render('FPS: %i | Life: %i' % (fps, preferences.player.life), 1, (10, 10, 10))
 		textpos = text.get_rect(centerx=background.get_width()/2)
 		background.blit(text, textpos)
 

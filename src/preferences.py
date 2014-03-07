@@ -30,4 +30,4 @@ preferences
 class Preferences():
 	""" This class manages the global and current execution game preferences."""
 	def __init__(self):
-		pass
+		player = None
