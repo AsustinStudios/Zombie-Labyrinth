@@ -38,53 +38,27 @@ from human import Human
 from zombie import Zombie
 from game_object import Game_object
 from weapons import *
+from ai import *
+
+from pygame.examples import movieplayer
 
 # ==============================================================================
 def main():
 	global preferences
 	preferences = process_cli_options()
 
-	status = main_loop()
+	screen, background = prepare_engine()
+
+	player = resources.load_level('Prueba')
+	ai = main_ai
+	camera = camera_effects
+	status = main_loop(screen, background, player, ai, camera)
 
 	return status
 
 # ==============================================================================
-def main_loop():
-	# Initialize Everything
-	pygame.init()
-	screen = pygame.display.set_mode((1280, 720))
-	pygame.display.set_caption('Zombie Labyrinth')
-	pygame.mouse.set_visible(True)
-
-	# Create Background
-	background = pygame.Surface(screen.get_size())
-	background = background.convert()
-	background.fill((205, 133, 63))
-
-	# Text
+def main_loop(screen, background, player, ai, camera):
 	font = pygame.font.Font(None, 20)
-	text = font.render('FPS:   | Life: ', 1, (10, 10, 10))
-	textpos = text.get_rect(centerx=background.get_width()/2)
-	background.blit(text, textpos)
-
-	# Display Background
-	screen.blit(background, (0, 0))
-	pygame.display.flip()
-
-	# Prepare Game Objects
-
-	resources.load_level('nivel')
-
-	topo = Human((600,300), 'topo')
-	topo.weapons[0] = Cold_weapon(40, 50)
-	topo.weapons[1] = Firearm(40)
-	topo.collision_group = objects_group
-
-	zombies = (Zombie((400,400)),Zombie((200,200)),Zombie((600,600)),Zombie((600,400)),Zombie((600,200)))
-	objects_group.add(zombies)
-
-	allsprites.add(zombies, topo)
-	allsprites.add(topo)
 
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
@@ -102,31 +76,31 @@ def main_loop():
 					return 0
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
-					topo.move(input.get_directions(keys))
+					player.move(input.get_directions(keys))
 				elif event.key == K_F1:
 					screen = pygame.display.set_mode((1920, 1080))
 				elif event.key == K_F2:
 					pygame.display.toggle_fullscreen()
 			elif event.type == MOUSEBUTTONDOWN:
 				if event.button == 1:
-					topo.attack(0)
+					player.attack(0)
 				elif event.button == 3:
-					topo.attack(1)
+					player.attack(1)
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
-		topo.look(pos)					# a device or a target must be specifyable.
-		for zombie in zombies:
-			zombie.look((topo.rect[0], topo.rect[1]))
+		player.look(pos)					# a device or a target must be specifyable.
+
+		ai()
 
 		# Mantener la cámara en el centro del nivel
-		camera_effects(topo)
+		camera(player)
 
 		# Update all the sprites
 		allsprites.update()
 
 		# Display Current FPS
 		background.fill((205, 133, 63))
-		text = font.render('FPS: %i | Life: %i' % (fps, topo.life), 1, (10, 10, 10))
+		text = font.render('FPS: %i | Life: %i' % (fps, player.life), 1, (10, 10, 10))
 		textpos = text.get_rect(centerx=background.get_width()/2)
 		background.blit(text, textpos)
 
@@ -173,6 +147,24 @@ def process_cli_options():
 	#preferences.thing = new_thing
 
 	return preferences
+
+# ==============================================================================
+def prepare_engine():
+	# Initialize the engine, screen && background
+	pygame.init() # Initialize Engine
+	pygame.display.set_caption('Zombie Labyrinth')
+	pygame.mouse.set_visible(True)
+
+	# Play intro video
+	#movieplayer.main('/home/roberto/Videos/Banned Commercials - Microsoft Office XP (Banned Too Sexy).mpeg')
+
+	# Initialize screen && drawing area
+	screen = pygame.display.set_mode((1280, 720))
+	background = pygame.Surface(screen.get_size())
+	background = background.convert()
+	background.fill((205, 133, 63))
+
+	return screen, background
 
 # ==============================================================================
 if __name__ == '__main__':
