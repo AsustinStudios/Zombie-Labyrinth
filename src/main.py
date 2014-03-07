@@ -42,8 +42,6 @@ from zombie import Zombie
 from game_object import Game_object
 from weapons import *
 
-from pygame.examples import movieplayer
-
 # ==============================================================================
 def main():
 	global preferences

@@ -25,6 +25,8 @@ Date: 2014-03-06
 
 import pygame
 
+from pygame.examples import movieplayer
+
 # ==============================================================================
 def prepare_engine():
 	# Initialize the engine, screen && background
