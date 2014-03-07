@@ -30,6 +30,9 @@ from pygame.locals import *
 
 from global_variables import *
 from game_object import Game_object
+from weapons import *
+from human import Human
+from zombie import Zombie
 
 # ==============================================================================
 def load_image(name, colorkey=None):
@@ -66,7 +69,7 @@ def load_sound(name):
 	return sound
 
 # ==============================================================================
-def load_level(name):
+def load_map(name):
 	""" This Function loads all the level construction, create the objects and
 	get them in their respective groups."""
 	name = '%s.lvl' % name
@@ -85,7 +88,7 @@ def load_level(name):
 		for elem in list:
 			elem = elem.split(':')
 			type = elem[0]
-			life = elem[1]
+			life = int(elem[1])
 			pos = (j*64, i*64+20)
 			new_obj = Game_object(pos, terrain_type[type])
 			new_obj.life = life
@@ -95,3 +98,23 @@ def load_level(name):
 			j += 1
 		line = file.readline()
 		i += 1
+
+# ==============================================================================
+def load_level(name):
+	""" This Should load missions from a text file or have a function for each
+	mission or level. However, by the time being it just loads the default map
+	and settings."""
+	load_map('nivel')
+
+	topo = Human((600,300), 'topo')
+	topo.weapons[0] = Cold_weapon(40, 50)
+	topo.weapons[1] = Firearm(40)
+	topo.collision_group = objects_group
+
+	zombies = (Zombie((400,400)), Zombie((200,200)), Zombie((600,600)),
+				Zombie((600,400)), Zombie((600,200)), Zombie((900,300)))
+	objects_group.add(zombies)
+
+	allsprites.add(zombies, topo)
+
+	preferences.player = topo

@@ -29,11 +29,15 @@ from optparse import OptionParser
 import pygame
 from pygame.locals import *
 
+from global_variables import *
 import resources
 import input
 import preferences
 import geometry
-from global_variables import *
+import camera
+import ai
+import engine
+
 from human import Human
 from zombie import Zombie
 from game_object import Game_object
@@ -44,46 +48,16 @@ def main():
 	global preferences
 	preferences = process_cli_options()
 
-	status = main_loop()
+	screen, background = engine.prepare_engine()
+	resources.load_level('Prueba')
+
+	status = main_loop(screen, background, ai.main_ai, camera.follow_char)
 
 	return status
 
 # ==============================================================================
-def main_loop():
-	# Initialize Everything
-	pygame.init()
-	screen = pygame.display.set_mode((1280, 720))
-	pygame.display.set_caption('Zombie Labyrinth')
-	pygame.mouse.set_visible(True)
-
-	# Create Background
-	background = pygame.Surface(screen.get_size())
-	background = background.convert()
-	background.fill((205, 133, 63))
-
-	# Text
+def main_loop(screen, background, run_ai, camera_effect):
 	font = pygame.font.Font(None, 20)
-	text = font.render('FPS:   | Life: ', 1, (10, 10, 10))
-	textpos = text.get_rect(centerx=background.get_width()/2)
-	background.blit(text, textpos)
-
-	# Display Background
-	screen.blit(background, (0, 0))
-	pygame.display.flip()
-
-	# Prepare Game Objects
-
-	resources.load_level('nivel')
-
-	topo = Human((600,300), 'topo')
-	topo.weapons[0] = Cold_weapon(40, 50)
-	topo.weapons[1] = Firearm(40)
-	topo.collision_group = objects_group
-
-	zombie = Zombie((400,400))
-	objects_group.add(zombie)
-
-	allsprites.add(zombie, topo)
 
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
@@ -101,26 +75,31 @@ def main_loop():
 					return 0
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
-					topo.move(input.get_directions(keys))
+					preferences.player.move(input.get_directions(keys))
+				elif event.key == K_F1:
+					screen = pygame.display.set_mode((1920, 1080))
+				elif event.key == K_F2:
+					pygame.display.toggle_fullscreen()
 			elif event.type == MOUSEBUTTONDOWN:
 				if event.button == 1:
-					topo.attack(0)
+					preferences.player.attack(0)
 				elif event.button == 3:
-					topo.attack(1)
+					preferences.player.attack(1)
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
-		topo.look(pos)					# a device or a target must be specifyable.
-		zombie.look((topo.rect[0], topo.rect[1]))
+		preferences.player.look(pos)					# a device or a target must be specifyable.
+
+		run_ai()
 
 		# Mantener la cámara en el centro del nivel
-		camera_effects(topo)
+		camera_effect(preferences.player)
 
 		# Update all the sprites
 		allsprites.update()
 
 		# Display Current FPS
 		background.fill((205, 133, 63))
-		text = font.render('FPS: %i | Life: %i' % (fps, topo.life), 1, (10, 10, 10))
+		text = font.render('FPS: %i | Life: %i' % (fps, preferences.player.life), 1, (10, 10, 10))
 		textpos = text.get_rect(centerx=background.get_width()/2)
 		background.blit(text, textpos)
 
@@ -130,15 +109,6 @@ def main_loop():
 		pygame.display.flip()
 
 	# Game Over
-
-# ==============================================================================
-def camera_effects(player):
-	newpos = (player.rect[0], player.rect[1])
-	distance = geometry.delta((600,300), newpos)
-	if distance != (0,0):
-		distance = (-distance[0], -distance[1])
-		for spr in allsprites.sprites():
-			spr.rect.move_ip(distance)
 
 # ==============================================================================
 def process_cli_options():

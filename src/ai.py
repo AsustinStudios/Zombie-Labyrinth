@@ -20,38 +20,14 @@
 """
 Author: Roberto Lapuente Romo
 E-mail: topo@asustin.net
-Date: 2013-11-26
+Date: 2014-03-06
 """
 
-import pygame
-
-import preferences
-
-# ==============================================================================
-global screen_center, allsprites, objects_group, preferences
-screen_center = (600,300)
-allsprites = pygame.sprite.OrderedUpdates()
-objects_group = pygame.sprite.Group()
-preferences = preferences.Preferences()
+from global_variables import preferences
+from global_variables import allsprites
 
 # ==============================================================================
-global RIGHT, LEFT, NORTH, SOUTH, EAST, WEST
-
-RIGHT = 0
-LEFT = 1
-NORTH = 'north'
-EAST = 'east'
-SOUTH = 'south'
-WEST = 'west'
-
-# ==============================================================================
-global GUN, NOT_GUN
-
-COLD_WEAPON = 0
-FIREARM = 1
-
-# ==============================================================================
-global UP, DOWN
-
-UP = 2
-DOWN = 3
+def main_ai():
+	for dude in allsprites:
+		if dude.object_type == 'zombie':
+			dude.look((preferences.player.rect[0], preferences.player.rect[1]))
