@@ -49,12 +49,9 @@ def main():
 	preferences = process_cli_options()
 
 	screen, background = engine.prepare_engine()
-
 	resources.load_level('Prueba')
 
-	run_ai = ai.main_ai
-	camera_effect = camera.follow_char
-	status = main_loop(screen, background, run_ai, camera_effect)
+	status = main_loop(screen, background, ai.main_ai, camera.follow_char)
 
 	return status
 
