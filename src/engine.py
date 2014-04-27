@@ -38,7 +38,7 @@ def prepare_engine():
 	#movieplayer.main('/home/roberto/Videos/Banned Commercials - Microsoft Office XP (Banned Too Sexy).mpeg')
 
 	# Initialize screen && drawing area
-	screen = pygame.display.set_mode((1280, 720))
+	screen = pygame.display.set_mode((1920, 1080))
 	background = pygame.Surface(screen.get_size())
 	background = background.convert()
 	background.fill((205, 133, 63))

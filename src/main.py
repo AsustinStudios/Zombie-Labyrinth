@@ -49,7 +49,7 @@ def main():
 	preferences = process_cli_options()
 
 	screen, background = engine.prepare_engine()
-	resources.load_level('Prueba')
+	resources.load_level('Demo')
 
 	status = main_loop(screen, background, ai.main_ai, camera.follow_char)
 
@@ -77,7 +77,7 @@ def main_loop(screen, background, run_ai, camera_effect):
 					keys = pygame.key.get_pressed()
 					preferences.player.move(input.get_directions(keys))
 				elif event.key == K_F1:
-					screen = pygame.display.set_mode((1920, 1080))
+					screen = pygame.display.set_mode((1280, 720))
 				elif event.key == K_F2:
 					pygame.display.toggle_fullscreen()
 			elif event.type == MOUSEBUTTONDOWN:
@@ -87,7 +87,7 @@ def main_loop(screen, background, run_ai, camera_effect):
 					preferences.player.attack(1)
 
 		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
-		preferences.player.look(pos)					# a device or a target must be specifyable.
+		preferences.player.look(pos)	# a device or a target must be specifyable.
 
 		run_ai()
 
