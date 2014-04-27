@@ -59,14 +59,42 @@ def load_sound(name):
 		def play(self): pass
 	if not pygame.mixer:
 		return NoneSound()
+
+	name = '%s.mp3' % name
 	path = os.path.dirname(os.path.abspath(sys.argv[0]))
-	fullname = os.path.join(path, '..', 'data', 'sounds', name)
+	fullname = os.path.join(path, '..', 'resources', 'sounds', name)
 	try:
 		sound = pygame.mixer.Sound(fullname)
 	except pygame.error, message:
 		print 'Cannot load sound:', wav
 		raise SystemExit, message
 	return sound
+
+# ==============================================================================
+def load_song(name):
+	class NoneSound:
+		def play(self): pass
+	if not pygame.mixer:
+		return NoneSound()
+
+	name = '%s.mp3' % name
+	path = os.path.dirname(os.path.abspath(sys.argv[0]))
+	fullname = os.path.join(path, '..', 'resources', 'music', name)
+	try:
+		pygame.mixer.music.load(fullname)
+	except pygame.error, message:
+		print 'Cannot load sound:', wav
+		raise SystemExit, message
+
+# ==============================================================================
+def play_song(loop=False, song=None):
+	if song != None:
+		load_song(song)
+
+	if loop:
+		pygame.mixer.music.play(-1)
+	else:
+		pygame.mixer.music.play(0)
 
 # ==============================================================================
 def load_map(name):
@@ -102,9 +130,10 @@ def load_map(name):
 # ==============================================================================
 def load_level(name):
 	""" This Should load missions from a text file or have a function for each
-	mission or level. However, by the time being it just loads the default map
+	mission or level. However, for the time being it just loads the default map
 	and settings."""
 	load_map('nivel')
+	resources.play_song(True, 'lluvia')
 
 	topo = Human((600,300), 'topo')
 	topo.weapons[0] = Cold_weapon(40, 50)
