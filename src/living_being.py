@@ -69,7 +69,7 @@ class Living_being(Game_object):
 		# Adjust direction Sprite
 		image_name = '%(sprite)s_%(direction)s' % {'sprite':self.object_type,
 													'direction':self.direction}
-		self.image, a = resources.load_image(image_name, -1)
+		self.image, a = resources.load_sprite(image_name, -1)
 
 	# ==========================================================================
 	def move(self, directions):

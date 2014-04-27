@@ -35,12 +35,12 @@ from human import Human
 from zombie import Zombie
 
 # ==============================================================================
-def load_image(name, colorkey=None):
+def load_sprite(name, colorkey=None):
 	""" This Functions loads a png image and returns the image object and the
 	image rect"""
 	name = '%s.png' % name
 	path = os.path.dirname(os.path.abspath(sys.argv[0]))
-	fullname = os.path.join(path, '..', 'resources', 'images', name)
+	fullname = os.path.join(path, '..', 'resources', 'sprites', name)
 	try:
 		image = pygame.image.load(fullname)
 	except pygame.error, message:
