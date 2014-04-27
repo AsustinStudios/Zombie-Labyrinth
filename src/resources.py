@@ -135,7 +135,7 @@ def load_level(name):
 	load_map(name)
 	resources.play_song(True, 'lluvia')
 
-	topo = Human((600,300), 'topo')
+	topo = Human((2000,2000), 'topo')
 	topo.weapons[0] = Cold_weapon(40, 50)
 	topo.weapons[1] = Firearm(40)
 	topo.collision_group = objects_group
