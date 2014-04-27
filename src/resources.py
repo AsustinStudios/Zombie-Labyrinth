@@ -72,6 +72,7 @@ def load_sound(name):
 
 # ==============================================================================
 def load_song(name):
+	pygame.mixer.init()
 	class NoneSound:
 		def play(self): pass
 	if not pygame.mixer:
@@ -91,10 +92,7 @@ def play_song(loop=False, song=None):
 	if song != None:
 		load_song(song)
 
-	if loop:
-		pygame.mixer.music.play(-1)
-	else:
-		pygame.mixer.music.play(0)
+	pygame.mixer.music.play(-1 if loop else 0)
 
 # ==============================================================================
 def load_map(name):

@@ -24,8 +24,7 @@ Date: 2014-03-06
 """
 
 import pygame
-
-from pygame.examples import movieplayer
+import resources
 
 # ==============================================================================
 def prepare_engine():
@@ -39,6 +38,7 @@ def prepare_engine():
 
 	# Initialize screen && drawing area
 	screen = pygame.display.set_mode((1920, 1080))
+
 	background = pygame.Surface(screen.get_size())
 	background = background.convert()
 	background.fill((61, 61, 61))
