@@ -132,7 +132,7 @@ def load_level(name):
 	""" This Should load missions from a text file or have a function for each
 	mission or level. However, for the time being it just loads the default map
 	and settings."""
-	load_map('nivel')
+	load_map(name)
 	resources.play_song(True, 'lluvia')
 
 	topo = Human((600,300), 'topo')

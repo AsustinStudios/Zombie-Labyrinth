@@ -49,7 +49,7 @@ def main():
 	preferences = process_cli_options()
 
 	screen, background = engine.prepare_engine()
-	resources.load_level('Demo')
+	resources.load_level('demo')
 
 	status = main_loop(screen, background, ai.main_ai, camera.follow_char)
 
@@ -98,14 +98,18 @@ def main_loop(screen, background, run_ai, camera_effect):
 		allsprites.update()
 
 		# Display Current FPS
-		background.fill((205, 133, 63))
-		text = font.render('FPS: %i | Life: %i' % (fps, preferences.player.life), 1, (10, 10, 10))
+		hud = pygame.Surface((screen.get_size()[0],20))
+		hud.fill((22, 22, 22, 255))
+		text = font.render('FPS: %i | Life: %i' % (fps, preferences.player.life), 1, (255,255,255))
 		textpos = text.get_rect(centerx=background.get_width()/2)
-		background.blit(text, textpos)
+		hud.blit(text, textpos)
 
 		# Draw the entire scene
 		screen.blit(background, (0, 0))
 		allsprites.draw(screen)
+		screen.blit(hud, (0, 0))
+
+
 		pygame.display.flip()
 
 	# Game Over

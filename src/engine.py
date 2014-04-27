@@ -41,6 +41,6 @@ def prepare_engine():
 	screen = pygame.display.set_mode((1920, 1080))
 	background = pygame.Surface(screen.get_size())
 	background = background.convert()
-	background.fill((205, 133, 63))
+	background.fill((61, 61, 61))
 
 	return screen, background
