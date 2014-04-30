@@ -32,7 +32,6 @@ from pygame.locals import *
 from global_variables import *
 import resources
 import input
-import preferences
 import geometry
 import camera
 import ai
@@ -48,7 +47,7 @@ def main():
 	global preferences
 	preferences = process_cli_options()
 
-	screen, background = engine.prepare_engine()
+	screen, background = engine.prepare_engine('Zombie Attack!')
 	resources.load_level('demo')
 
 	status = main_loop(screen, background, ai.main_ai, camera.follow_char)
@@ -79,7 +78,7 @@ def main_loop(screen, background, run_ai, camera_effect):
 				elif event.key == K_F1:
 					screen = pygame.display.set_mode((1280, 720))
 				elif event.key == K_F2:
-					pygame.display.toggle_fullscreen()
+					screen = pygame.display.set_mode((1280, 720),pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE)
 			elif event.type == MOUSEBUTTONDOWN:
 				if event.button == 1:
 					preferences.player.attack(0)
@@ -118,27 +117,30 @@ def main_loop(screen, background, run_ai, camera_effect):
 def process_cli_options():
 	""" Process the command line interface options and return a Preferences
 	object"""
-	parser = OptionParser(usage='Ejecuta el proceso de ETL')
-	parser.add_option('--directorio', '--dir', '-d',
-					  dest='directorio',
-					  metavar='Directorio',
-					  default=".",
-					  help='Directorio')
-	parser.add_option('--patron', '-p',
-					  dest='patron',
-					  metavar='Patron',
-					  default=".txt",
-					  help='Patron')
-	parser.add_option('--header',
-					  dest='line_header',
+	parser = OptionParser(usage='Configuration options')
+	parser.add_option('--height ', '-y',
+					  dest='y',
+					  type='int',
+					  metavar='Height',
+					  default="720",
+					  help='Window height')
+	parser.add_option('--width', '-x',
+					  dest='x',
+					  type='int',
+					  metavar='width',
+					  default='1280',
+					  help='Window wdth')
+	parser.add_option('--fullscreen', '-f',
+					  dest='fullscreen',
 					  action="store_true",
-					  metavar='header',
+					  metavar='Fullscreen',
 					  default=False,
-					  help='Si una función tiene o no un header')
+					  help='Weather or not window should start on fullscreen mode.')
 	options, args = parser.parse_args()
 
 	# Assign options to preferences
-	#preferences.thing = new_thing
+	preferences.size = (options.x, options.y)
+	preferences.fullscreen = options.fullscreen
 
 	return preferences
 
