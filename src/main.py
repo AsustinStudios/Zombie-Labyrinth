@@ -56,7 +56,7 @@ def main():
 # ==============================================================================
 def main_loop(screen, background, run_ai, camera_effect):
 	font = pygame.font.Font(None, 20)
-
+	hud = pygame.Surface((screen.get_size()[0],20))
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
 
@@ -109,9 +109,8 @@ def main_loop(screen, background, run_ai, camera_effect):
 		# Update all the sprites
 		allsprites.update()
 
-		# Display Current FPS
-		hud = pygame.Surface((screen.get_size()[0],20))
-		hud.fill((22, 22, 22, 255))
+		# Display Current FPS (HUD)
+		hud.fill((22, 22, 22))
 		text = font.render('F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit                                                                                   FPS: %i | Life: %i' % (fps, preferences.player.life), 1, (255,255,255))
 		textpos = text.get_rect(centerx=screen.get_width()/2)
 		hud.blit(text, textpos)
