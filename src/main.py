@@ -44,8 +44,7 @@ from weapons import *
 
 # ==============================================================================
 def main():
-	global preferences
-	preferences = process_cli_options()
+	process_cli_options()
 
 	screen, background = engine.prepare_engine('Zombie Attack!')
 	resources.load_level('demo')
@@ -141,8 +140,6 @@ def process_cli_options():
 	# Assign options to preferences
 	preferences.size = (options.x, options.y)
 	preferences.fullscreen = options.fullscreen
-
-	return preferences
 
 # ==============================================================================
 if __name__ == '__main__':
