@@ -75,9 +75,23 @@ def main_loop(screen, background, run_ai, camera_effect):
 					keys = pygame.key.get_pressed()
 					preferences.player.move(input.get_directions(keys))
 				elif event.key == K_F1:
-					screen = pygame.display.set_mode((1280, 720))
+					# Toggle FULL HD
+					if screen.get_size() == (1280, 720):
+						screen = pygame.display.set_mode((1920, 1080), screen.get_flags())
+						background = pygame.Surface(screen.get_size())
+						background = background.convert()
+						background.fill((61, 61, 61))
+					elif screen.get_size() == (1920, 1080):
+						screen = pygame.display.set_mode((1280, 720), screen.get_flags())
+						background = pygame.Surface(screen.get_size())
+						background = background.convert()
+						background.fill((61, 61, 61))
 				elif event.key == K_F2:
-					screen = pygame.display.set_mode((1280, 720),pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE)
+					# Toggle Fullscreen
+					if screen.get_flags() & pygame.FULLSCREEN:
+						screen = pygame.display.set_mode(screen.get_size(),pygame.DOUBLEBUF)
+					else:
+						screen = pygame.display.set_mode(screen.get_size(),pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE)
 			elif event.type == MOUSEBUTTONDOWN:
 				if event.button == 1:
 					preferences.player.attack(0)
@@ -98,8 +112,8 @@ def main_loop(screen, background, run_ai, camera_effect):
 		# Display Current FPS
 		hud = pygame.Surface((screen.get_size()[0],20))
 		hud.fill((22, 22, 22, 255))
-		text = font.render('FPS: %i | Life: %i' % (fps, preferences.player.life), 1, (255,255,255))
-		textpos = text.get_rect(centerx=background.get_width()/2)
+		text = font.render('F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit                                                                                   FPS: %i | Life: %i' % (fps, preferences.player.life), 1, (255,255,255))
+		textpos = text.get_rect(centerx=screen.get_width()/2)
 		hud.blit(text, textpos)
 
 		# Draw the entire scene
