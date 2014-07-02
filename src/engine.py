@@ -25,12 +25,13 @@ Date: 2014-03-06
 
 import pygame
 import resources
-from global_variables import *
+
+from global_variables import preferences
 
 # ==============================================================================
 def prepare_engine(window_title=''):
 	# Initialize the engine, screen && background
-	pygame.init() # Initialize Engine
+	pygame.init()
 	pygame.display.set_caption(window_title)
 	pygame.mouse.set_visible(True)
 

@@ -29,18 +29,14 @@ from optparse import OptionParser
 import pygame
 from pygame.locals import *
 
-from global_variables import *
-import resources
-import input
-import geometry
-import camera
-import ai
-import engine
 
-from human import Human
-from zombie import Zombie
-from game_object import Game_object
-from weapons import *
+import ai
+import camera
+import engine
+import input
+import resources
+
+from global_variables import allsprites, preferences
 
 # ==============================================================================
 def main():

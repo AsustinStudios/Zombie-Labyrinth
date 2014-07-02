@@ -26,10 +26,8 @@ Date: 2013-11-26
 import pygame
 from pygame.locals import *
 
-import geometry
-import resources
-from global_variables import *
-from game_object import Game_object
+from game_objects import Bullet
+from global_variables import allsprites, COLD_WEAPON, FIREARM
 
 # ==============================================================================
 class Weapon():
@@ -67,54 +65,3 @@ class Firearm(Weapon):
 	def attack(self, rect, direction, collision_group):
 		position = (rect[0], rect[1])
 		allsprites.add(Bullet(position, direction, collision_group))
-
-
-# ==============================================================================
-class Bullet(Game_object):
-
-	# ==========================================================================
-	def __init__(self, start_location, direction, collision_group, speed=50,
-					strength=10, object_type='bullet'):
-		Game_object.__init__(self, start_location,
-							'%s_%s' % (object_type, direction))
-
-		position = start_location
-		self.speed = self.get_coordinate_speed(direction, speed)
-		self.collision_group = collision_group
-		self.strength = strength
-
-	# ==========================================================================
-	def update(self):
-		""" Update the Object"""
-		self.move()
-		self.process_collisions()
-
-	# ==========================================================================
-	def process_collisions(self):
-		collision_list = pygame.sprite.spritecollide(self,
-													self.collision_group, False)
-		if len(collision_list) != 0:
-			self.kill()
-			for obj in collision_list:
-				obj.receive_damage(self.strength)
-
-	# ==========================================================================
-	def move(self):
-		""" Move around the being depending on the direction"""
-		self.rect.move_ip(self.speed)
-
-	# ==========================================================================
-	def get_coordinate_speed(self, direction, speed):
-		x, y = 0, 0
-
-		if direction == NORTH:
-			y = -speed/10
-		elif direction == EAST:
-			x = speed/10
-		elif direction == SOUTH:
-			y = speed/10
-		elif direction == WEST:
-			x = -speed/10
-
-		return (x, y)
-

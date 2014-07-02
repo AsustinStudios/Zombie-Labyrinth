@@ -23,8 +23,8 @@ E-mail: topo@asustin.net
 Date: 2014-03-06
 """
 
-from global_variables import preferences
 from global_variables import allsprites
+from global_variables import preferences
 
 # ==============================================================================
 def main_ai():

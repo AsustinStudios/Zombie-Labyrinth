@@ -20,34 +20,36 @@
 """
 Author: Roberto Lapuente Romo
 E-mail: topo@asustin.net
-Date: 2013-11-26
+Date: 2013-11-05
 """
 
+import sys, os
+
 import pygame
+from pygame.locals import *
 
-import preferences
+import resources
+import weapons
+import living_beings
 
-# ==============================================================================
-global screen_center, allsprites, objects_group, preferences
-screen_center = (600,300)
-allsprites = pygame.sprite.OrderedUpdates()
-objects_group = pygame.sprite.Group()
-preferences = preferences.Preferences()
+from global_variables import allsprites, objects_group, preferences
 
 # ==============================================================================
-global RIGHT, LEFT, UP, DOWN, NORTH, SOUTH, EAST, WEST
+def load_demo():
+	""" Load the map and starting settings for the game demo."""
+	resources.load_map('demo')
+	resources.play_song(True, 'lluvia')
 
-RIGHT = 0
-LEFT = 1
-UP = 2
-DOWN = 3
-NORTH = 'north'
-EAST = 'east'
-SOUTH = 'south'
-WEST = 'west'
+	topo = living_beings.Human((2000,2000), 'topo')
+	topo.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
+	topo.weapons[1] = weapons.Firearm(40, 'AK-47')
+	topo.collision_group = objects_group
 
-# ==============================================================================
-global COLD_WEAPON, FIREARM
+	zombies = (living_beings.Zombie((400,400)), living_beings.Zombie((200,200)),
+			living_beings.Zombie((600,600)), living_beings.Zombie((600,400)),
+			living_beings.Zombie((600,200)), living_beings.Zombie((900,300)))
+	objects_group.add(zombies)
 
-COLD_WEAPON = 0
-FIREARM = 1
+	allsprites.add(zombies, topo)
+
+	preferences.player = topo

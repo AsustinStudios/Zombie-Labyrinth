@@ -28,10 +28,10 @@ from pygame.locals import *
 
 import geometry
 import resources
-from input import *
-from global_variables import *
-from game_object import Game_object
-from weapons import *
+
+from game_objects import Game_object
+from global_variables import COLD_WEAPON, FIREARM
+from global_variables import RIGHT, LEFT, UP, DOWN, NORTH, SOUTH, EAST, WEST
 
 # ==============================================================================
 class Living_being(Game_object):
@@ -219,3 +219,43 @@ class Living_being(Game_object):
 				height = original_height/2
 
 		return pygame.Rect(x, y, width, height)
+
+# ==============================================================================
+class Human(Living_being):
+	""" The class that represents the human player on the game"""
+
+	# ==========================================================================
+	def __init__(self, start_location=(600, 300), object_type='human'):
+		Living_being.__init__(self, start_location, object_type)
+
+		# ======================================================================
+		""" Permanent Stats"""
+		self.handedness = 0
+		self.melee_range = 10
+		self.life = 100
+
+		""" Trainable Stats"""
+		self.speed = 20
+		self.strength = 20
+		self.programming = 15
+		self.data_sciencing = 15
+
+# ==============================================================================
+class Zombie(Living_being):
+	""" The class that represents the zombies on the game"""
+
+	# ==========================================================================
+	def __init__(self, start_location=(600, 300), object_type='zombie'):
+		Living_being.__init__(self, start_location, object_type)
+
+		# ======================================================================
+		""" Permanent Stats"""
+		self.handedness = 0
+		self.melee_range = 10
+		self.life = 50
+
+		""" Trainable Stats"""
+		self.speed = 10
+		self.strength = 10
+		self.programming = 0
+		self.data_sciencing = 0

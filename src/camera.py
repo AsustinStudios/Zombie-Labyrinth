@@ -24,7 +24,8 @@ Date: 2014-03-06
 """
 
 import geometry
-from global_variables import *
+
+from global_variables import allsprites, screen_center
 
 # ==============================================================================
 def follow_char(character):

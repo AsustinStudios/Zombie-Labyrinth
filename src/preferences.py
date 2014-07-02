@@ -23,7 +23,7 @@ E-mail: topo@asustin.net
 Date: 2013-11-05
 
 This file contains the preferences of the current execution and global game
-preferences
+preferences.
 """
 
 # ==============================================================================

@@ -28,11 +28,12 @@ import sys, os
 import pygame
 from pygame.locals import *
 
-from global_variables import *
-from game_object import Game_object
-from weapons import *
-from human import Human
-from zombie import Zombie
+import game_objects
+import levels
+
+from global_variables import allsprites
+from global_variables import objects_group
+from global_variables import preferences
 
 # ==============================================================================
 def load_sprite(name, colorkey=None):
@@ -116,7 +117,7 @@ def load_map(name):
 			type = elem[0]
 			life = int(elem[1])
 			pos = (j*64, i*64+20)
-			new_obj = Game_object(pos, terrain_type[type])
+			new_obj = game_objects.Game_object(pos, terrain_type[type])
 			new_obj.life = life
 			allsprites.add(new_obj)
 			if type == 'W':
@@ -130,18 +131,10 @@ def load_level(name):
 	""" This Should load missions from a text file or have a function for each
 	mission or level. However, for the time being it just loads the default map
 	and settings."""
-	load_map(name)
-	resources.play_song(True, 'lluvia')
 
-	topo = Human((2000,2000), 'topo')
-	topo.weapons[0] = Cold_weapon(40, 50, 'Knife')
-	topo.weapons[1] = Firearm(40, 'AK-47')
-	topo.collision_group = objects_group
-
-	zombies = (Zombie((400,400)), Zombie((200,200)), Zombie((600,600)),
-				Zombie((600,400)), Zombie((600,200)), Zombie((900,300)))
-	objects_group.add(zombies)
-
-	allsprites.add(zombies, topo)
-
-	preferences.player = topo
+	if name == 'demo':
+		levels.load_demo()
+	elif True:
+		pass
+	else:
+		pass
