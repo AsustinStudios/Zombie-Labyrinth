@@ -36,26 +36,32 @@ class Weapon():
 	""" The class that represents the weapons in the game"""
 
 	# ==========================================================================
-	def __init__(self, type, strength):
+	def __init__(self, type, strength, name):
 		self.type = type
 		self.strength = strength
+		self.name = name
+
+	# ==========================================================================
+	def __str__(self):
+		return self.name
 
 # ==============================================================================
 class Cold_weapon(Weapon):
 	""" The class that represents the white arms in the game"""
 
 	# ==========================================================================
-	def __init__(self, strength=10, range=20):
-		Weapon.__init__(self, COLD_WEAPON, strength)
+	def __init__(self, strength=10, range=20, name='Cold_weapon'):
+		Weapon.__init__(self, COLD_WEAPON, strength, name)
 		self.range = range
 
 # ==============================================================================
 class Firearm(Weapon):
 	""" The class that represents the firearms in the game"""
 
+
 	# ==========================================================================
-	def __init__(self, strength=10):
-		Weapon.__init__(self, FIREARM, strength)
+	def __init__(self, strength=10, name='Firearm'):
+		Weapon.__init__(self, FIREARM, strength, name)
 
 	# ==========================================================================
 	def attack(self, rect, direction, collision_group):

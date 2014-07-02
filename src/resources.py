@@ -134,8 +134,8 @@ def load_level(name):
 	resources.play_song(True, 'lluvia')
 
 	topo = Human((2000,2000), 'topo')
-	topo.weapons[0] = Cold_weapon(40, 50)
-	topo.weapons[1] = Firearm(40)
+	topo.weapons[0] = Cold_weapon(40, 50, 'Knife')
+	topo.weapons[1] = Firearm(40, 'AK-47')
 	topo.collision_group = objects_group
 
 	zombies = (Zombie((400,400)), Zombie((200,200)), Zombie((600,600)),
