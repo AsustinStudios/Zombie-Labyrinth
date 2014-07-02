@@ -41,5 +41,5 @@ def follow_char(character):
 # ==============================================================================
 def fancy_new_cam(character):
 	""" Similar to the 'follow_char' but this camera should work like the cam in
-	'Zelda: Minish Cap' when you reach the end of a room, the camera stays still and the
-	char gets to move all the way to the end of the screen"""
+	'Zelda: Minish Cap' when you reach the end of a room, the camera stays still
+	and the	char gets to move all the way to the end of the screen"""
