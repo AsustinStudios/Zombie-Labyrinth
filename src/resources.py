@@ -31,9 +31,7 @@ from pygame.locals import *
 import game_objects
 import levels
 
-from global_variables import allsprites
-from global_variables import objects_group
-from global_variables import preferences
+from global_variables import allsprites, objects_group, preferences
 
 # ==============================================================================
 def load_sprite(name, colorkey=None):

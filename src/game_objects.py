@@ -27,6 +27,7 @@ import pygame
 from pygame.locals import *
 
 import resources
+
 from global_variables import NORTH, SOUTH, EAST, WEST
 
 # ==============================================================================

@@ -26,7 +26,8 @@ Date: 2013-11-26
 import pygame
 from pygame.locals import *
 
-from game_objects import Bullet
+import game_objects
+
 from global_variables import allsprites, COLD_WEAPON, FIREARM
 
 # ==============================================================================
@@ -64,4 +65,4 @@ class Firearm(Weapon):
 	# ==========================================================================
 	def attack(self, rect, direction, collision_group):
 		position = (rect[0], rect[1])
-		allsprites.add(Bullet(position, direction, collision_group))
+		allsprites.add(game_objects.Bullet(position, direction, collision_group))

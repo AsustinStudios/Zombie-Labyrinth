@@ -28,18 +28,18 @@ from pygame.locals import *
 
 import geometry
 import resources
+import game_objects
 
-from game_objects import Game_object
 from global_variables import COLD_WEAPON, FIREARM
 from global_variables import RIGHT, LEFT, UP, DOWN, NORTH, SOUTH, EAST, WEST
 
 # ==============================================================================
-class Living_being(Game_object):
+class Living_being(game_objects.Game_object):
 	""" The class that represents all the living entities in the game"""
 
 	# ==========================================================================
 	def __init__(self, start_location=(50, 50), object_type='living_being'):
-		Game_object.__init__(self, start_location, object_type)
+		game_objects.Game_object.__init__(self, start_location, object_type)
 		self.collision_group = None
 		self.direction = SOUTH
 
