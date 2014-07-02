@@ -26,12 +26,21 @@ Date: 2013-11-15
 import pygame
 from pygame.locals import *
 
-import geometry
-import resources
 import game_objects
+import geometry
+import global_variables
+import resources
+import weapons
 
-from global_variables import COLD_WEAPON, FIREARM
 from global_variables import RIGHT, LEFT, UP, DOWN, NORTH, SOUTH, EAST, WEST
+
+# ==============================================================================
+global GENERIC, ABIGAIL, DEXTER, NANO, TOPO
+GENERIC = 0
+ABIGAIL = 1
+DEXTER = 2
+NANO = 3
+TOPO = 4
 
 # ==============================================================================
 class Living_being(game_objects.Game_object):
@@ -41,6 +50,7 @@ class Living_being(game_objects.Game_object):
 	def __init__(self, start_location=(50, 50), object_type='living_being'):
 		game_objects.Game_object.__init__(self, start_location, object_type)
 		self.collision_group = None
+		self.interact_group = None
 		self.direction = SOUTH
 
 		# ======================================================================
@@ -94,24 +104,30 @@ class Living_being(game_objects.Game_object):
 
 	# ==========================================================================
 	def valid_movement(self, coordenates):
-		if self.collision_group:
-			old_position = self.rect
-			new_position = self.rect.move(coordenates)
-			self.rect = new_position
-
-			collision_list = pygame.sprite.spritecollide(self,
-													self.collision_group, False)
-			if len(collision_list) == 0:
-				return True
-			else:
-				self.rect = old_position
-				return False
-		else:
+		if not self.collision_group:
 			return True
+
+		old_position = self.rect
+		new_position = self.rect.move(coordenates)
+		self.rect = new_position
+
+		collision_list = pygame.sprite.spritecollide(self,
+												self.collision_group, False)
+		if len(collision_list) == 0:
+			return True
+		else:
+			self.rect = old_position
+			return False
 
 	# ==========================================================================
 	def process_collisions(self):
-		pass
+		""" This method should detectd when the agent is standing in some
+		terrain that affects it stats, weapons and items that can be picked up
+		or powerups that modify the agents stats. """
+		if not self.collision_group:
+			return
+		collision_list = pygame.sprite.spritecollide(self,
+													self.collision_group, False)
 
 	# ==========================================================================
 	def monitor_life(self):
@@ -143,9 +159,9 @@ class Living_being(game_objects.Game_object):
 
 		if weapon == None:
 			self.melee_attack(self.strength, self.melee_range)
-		elif weapon.type == COLD_WEAPON:
+		elif weapon.type == weapons.COLD_WEAPON:
 			self.melee_attack(weapon.strength, weapon.range)
-		elif weapon.type == FIREARM:
+		elif weapon.type == weapons.FIREARM:
 			weapon.attack(self.rect, self.direction, self.collision_group)
 
 	# ==========================================================================
@@ -259,3 +275,32 @@ class Zombie(Living_being):
 		self.strength = 10
 		self.programming = 0
 		self.data_sciencing = 0
+
+# ==============================================================================
+def new_human(start_location=global_variables.screen_center, type=GENERIC):
+	""" This function returns Human corresponding to some character. It should
+	load that character base stats & stuff. Weapons, powerups and other stuff
+	that are mission specific should be setup at the level."""
+	human = Human(start_location)
+
+	if type == TOPO:
+		human.object_type = 'topo'
+		human.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
+		human.weapons[1] = weapons.Firearm(40, 'AK-47')
+		human.collision_group = global_variables.objects_group
+	elif type == NANO:
+		human.object_type = 'nano'
+		human.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
+		human.weapons[1] = weapons.Firearm(40, 'AK-47')
+		human.collision_group = global_variables.objects_group
+	elif type == DEXTER:
+		human.object_type = 'dexter'
+		human.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
+		human.weapons[1] = weapons.Firearm(40, 'AK-47')
+		human.collision_group = global_variables.objects_group
+	elif type == ABIGAIL:
+		human.object_type = 'abigail'
+		human.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
+		human.weapons[1] = weapons.Firearm(40, 'AK-47')
+		human.collision_group = global_variables.objects_group
+	return human

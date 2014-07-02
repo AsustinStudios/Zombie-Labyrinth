@@ -34,6 +34,8 @@ import ai
 import camera
 import engine
 import input
+import levels
+import living_beings
 import resources
 
 from global_variables import allsprites, preferences
@@ -43,7 +45,7 @@ def main():
 	process_cli_options()
 
 	screen, background = engine.prepare_engine('Zombie Attack!')
-	resources.load_level('demo')
+	resources.load_level(levels.DEMO, living_beings.TOPO)
 
 	status = main_loop(screen, background, ai.main_ai, camera.follow_char)
 

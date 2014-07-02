@@ -28,28 +28,31 @@ import sys, os
 import pygame
 from pygame.locals import *
 
+import living_beings
 import resources
 import weapons
-import living_beings
 
 from global_variables import allsprites, objects_group, preferences
 
 # ==============================================================================
-def load_demo():
+global DEMO
+""" Global constants defining all the possible levels of the game. Each constant
+should have a corresponding function that loads that level."""
+DEMO = 0
+
+# ==============================================================================
+def load_demo(character):
 	""" Load the map and starting settings for the game demo."""
 	resources.load_map('demo')
 	resources.play_song(True, 'lluvia')
 
-	topo = living_beings.Human((2000,2000), 'topo')
-	topo.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
-	topo.weapons[1] = weapons.Firearm(40, 'AK-47')
-	topo.collision_group = objects_group
+	character = living_beings.new_human((2000,2000), character)
 
 	zombies = (living_beings.Zombie((400,400)), living_beings.Zombie((200,200)),
 			living_beings.Zombie((600,600)), living_beings.Zombie((600,400)),
 			living_beings.Zombie((600,200)), living_beings.Zombie((900,300)))
 	objects_group.add(zombies)
 
-	allsprites.add(zombies, topo)
+	allsprites.add(zombies, character)
 
-	preferences.player = topo
+	preferences.player = character

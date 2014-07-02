@@ -36,7 +36,6 @@ preferences = preferences.Preferences()
 
 # ==============================================================================
 global RIGHT, LEFT, UP, DOWN, NORTH, SOUTH, EAST, WEST
-
 RIGHT = 0
 LEFT = 1
 UP = 2
@@ -45,9 +44,3 @@ NORTH = 'north'
 EAST = 'east'
 SOUTH = 'south'
 WEST = 'west'
-
-# ==============================================================================
-global COLD_WEAPON, FIREARM
-
-COLD_WEAPON = 0
-FIREARM = 1

@@ -28,7 +28,12 @@ from pygame.locals import *
 
 import game_objects
 
-from global_variables import allsprites, COLD_WEAPON, FIREARM
+from global_variables import allsprites
+# ==============================================================================
+global COLD_WEAPON, FIREARM
+
+COLD_WEAPON = 0
+FIREARM = 1
 
 # ==============================================================================
 class Weapon():

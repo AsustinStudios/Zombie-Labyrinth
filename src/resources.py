@@ -125,13 +125,13 @@ def load_map(name):
 		i += 1
 
 # ==============================================================================
-def load_level(name):
+def load_level(level, character):
 	""" This Should load missions from a text file or have a function for each
 	mission or level. However, for the time being it just loads the default map
 	and settings."""
 
-	if name == 'demo':
-		levels.load_demo()
+	if level == levels.DEMO:
+		levels.load_demo(character)
 	elif True:
 		pass
 	else:
