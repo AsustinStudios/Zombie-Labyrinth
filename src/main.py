@@ -109,9 +109,10 @@ def main_loop(screen, background, run_ai, camera_effect):
 
 		# Display Current FPS (HUD)
 		hud.fill((22, 22, 22))
-		hud_text = 'F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit                                                                                   FPS: %i | Life: %i | Weapons: %s'
+		hud_text = 'F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit                                                              FPS: %i | Life: %i | Weapons: %s | Status: %s'
 		wp = (str(preferences.player.weapons[0]), str(preferences.player.weapons[1]))
-		text = font.render(hud_text % (fps, preferences.player.life, wp), 1, (255,255,255))
+		text = font.render(hud_text % (fps, preferences.player.life, wp,
+									preferences.player.status), 1, (255,255,255))
 		textpos = text.get_rect(x=5, y=3)
 		hud.blit(text, textpos)
 

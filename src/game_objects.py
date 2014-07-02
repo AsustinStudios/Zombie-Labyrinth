@@ -89,6 +89,8 @@ class Bullet(Game_object):
 
 	# ==========================================================================
 	def get_coordinate_speed(self, direction, speed):
+		""" Receives a speed and returns the (x,y) px pair needed by the
+		rect.move function to move at the received speed"""
 		x, y = 0, 0
 
 		if direction == NORTH:

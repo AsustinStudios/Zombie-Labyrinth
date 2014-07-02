@@ -52,6 +52,7 @@ class Living_being(game_objects.Game_object):
 		self.collision_group = None
 		self.interact_group = None
 		self.direction = SOUTH
+		self.status = None
 
 		# ======================================================================
 		""" Permanent Stats"""
@@ -124,10 +125,22 @@ class Living_being(game_objects.Game_object):
 		""" This method should detectd when the agent is standing in some
 		terrain that affects it stats, weapons and items that can be picked up
 		or powerups that modify the agents stats. """
-		if not self.collision_group:
+		if not self.interact_group:
+			self.status = ''
 			return
-		collision_list = pygame.sprite.spritecollide(self,
-													self.collision_group, False)
+
+		collision_list = pygame.sprite.spritecollide(self, self.interact_group, False)
+		self.status = ''
+
+		for element in collision_list:	# TODO: Finish this
+			if element.object_type == 'weapon':
+				pass
+			elif element.object_type == 'powerup':
+				pass
+			elif element.object_type == 'terrain':
+				pass
+			self.status = element
+
 
 	# ==========================================================================
 	def monitor_life(self):
