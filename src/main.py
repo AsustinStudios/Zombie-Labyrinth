@@ -65,7 +65,7 @@ def main_loop(screen, background, run_ai, camera_effect):
 		fps = clock.get_fps()
 
 		# Handle Input Events
-		for event in pygame.event.get():
+		for event in pygame.event.get(): # TODO: Get the input event control outside of the main loop
 			if event.type == QUIT:
 				return 0
 			elif event.type == KEYDOWN:
@@ -111,8 +111,10 @@ def main_loop(screen, background, run_ai, camera_effect):
 
 		# Display Current FPS (HUD)
 		hud.fill((22, 22, 22))
-		text = font.render('F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit                                                                                   FPS: %i | Life: %i' % (fps, preferences.player.life), 1, (255,255,255))
-		textpos = text.get_rect(centerx=screen.get_width()/2)
+		hud_text = 'F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit                                                                                   FPS: %i | Life: %i | Weapons: %s'
+		wp = (str(preferences.player.weapons[0]), str(preferences.player.weapons[1]))
+		text = font.render(hud_text % (fps, preferences.player.life, wp), 1, (255,255,255))
+		textpos = text.get_rect(x=5, y=3)
 		hud.blit(text, textpos)
 
 		# Draw the entire scene
