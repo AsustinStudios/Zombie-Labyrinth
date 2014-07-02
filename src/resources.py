@@ -28,19 +28,18 @@ import sys, os
 import pygame
 from pygame.locals import *
 
-from global_variables import *
-from game_object import Game_object
-from weapons import *
-from human import Human
-from zombie import Zombie
+import game_objects
+import levels
+
+from global_variables import allsprites, objects_group, preferences
 
 # ==============================================================================
-def load_image(name, colorkey=None):
+def load_sprite(name, colorkey=None):
 	""" This Functions loads a png image and returns the image object and the
 	image rect"""
 	name = '%s.png' % name
 	path = os.path.dirname(os.path.abspath(sys.argv[0]))
-	fullname = os.path.join(path, '..', 'resources', 'images', name)
+	fullname = os.path.join(path, '..', 'resources', 'sprites', name)
 	try:
 		image = pygame.image.load(fullname)
 	except pygame.error, message:
@@ -59,14 +58,40 @@ def load_sound(name):
 		def play(self): pass
 	if not pygame.mixer:
 		return NoneSound()
+
+	name = '%s.mp3' % name
 	path = os.path.dirname(os.path.abspath(sys.argv[0]))
-	fullname = os.path.join(path, '..', 'data', 'sounds', name)
+	fullname = os.path.join(path, '..', 'resources', 'sounds', name)
 	try:
 		sound = pygame.mixer.Sound(fullname)
 	except pygame.error, message:
 		print 'Cannot load sound:', wav
 		raise SystemExit, message
 	return sound
+
+# ==============================================================================
+def load_song(name):
+	pygame.mixer.init()
+	class NoneSound:
+		def play(self): pass
+	if not pygame.mixer:
+		return NoneSound()
+
+	name = '%s.mp3' % name
+	path = os.path.dirname(os.path.abspath(sys.argv[0]))
+	fullname = os.path.join(path, '..', 'resources', 'music', name)
+	try:
+		pygame.mixer.music.load(fullname)
+	except pygame.error, message:
+		print 'Cannot load sound:', wav
+		raise SystemExit, message
+
+# ==============================================================================
+def play_song(loop=False, song=None):
+	if song != None:
+		load_song(song)
+
+	pygame.mixer.music.play(-1 if loop else 0)
 
 # ==============================================================================
 def load_map(name):
@@ -90,7 +115,7 @@ def load_map(name):
 			type = elem[0]
 			life = int(elem[1])
 			pos = (j*64, i*64+20)
-			new_obj = Game_object(pos, terrain_type[type])
+			new_obj = game_objects.Game_object(pos, terrain_type[type])
 			new_obj.life = life
 			allsprites.add(new_obj)
 			if type == 'W':
@@ -102,19 +127,12 @@ def load_map(name):
 # ==============================================================================
 def load_level(name):
 	""" This Should load missions from a text file or have a function for each
-	mission or level. However, by the time being it just loads the default map
+	mission or level. However, for the time being it just loads the default map
 	and settings."""
-	load_map('nivel')
 
-	topo = Human((600,300), 'topo')
-	topo.weapons[0] = Cold_weapon(40, 50)
-	topo.weapons[1] = Firearm(40)
-	topo.collision_group = objects_group
-
-	zombies = (Zombie((400,400)), Zombie((200,200)), Zombie((600,600)),
-				Zombie((600,400)), Zombie((600,200)), Zombie((900,300)))
-	objects_group.add(zombies)
-
-	allsprites.add(zombies, topo)
-
-	preferences.player = topo
+	if name == 'demo':
+		levels.load_demo()
+	elif True:
+		pass
+	else:
+		pass

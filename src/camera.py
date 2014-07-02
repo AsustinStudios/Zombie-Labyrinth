@@ -24,7 +24,8 @@ Date: 2014-03-06
 """
 
 import geometry
-from global_variables import *
+
+from global_variables import allsprites, screen_center
 
 # ==============================================================================
 def follow_char(character):
@@ -41,5 +42,5 @@ def follow_char(character):
 # ==============================================================================
 def fancy_new_cam(character):
 	""" Similar to the 'follow_char' but this camera should work like the cam in
-	'Zelda: Minish Cap' when you reach the end of a room, the camera stays still and the
-	char gets to move all the way to the end of the screen"""
+	'Zelda: Minish Cap' when you reach the end of a room, the camera stays still
+	and the	char gets to move all the way to the end of the screen"""

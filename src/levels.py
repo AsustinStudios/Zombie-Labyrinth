@@ -23,27 +23,33 @@ E-mail: topo@asustin.net
 Date: 2013-11-05
 """
 
+import sys, os
+
 import pygame
 from pygame.locals import *
 
-from living_being import Living_being
+import resources
+import weapons
+import living_beings
+
+from global_variables import allsprites, objects_group, preferences
 
 # ==============================================================================
-class Zombie(Living_being):
-	""" The class that represents the zombies on the game"""
+def load_demo():
+	""" Load the map and starting settings for the game demo."""
+	resources.load_map('demo')
+	resources.play_song(True, 'lluvia')
 
-	# ==========================================================================
-	def __init__(self, start_location=(600, 300), object_type='zombie'):
-		Living_being.__init__(self, start_location, object_type)
+	topo = living_beings.Human((2000,2000), 'topo')
+	topo.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
+	topo.weapons[1] = weapons.Firearm(40, 'AK-47')
+	topo.collision_group = objects_group
 
-		# ======================================================================
-		""" Permanent Stats"""
-		self.handedness = 0
-		self.melee_range = 10
-		self.life = 50
+	zombies = (living_beings.Zombie((400,400)), living_beings.Zombie((200,200)),
+			living_beings.Zombie((600,600)), living_beings.Zombie((600,400)),
+			living_beings.Zombie((600,200)), living_beings.Zombie((900,300)))
+	objects_group.add(zombies)
 
-		""" Trainable Stats"""
-		self.speed = 10
-		self.strength = 10
-		self.programming = 0
-		self.data_sciencing = 0
+	allsprites.add(zombies, topo)
+
+	preferences.player = topo

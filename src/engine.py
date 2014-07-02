@@ -24,23 +24,30 @@ Date: 2014-03-06
 """
 
 import pygame
+import resources
 
-from pygame.examples import movieplayer
+from global_variables import preferences
 
 # ==============================================================================
-def prepare_engine():
+def prepare_engine(window_title=''):
 	# Initialize the engine, screen && background
-	pygame.init() # Initialize Engine
-	pygame.display.set_caption('Zombie Labyrinth')
+	pygame.init()
+	pygame.display.set_caption(window_title)
 	pygame.mouse.set_visible(True)
 
 	# Play intro video
 	#movieplayer.main('/home/roberto/Videos/Banned Commercials - Microsoft Office XP (Banned Too Sexy).mpeg')
 
 	# Initialize screen && drawing area
-	screen = pygame.display.set_mode((1280, 720))
+	if preferences.fullscreen:
+		flags = pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE
+	else:
+		flags = pygame.DOUBLEBUF
+
+	screen = pygame.display.set_mode(preferences.size, flags)
+
 	background = pygame.Surface(screen.get_size())
 	background = background.convert()
-	background.fill((205, 133, 63))
+	background.fill((61, 61, 61))
 
 	return screen, background

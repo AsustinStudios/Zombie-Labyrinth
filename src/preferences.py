@@ -23,11 +23,13 @@ E-mail: topo@asustin.net
 Date: 2013-11-05
 
 This file contains the preferences of the current execution and global game
-preferences
+preferences.
 """
 
 # ==============================================================================
 class Preferences():
 	""" This class manages the global and current execution game preferences."""
 	def __init__(self):
-		player = None
+		self.player = None
+		self.size = (1920, 1080)
+		self.fullscreen = True
