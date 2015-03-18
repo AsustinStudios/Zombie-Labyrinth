@@ -35,18 +35,23 @@ from human import Human
 from zombie import Zombie
 
 # ==============================================================================
-def load_sprite(name, colorkey=None):
+def load_sprite(name, status=None, direction=None, number=0, colorkey=None):
 	""" This Functions loads a png image and returns the image object and the
 	image rect"""
-	name = '%s.png' % name
+	if direction == None:
+		direction = SOUTH
+	if status == None:
+		status = STANDARD
+
 	path = os.path.dirname(os.path.abspath(sys.argv[0]))
-	fullname = os.path.join(path, '..', 'resources', 'sprites', name)
+	fullname = os.path.join(path, '..', 'resources', 'sprites', name, status,
+							direction, '%s_%02d.png' % (name, number))
 	try:
 		image = pygame.image.load(fullname)
 	except pygame.error, message:
 		print 'Cannot load image:', name
 		raise SystemExit, message
-	image = image.convert()
+	image = image.convert_alpha()
 	if colorkey is not None:
 		if colorkey is -1:
 			colorkey = image.get_at((0,0))
@@ -115,7 +120,7 @@ def load_map(name):
 			elem = elem.split(':')
 			type = elem[0]
 			life = int(elem[1])
-			pos = (j*64, i*64+20)
+			pos = (j*64, i*64+20) # The +20 is to account for the HUD space
 			new_obj = Game_object(pos, terrain_type[type])
 			new_obj.life = life
 			allsprites.add(new_obj)
@@ -131,7 +136,7 @@ def load_level(name):
 	mission or level. However, for the time being it just loads the default map
 	and settings."""
 	load_map(name)
-	resources.play_song(True, 'lluvia')
+	resources.play_song(True, 'menu')
 
 	topo = Human((2000,2000), 'topo')
 	topo.weapons[0] = Cold_weapon(40, 50)

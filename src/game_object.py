@@ -36,10 +36,11 @@ class Game_object(pygame.sprite.Sprite):
 	# ==========================================================================
 	def __init__(self, location, object_type):
 		pygame.sprite.Sprite.__init__(self) # call Sprite initializer
-		self.image, self.rect = resources.load_sprite(object_type, None)
+		self.image, self.rect = resources.load_sprite(object_type)
 		self.rect = self.rect.move(location)
 		self.object_type = object_type
 		self.life = 100
+		self.animation_count = 0
 
 	# ==========================================================================
 	def update(self):

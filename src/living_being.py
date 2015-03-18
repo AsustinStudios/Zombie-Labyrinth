@@ -66,10 +66,17 @@ class Living_being(Game_object):
 		self.process_collisions()
 		self.monitor_life()
 
-		# Adjust direction Sprite
-		image_name = '%(sprite)s_%(direction)s' % {'sprite':self.object_type,
-													'direction':self.direction}
-		self.image, a = resources.load_sprite(image_name, -1)
+		# Adjust direction Sprite && animation frame
+		if self.animation_count >= 15:
+			self.animation_count = 0
+		if self.animation_count < 5:
+			n = 0
+		elif self.animation_count >= 10:
+			n = 2
+		else:
+			n = 1
+		self.image, a = resources.load_sprite(self.object_type, None,
+												self.direction, n)
 
 	# ==========================================================================
 	def move(self, directions):
@@ -89,6 +96,7 @@ class Living_being(Game_object):
 
 		if self.valid_movement(move):
 			new_position = self.rect.move_ip(move) # Obtain position after movement
+			self.animation_count += 1
 		else:
 			pass
 

@@ -55,3 +55,8 @@ global UP, DOWN
 
 UP = 2
 DOWN = 3
+
+# ==============================================================================
+global STANDARD
+
+STANDARD = 'standard'
