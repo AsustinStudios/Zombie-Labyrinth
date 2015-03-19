@@ -35,26 +35,21 @@ objects_group = pygame.sprite.Group()
 preferences = preferences.Preferences()
 
 # ==============================================================================
-global RIGHT, LEFT, NORTH, SOUTH, EAST, WEST
-
+global RIGHT, LEFT, UP, DOWN, NORTH, SOUTH, EAST, WEST
 RIGHT = 0
 LEFT = 1
+UP = 2
+DOWN = 3
 NORTH = 'north'
 EAST = 'east'
 SOUTH = 'south'
 WEST = 'west'
 
 # ==============================================================================
-global GUN, NOT_GUN
+global COLD_WEAPON, FIREARM
 
 COLD_WEAPON = 0
 FIREARM = 1
-
-# ==============================================================================
-global UP, DOWN
-
-UP = 2
-DOWN = 3
 
 # ==============================================================================
 global STANDARD

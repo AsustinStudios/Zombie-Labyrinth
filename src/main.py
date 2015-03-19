@@ -29,27 +29,23 @@ from optparse import OptionParser
 import pygame
 from pygame.locals import *
 
-from global_variables import *
-import resources
-import input
-import preferences
-import geometry
-import camera
-import ai
-import engine
 
-from human import Human
-from zombie import Zombie
-from game_object import Game_object
-from weapons import *
+import ai
+import camera
+import engine
+import input
+import levels
+import living_beings
+import resources
+
+from global_variables import allsprites, preferences
 
 # ==============================================================================
 def main():
-	global preferences
-	preferences = process_cli_options()
+	process_cli_options()
 
-	screen, background = engine.prepare_engine()
-	resources.load_level('demo')
+	screen, background = engine.prepare_engine('Zombie Attack!')
+	resources.load_level(levels.DEMO, living_beings.TOPO)
 
 	status = main_loop(screen, background, ai.main_ai, camera.follow_char)
 
@@ -58,7 +54,7 @@ def main():
 # ==============================================================================
 def main_loop(screen, background, run_ai, camera_effect):
 	font = pygame.font.Font(None, 20)
-
+	hud = pygame.Surface((screen.get_size()[0],20))
 	clock = pygame.time.Clock()
 	pygame.key.set_repeat(10, 20)
 
@@ -67,7 +63,7 @@ def main_loop(screen, background, run_ai, camera_effect):
 		fps = clock.get_fps()
 
 		# Handle Input Events
-		for event in pygame.event.get():
+		for event in pygame.event.get(): # TODO: Get the input event control outside of the main loop
 			if event.type == QUIT:
 				return 0
 			elif event.type == KEYDOWN:
@@ -77,9 +73,23 @@ def main_loop(screen, background, run_ai, camera_effect):
 					keys = pygame.key.get_pressed()
 					preferences.player.move(input.get_directions(keys))
 				elif event.key == K_F1:
-					screen = pygame.display.set_mode((1280, 720))
+					# Toggle FULL HD
+					if screen.get_size() == (1280, 720):
+						screen = pygame.display.set_mode((1920, 1080), screen.get_flags())
+						background = pygame.Surface(screen.get_size())
+						background = background.convert()
+						background.fill((61, 61, 61))
+					elif screen.get_size() == (1920, 1080):
+						screen = pygame.display.set_mode((1280, 720), screen.get_flags())
+						background = pygame.Surface(screen.get_size())
+						background = background.convert()
+						background.fill((61, 61, 61))
 				elif event.key == K_F2:
-					pygame.display.toggle_fullscreen()
+					# Toggle Fullscreen
+					if screen.get_flags() & pygame.FULLSCREEN:
+						screen = pygame.display.set_mode(screen.get_size(),pygame.DOUBLEBUF)
+					else:
+						screen = pygame.display.set_mode(screen.get_size(),pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE)
 			elif event.type == MOUSEBUTTONDOWN:
 				if event.button == 1:
 					preferences.player.attack(0)
@@ -97,11 +107,13 @@ def main_loop(screen, background, run_ai, camera_effect):
 		# Update all the sprites
 		allsprites.update()
 
-		# Display Current FPS
-		hud = pygame.Surface((screen.get_size()[0],20))
-		hud.fill((22, 22, 22, 255))
-		text = font.render('FPS: %i | Life: %i' % (fps, preferences.player.life), 1, (255,255,255))
-		textpos = text.get_rect(centerx=background.get_width()/2)
+		# Display Current FPS (HUD)
+		hud.fill((22, 22, 22))
+		hud_text = 'F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit                                                              FPS: %i | Life: %i | Weapons: %s | Status: %s'
+		wp = (str(preferences.player.weapons[0]), str(preferences.player.weapons[1]))
+		text = font.render(hud_text % (fps, preferences.player.life, wp,
+									preferences.player.status), 1, (255,255,255))
+		textpos = text.get_rect(x=5, y=3)
 		hud.blit(text, textpos)
 
 		# Draw the entire scene
@@ -118,29 +130,30 @@ def main_loop(screen, background, run_ai, camera_effect):
 def process_cli_options():
 	""" Process the command line interface options and return a Preferences
 	object"""
-	parser = OptionParser(usage='Ejecuta el proceso de ETL')
-	parser.add_option('--directorio', '--dir', '-d',
-					  dest='directorio',
-					  metavar='Directorio',
-					  default=".",
-					  help='Directorio')
-	parser.add_option('--patron', '-p',
-					  dest='patron',
-					  metavar='Patron',
-					  default=".txt",
-					  help='Patron')
-	parser.add_option('--header',
-					  dest='line_header',
+	parser = OptionParser(usage='Configuration options')
+	parser.add_option('--height ', '-y',
+					  dest='y',
+					  type='int',
+					  metavar='Height',
+					  default="720",
+					  help='Window height')
+	parser.add_option('--width', '-x',
+					  dest='x',
+					  type='int',
+					  metavar='width',
+					  default='1280',
+					  help='Window wdth')
+	parser.add_option('--fullscreen', '-f',
+					  dest='fullscreen',
 					  action="store_true",
-					  metavar='header',
+					  metavar='Fullscreen',
 					  default=False,
-					  help='Si una función tiene o no un header')
+					  help='Weather or not window should start on fullscreen mode.')
 	options, args = parser.parse_args()
 
 	# Assign options to preferences
-	#preferences.thing = new_thing
-
-	return preferences
+	preferences.size = (options.x, options.y)
+	preferences.fullscreen = options.fullscreen
 
 # ==============================================================================
 if __name__ == '__main__':
