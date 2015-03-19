@@ -46,16 +46,16 @@ def load_demo(character):
 	resources.load_map('demo')
 	resources.play_song(True, 'lluvia')
 
-	character = living_beings.new_human((2000,2000), character)
-	powerup = living_beings.new_human((1500,1500))
+	character = living_beings.new_human((96, 90), character)
+	powerup = living_beings.new_human((100,750))
 
 	interact_group = pygame.sprite.Group()
 	interact_group.add(powerup)
 	character.interact_group = interact_group
 
-	zombies = (living_beings.new_zombie((400,400)), living_beings.new_zombie((200,200)),
+	zombies = (living_beings.new_zombie((300,400)), living_beings.new_zombie((900,600)),
 			living_beings.new_zombie((600,600)), living_beings.new_zombie((600,400)),
-			living_beings.new_zombie((600,200)), living_beings.new_zombie((900,300)))
+			living_beings.new_zombie((650,500)), living_beings.new_zombie((900,300)))
 	objects_group.add(zombies)
 
 	allsprites.add(zombies, powerup, character)
