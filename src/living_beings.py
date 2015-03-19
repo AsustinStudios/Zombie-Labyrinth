@@ -78,14 +78,16 @@ class Living_being(game_objects.Game_object):
 		self.monitor_life()
 
 		# Adjust direction Sprite && animation frame
-		if self.animation_count >= 15:
+		if self.animation_count >= 20:
 			self.animation_count = 0
 		if self.animation_count < 5:
 			n = 0
-		elif self.animation_count >= 10:
+		elif self.animation_count < 10:
+			n = 1
+		elif self.animation_count < 15:
 			n = 2
 		else:
-			n = 1
+			n = 3
 		self.image, a = resources.load_sprite(self.object_type, None,
 												self.direction, n)
 
@@ -106,7 +108,7 @@ class Living_being(game_objects.Game_object):
 		move = tuple(move)
 
 		if self.valid_movement(move):
-			new_position = self.rect.move_ip(move) # Obtain position after movement
+			self.rect.move_ip(move)
 			self.animation_count += 1
 		else:
 			pass
@@ -120,9 +122,9 @@ class Living_being(game_objects.Game_object):
 		new_position = self.rect.move(coordenates)
 		self.rect = new_position
 
-		collision_list = pygame.sprite.spritecollide(self,
-												self.collision_group, False)
-		if len(collision_list) == 0:
+		collision_list = pygame.sprite.spritecollide(self, self.collision_group, False)
+		if len(collision_list) == 0 or (
+							len(collision_list) == 1 and self in collision_list):
 			return True
 		else:
 			self.rect = old_position
@@ -148,7 +150,6 @@ class Living_being(game_objects.Game_object):
 			elif element.object_type == 'terrain':
 				pass
 			self.status = element
-
 
 	# ==========================================================================
 	def monitor_life(self):
@@ -281,24 +282,24 @@ def new_human(start_location=global_variables.screen_center, type=GENERIC):
 
 	if type == TOPO:
 		human.object_type = 'topo'
-		human.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
+		human.weapons[0] = weapons.Cold_weapon(40, 10, 'Knife')
 		human.weapons[1] = weapons.Firearm(40, 'AK-47')
-		human.collision_group = global_variables.objects_group
+		human.collision_group = global_variables.chars_objects_group
 	elif type == NANO:
 		human.object_type = 'nano'
 		human.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
 		human.weapons[1] = weapons.Firearm(40, 'AK-47')
-		human.collision_group = global_variables.objects_group
+		human.collision_group = global_variables.chars_objects_group
 	elif type == DEXTER:
 		human.object_type = 'dexter'
 		human.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
 		human.weapons[1] = weapons.Firearm(40, 'AK-47')
-		human.collision_group = global_variables.objects_group
+		human.collision_group = global_variables.chars_objects_group
 	elif type == ABIGAIL:
 		human.object_type = 'abigail'
 		human.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
 		human.weapons[1] = weapons.Firearm(40, 'AK-47')
-		human.collision_group = global_variables.objects_group
+		human.collision_group = global_variables.chars_objects_group
 	return human
 
 def new_zombie(start_location=global_variables.screen_center, type=ZOMBIE):
@@ -322,6 +323,6 @@ def new_zombie(start_location=global_variables.screen_center, type=ZOMBIE):
 		zombie.object_type = 'zombie'
 		zombie.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
 		zombie.weapons[1] = weapons.Firearm(40, 'AK-47')
-		zombie.collision_group = global_variables.objects_group
+		zombie.collision_group = global_variables.zombies_objects_group
 
 	return zombie

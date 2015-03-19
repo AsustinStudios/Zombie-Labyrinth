@@ -28,10 +28,11 @@ import pygame
 import preferences
 
 # ==============================================================================
-global screen_center, allsprites, objects_group, preferences
+global screen_center, allsprites, chars_objects_group, zombies_objects_group, preferences
 screen_center = (600,300)
 allsprites = pygame.sprite.OrderedUpdates()
-objects_group = pygame.sprite.Group()
+chars_objects_group = pygame.sprite.Group()
+zombies_objects_group = pygame.sprite.Group()
 preferences = preferences.Preferences()
 
 # ==============================================================================
@@ -44,12 +45,6 @@ NORTH = 'north'
 EAST = 'east'
 SOUTH = 'south'
 WEST = 'west'
-
-# ==============================================================================
-global COLD_WEAPON, FIREARM
-
-COLD_WEAPON = 0
-FIREARM = 1
 
 # ==============================================================================
 global STANDARD

@@ -31,7 +31,7 @@ from pygame.locals import *
 import game_objects
 import levels
 
-from global_variables import allsprites, objects_group, preferences, SOUTH, STANDARD
+from global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences, SOUTH, STANDARD
 
 # ==============================================================================
 def load_sprite(name, status=None, direction=None, number=0, colorkey=None):
@@ -124,7 +124,8 @@ def load_map(name):
 			new_obj.life = life
 			allsprites.add(new_obj)
 			if type == 'W':
-				objects_group.add(new_obj)
+				chars_objects_group.add(new_obj)
+				zombies_objects_group.add(new_obj)
 			j += 1
 		line = file.readline()
 		i += 1

@@ -47,7 +47,7 @@ def main():
 	screen, background = engine.prepare_engine('Zombie Attack!')
 	resources.load_level(levels.DEMO, living_beings.TOPO)
 
-	status = main_loop(screen, background, ai.main_ai, camera.follow_char)
+	status = main_loop(screen, background, ai.look, camera.follow_char)
 
 	return status
 
@@ -61,6 +61,10 @@ def main_loop(screen, background, run_ai, camera_effect):
 	while True:
 		clock.tick(60)
 		fps = clock.get_fps()
+
+		# Loose condition
+		if preferences.player.life <= 0:
+			return 0
 
 		# Handle Input Events
 		for event in pygame.event.get(): # TODO: Get the input event control outside of the main loop

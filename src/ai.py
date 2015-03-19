@@ -22,11 +22,19 @@ Author: Roberto Lapuente Romo
 E-mail: topo@asustin.net
 Date: 2014-03-06
 """
+import input
 
 from global_variables import allsprites, preferences
 
 # ==============================================================================
-def main_ai():
+def look():
 	for dude in allsprites:
 		if dude.object_type == 'zombie':
 			dude.look((preferences.player.rect[0], preferences.player.rect[1]))
+
+# ==============================================================================
+def dumb_chase():
+	for dude in allsprites:
+		if dude.object_type == 'zombie':
+			dude.look((preferences.player.rect[0], preferences.player.rect[1]))
+			dude.move(input.get_direction_from_look(dude.direction))

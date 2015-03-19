@@ -26,6 +26,7 @@ Date: 2013-11-06
 from pygame.locals import *
 
 from global_variables import RIGHT, LEFT, UP, DOWN
+from global_variables import NORTH, SOUTH, EAST, WEST
 
 # ==============================================================================
 def get_directions(pressed_keys):
@@ -37,5 +38,18 @@ def get_directions(pressed_keys):
 	if pressed_keys[K_s] or pressed_keys[K_DOWN]:
 		directions[DOWN] = True
 	if pressed_keys[K_w] or pressed_keys[K_UP]:
+		directions[UP] = True
+	return directions
+
+# ==============================================================================
+def get_direction_from_look(look):
+	directions = {RIGHT:False, LEFT:False, UP:False, DOWN:False, }
+	if look == EAST:
+		directions[RIGHT] = True
+	if look == WEST:
+		directions[LEFT] = True
+	if look == SOUTH:
+		directions[DOWN] = True
+	if look == NORTH:
 		directions[UP] = True
 	return directions

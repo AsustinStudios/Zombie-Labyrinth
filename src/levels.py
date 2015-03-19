@@ -32,7 +32,7 @@ import living_beings
 import resources
 import weapons
 
-from global_variables import allsprites, objects_group, preferences
+from global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences
 
 # ==============================================================================
 global DEMO
@@ -56,7 +56,8 @@ def load_demo(character):
 	zombies = (living_beings.new_zombie((300,400)), living_beings.new_zombie((900,600)),
 			living_beings.new_zombie((600,600)), living_beings.new_zombie((600,400)),
 			living_beings.new_zombie((650,500)), living_beings.new_zombie((900,300)))
-	objects_group.add(zombies)
+	chars_objects_group.add(zombies)
+	zombies_objects_group.add(zombies, character)
 
 	allsprites.add(zombies, powerup, character)
 
