@@ -75,21 +75,22 @@ def main_loop(screen, background, run_ai, camera_effect):
 				elif event.key == K_F1:
 					# Toggle FULL HD
 					if screen.get_size() == (1280, 720):
-						screen = pygame.display.set_mode((1920, 1080), screen.get_flags())
-						background = pygame.Surface(screen.get_size())
-						background = background.convert()
-						background.fill((61, 61, 61))
+						new_size = (1920, 1080)
 					elif screen.get_size() == (1920, 1080):
-						screen = pygame.display.set_mode((1280, 720), screen.get_flags())
-						background = pygame.Surface(screen.get_size())
-						background = background.convert()
-						background.fill((61, 61, 61))
+						new_size = (1280, 720)
+					if screen.get_flags() & pygame.FULLSCREEN:
+						screen = pygame.display.set_mode(new_size, pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE)
+					else:
+						screen = pygame.display.set_mode(new_size, pygame.DOUBLEBUF)
+					background = pygame.Surface(screen.get_size())
+					background = background.convert()
+					background.fill((61, 61, 61))
 				elif event.key == K_F2:
 					# Toggle Fullscreen
 					if screen.get_flags() & pygame.FULLSCREEN:
-						screen = pygame.display.set_mode(screen.get_size(),pygame.DOUBLEBUF)
+						screen = pygame.display.set_mode(screen.get_size(), pygame.DOUBLEBUF)
 					else:
-						screen = pygame.display.set_mode(screen.get_size(),pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE)
+						screen = pygame.display.set_mode(screen.get_size(), pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE)
 			elif event.type == MOUSEBUTTONDOWN:
 				if event.button == 1:
 					preferences.player.attack(0)
@@ -135,13 +136,13 @@ def process_cli_options():
 					  dest='y',
 					  type='int',
 					  metavar='Height',
-					  default="720",
+					  default="1080",
 					  help='Window height')
 	parser.add_option('--width', '-x',
 					  dest='x',
 					  type='int',
 					  metavar='width',
-					  default='1280',
+					  default='1920',
 					  help='Window wdth')
 	parser.add_option('--fullscreen', '-f',
 					  dest='fullscreen',

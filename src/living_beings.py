@@ -41,6 +41,7 @@ ABIGAIL = 1
 DEXTER = 2
 NANO = 3
 TOPO = 4
+ZOMBIE = 5
 
 # ==============================================================================
 class Living_being(game_objects.Game_object):
@@ -164,13 +165,17 @@ class Living_being(game_objects.Game_object):
 		angle = geometry.angle_between(self.rect, target)
 
 		if angle >= 45 and angle <= 135:
-			self.direction = NORTH
+			new_direction = NORTH
 		elif angle > 135 or angle < -135:
-			self.direction = WEST
+			new_direction = WEST
 		elif angle >= -135 and angle <= -45:
-			self.direction = SOUTH
+			new_direction = SOUTH
 		elif angle > -45 and angle < 45:
-			self.direction = EAST
+			new_direction = EAST
+
+		if new_direction != self.direction:
+			self.animation_count = 0
+			self.direction = new_direction
 
 	# ==========================================================================
 	def attack(self, current_weapon=0):
@@ -257,51 +262,22 @@ class Living_being(game_objects.Game_object):
 		return pygame.Rect(x, y, width, height)
 
 # ==============================================================================
-class Human(Living_being):
-	""" The class that represents the human player on the game"""
-
-	# ==========================================================================
-	def __init__(self, start_location=(600, 300), object_type='human'):
-		Living_being.__init__(self, start_location, object_type)
-
-		# ======================================================================
-		""" Permanent Stats"""
-		self.handedness = 0
-		self.melee_range = 10
-		self.life = 100
-
-		""" Trainable Stats"""
-		self.speed = 20
-		self.strength = 20
-		self.programming = 15
-		self.data_sciencing = 15
-
-# ==============================================================================
-class Zombie(Living_being):
-	""" The class that represents the zombies on the game"""
-
-	# ==========================================================================
-	def __init__(self, start_location=(600, 300), object_type='zombie'):
-		Living_being.__init__(self, start_location, object_type)
-
-		# ======================================================================
-		""" Permanent Stats"""
-		self.handedness = 0
-		self.melee_range = 10
-		self.life = 50
-
-		""" Trainable Stats"""
-		self.speed = 10
-		self.strength = 10
-		self.programming = 0
-		self.data_sciencing = 0
-
-# ==============================================================================
 def new_human(start_location=global_variables.screen_center, type=GENERIC):
 	""" This function returns Human corresponding to some character. It should
 	load that character base stats & stuff. Weapons, powerups and other stuff
 	that are mission specific should be setup at the level."""
-	human = Human(start_location)
+	human = Living_being(start_location, 'human')
+
+	""" Permanent Stats"""
+	human.handedness = 0
+	human.melee_range = 10
+	human.life = 100
+
+	""" Trainable Stats"""
+	human.speed = 20
+	human.strength = 20
+	human.programming = 15
+	human.data_sciencing = 15
 
 	if type == TOPO:
 		human.object_type = 'topo'
@@ -324,3 +300,28 @@ def new_human(start_location=global_variables.screen_center, type=GENERIC):
 		human.weapons[1] = weapons.Firearm(40, 'AK-47')
 		human.collision_group = global_variables.objects_group
 	return human
+
+def new_zombie(start_location=global_variables.screen_center, type=ZOMBIE):
+	""" This function returns Human corresponding to some character. It should
+	load that character base stats & stuff. Weapons, powerups and other stuff
+	that are mission specific should be setup at the level."""
+	zombie = Living_being(start_location, 'zombie')
+
+	""" Permanent Stats"""
+	zombie.handedness = 0
+	zombie.melee_range = 10
+	zombie.life = 50
+
+	""" Trainable Stats"""
+	zombie.speed = 10
+	zombie.strength = 10
+	zombie.programming = 0
+	zombie.data_sciencing = 0
+
+	if type == ZOMBIE:
+		zombie.object_type = 'zombie'
+		zombie.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
+		zombie.weapons[1] = weapons.Firearm(40, 'AK-47')
+		zombie.collision_group = global_variables.objects_group
+
+	return zombie
