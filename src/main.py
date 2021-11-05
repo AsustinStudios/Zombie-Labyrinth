@@ -27,8 +27,8 @@ import sys
 from optparse import OptionParser
 
 import pygame
-from pygame.locals import *
-
+from pygame.locals import K_a, K_d, K_s, K_w, K_DOWN, K_ESCAPE, K_F1, K_F2, K_LEFT
+from pygame.locals import K_RIGHT, K_UP, KEYDOWN, MOUSEBUTTONDOWN, QUIT
 
 import ai
 import camera
@@ -162,6 +162,6 @@ def process_cli_options():
 
 # ==============================================================================
 if __name__ == '__main__':
-	if not pygame.font: print 'Warning, fonts disabled'
-	if not pygame.mixer: print 'Warning, sound disabled'
+	if not pygame.font: print('Warning, fonts disabled')
+	if not pygame.mixer: print('Warning, sound disabled')
 	sys.exit(main())
