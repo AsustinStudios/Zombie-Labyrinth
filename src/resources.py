@@ -26,7 +26,7 @@ Date: 2013-11-05
 import sys, os
 
 import pygame
-from pygame.locals import *
+from pygame.locals import wav, RLEACCEL
 
 import game_objects
 import levels
@@ -47,9 +47,9 @@ def load_sprite(name, status=None, direction=None, number=0, colorkey=None):
 							direction, '%s_%02d.png' % (name, number))
 	try:
 		image = pygame.image.load(fullname)
-	except pygame.error, message:
-		print 'Cannot load image:', name
-		raise SystemExit, message
+	except pygame.error as message:
+		print('Cannot load image:', name)
+		raise SystemExit(message)
 	image = image.convert_alpha()
 	if colorkey is not None:
 		if colorkey is -1:
@@ -69,8 +69,8 @@ def load_sound(name):
 	fullname = os.path.join(path, '..', 'resources', 'sounds', name)
 	try:
 		sound = pygame.mixer.Sound(fullname)
-	except pygame.error, message:
-		print 'Cannot load sound:', wav
+	except pygame.error as message:
+		print('Cannot load sound:', wav)
 		raise SystemExit, message
 	return sound
 
@@ -87,8 +87,8 @@ def load_song(name):
 	fullname = os.path.join(path, '..', 'resources', 'music', name)
 	try:
 		pygame.mixer.music.load(fullname)
-	except pygame.error, message:
-		print 'Cannot load sound:', wav
+	except pygame.error as message:
+		print('Cannot load sound:', wav)
 		raise SystemExit, message
 
 # ==============================================================================

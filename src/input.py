@@ -23,7 +23,7 @@ E-mail: topo@asustin.net
 Date: 2013-11-06
 """
 
-from pygame.locals import *
+from pygame.locals import K_a, K_d, K_DOWN, K_LEFT, K_RIGHT, K_s, K_UP, K_w
 
 from global_variables import RIGHT, LEFT, UP, DOWN
 from global_variables import NORTH, SOUTH, EAST, WEST
