@@ -30,24 +30,23 @@ import pygame
 from pygame.locals import K_a, K_d, K_s, K_w, K_DOWN, K_ESCAPE, K_F1, K_F2, K_LEFT
 from pygame.locals import K_RIGHT, K_UP, KEYDOWN, MOUSEBUTTONDOWN, QUIT
 
-import ai
-import camera
-import engine
-import input
-import levels
-import living_beings
-import resources
-
-from global_variables import allsprites, preferences
+from src.ai import look
+from src.camera import follow_char
+from src.engine import prepare_engine
+from src.global_variables import allsprites, preferences
+from src.input import get_directions
+from src.levels import DEMO
+from src.living_beings import TOPO
+from src.resources import load_level
 
 # ==============================================================================
 def main():
 	process_cli_options()
 
-	screen, background = engine.prepare_engine('Zombie Attack!')
-	resources.load_level(levels.DEMO, living_beings.TOPO)
+	screen, background = prepare_engine('Zombie Attack!')
+	load_level(DEMO, TOPO)
 
-	status = main_loop(screen, background, ai.look, camera.follow_char)
+	status = main_loop(screen, background, look, follow_char)
 
 	return status
 
@@ -75,7 +74,7 @@ def main_loop(screen, background, run_ai, camera_effect):
 					return 0
 				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
 					keys = pygame.key.get_pressed()
-					preferences.player.move(input.get_directions(keys))
+					preferences.player.move(get_directions(keys))
 				elif event.key == K_F1:
 					# Toggle FULL HD
 					if screen.get_size() == (1280, 720):

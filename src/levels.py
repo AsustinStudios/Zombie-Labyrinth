@@ -28,11 +28,8 @@ import sys, os
 import pygame
 from pygame.locals import *
 
-import living_beings
-import resources
-import weapons
-
-from global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences
+from src.global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences
+from src.living_beings import new_human, new_zombie
 
 # ==============================================================================
 global DEMO
@@ -43,19 +40,21 @@ DEMO = 0
 # ==============================================================================
 def load_demo(character):
 	""" Load the map and starting settings for the game demo."""
-	resources.load_map('demo')
-	resources.play_song(True, 'lluvia')
+	from src.resources import load_map, play_song  # Avoid circular import
 
-	character = living_beings.new_human((96, 90), character)
-	powerup = living_beings.new_human((100,750))
+	load_map('demo')
+	play_song(True, 'lluvia')
+
+	character = new_human((96, 90), character)
+	powerup = new_human((100,750))
 
 	interact_group = pygame.sprite.Group()
 	interact_group.add(powerup)
 	character.interact_group = interact_group
 
-	zombies = (living_beings.new_zombie((300,400)), living_beings.new_zombie((900,600)),
-			living_beings.new_zombie((600,600)), living_beings.new_zombie((600,400)),
-			living_beings.new_zombie((650,500)), living_beings.new_zombie((900,300)))
+	zombies = (new_zombie((300,400)), new_zombie((900,600)),
+			new_zombie((600,600)), new_zombie((600,400)),
+			new_zombie((650,500)), new_zombie((900,300)))
 	chars_objects_group.add(zombies)
 	zombies_objects_group.add(zombies, character)
 

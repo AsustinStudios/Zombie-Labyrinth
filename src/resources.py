@@ -26,12 +26,9 @@ Date: 2013-11-05
 import sys, os
 
 import pygame
-from pygame.locals import wav, RLEACCEL
+from pygame.locals import RLEACCEL
 
-import game_objects
-import levels
-
-from global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences, SOUTH, STANDARD
+from src.global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences, SOUTH, STANDARD
 
 # ==============================================================================
 def load_sprite(name, status=None, direction=None, number=0, colorkey=None):
@@ -43,7 +40,7 @@ def load_sprite(name, status=None, direction=None, number=0, colorkey=None):
 		status = STANDARD
 
 	path = os.path.dirname(os.path.abspath(sys.argv[0]))
-	fullname = os.path.join(path, '..', 'resources', 'sprites', name, status,
+	fullname = os.path.join(path, '../..', 'resources', 'sprites', name, status,
 							direction, '%s_%02d.png' % (name, number))
 	try:
 		image = pygame.image.load(fullname)
@@ -66,12 +63,12 @@ def load_sound(name):
 
 	name = '%s.mp3' % name
 	path = os.path.dirname(os.path.abspath(sys.argv[0]))
-	fullname = os.path.join(path, '..', 'resources', 'sounds', name)
+	fullname = os.path.join(path, '../..', 'resources', 'sounds', name)
 	try:
 		sound = pygame.mixer.Sound(fullname)
 	except pygame.error as message:
-		print('Cannot load sound:', wav)
-		raise SystemExit, message
+		print(f'Cannot load sound: {fullname!r}')
+		raise SystemExit from message
 	return sound
 
 # ==============================================================================
@@ -82,14 +79,14 @@ def load_song(name):
 	if not pygame.mixer:
 		return NoneSound()
 
-	name = '%s.mp3' % name
+	name = f'{name}.mp3'
 	path = os.path.dirname(os.path.abspath(sys.argv[0]))
-	fullname = os.path.join(path, '..', 'resources', 'music', name)
+	fullname = os.path.join(path, '../..', 'resources', 'music', name)
 	try:
 		pygame.mixer.music.load(fullname)
 	except pygame.error as message:
-		print('Cannot load sound:', wav)
-		raise SystemExit, message
+		print(f'Cannot load sound: {fullname!r}')
+		raise SystemExit from message
 
 # ==============================================================================
 def play_song(loop=False, song=None):
@@ -102,9 +99,11 @@ def play_song(loop=False, song=None):
 def load_map(name):
 	""" This Function loads all the level construction, create the objects and
 	get them in their respective groups."""
+	from src.game_objects import Game_object  # Avoid circular import
+
 	name = '%s.lvl' % name
 	path = os.path.dirname(os.path.abspath(sys.argv[0]))
-	fullname = os.path.join(path, '..', 'resources', 'levels', name)
+	fullname = os.path.join(path, '../..', 'resources', 'levels', name)
 	terrain_type = {	'F':'floor',
 						'W':'wall'}
 
@@ -120,7 +119,7 @@ def load_map(name):
 			type = elem[0]
 			life = int(elem[1])
 			pos = (j*64, i*64+20) # The +20 is to account for the HUD space
-			new_obj = game_objects.Game_object(pos, terrain_type[type])
+			new_obj = Game_object(pos, terrain_type[type])
 			new_obj.life = life
 			allsprites.add(new_obj)
 			if type == 'W':
@@ -135,8 +134,10 @@ def load_level(level, character):
 	""" This Should load missions from a text file or have a function for each
 	mission or level. However, for the time being it just loads the default map
 	and settings."""
-	if level == levels.DEMO:
-		levels.load_demo(character)
+	from src.levels import load_demo, DEMO  # Avoid circular import
+
+	if level == DEMO:
+		load_demo(character)
 	elif True:
 		pass
 	else:

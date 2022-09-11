@@ -25,8 +25,8 @@ Date: 2013-11-06
 
 from pygame.locals import K_a, K_d, K_DOWN, K_LEFT, K_RIGHT, K_s, K_UP, K_w
 
-from global_variables import RIGHT, LEFT, UP, DOWN
-from global_variables import NORTH, SOUTH, EAST, WEST
+from src.global_variables import RIGHT, LEFT, UP, DOWN
+from src.global_variables import NORTH, SOUTH, EAST, WEST
 
 # ==============================================================================
 def get_directions(pressed_keys):

@@ -25,7 +25,7 @@ Date: 2013-11-26
 
 import pygame
 
-import preferences
+from src.preferences import Preferences
 
 # ==============================================================================
 global screen_center, allsprites, chars_objects_group, zombies_objects_group, preferences
@@ -33,7 +33,7 @@ screen_center = (600,300)
 allsprites = pygame.sprite.OrderedUpdates()
 chars_objects_group = pygame.sprite.Group()
 zombies_objects_group = pygame.sprite.Group()
-preferences = preferences.Preferences()
+preferences = Preferences()
 
 # ==============================================================================
 global RIGHT, LEFT, UP, DOWN, NORTH, SOUTH, EAST, WEST

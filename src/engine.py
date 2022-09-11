@@ -24,9 +24,8 @@ Date: 2014-03-06
 """
 
 import pygame
-import resources
 
-from global_variables import preferences
+from src.global_variables import preferences
 
 # ==============================================================================
 def prepare_engine(window_title=''):

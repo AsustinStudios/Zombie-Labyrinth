@@ -26,13 +26,17 @@ Date: 2013-11-15
 import pygame
 from pygame.locals import *
 
-import game_objects
-import geometry
-import global_variables
-import resources
-import weapons
-
-from global_variables import RIGHT, LEFT, UP, DOWN, NORTH, SOUTH, EAST, WEST
+from src.game_objects import Game_object
+from src.geometry import angle_between
+from src.global_variables import chars_objects_group
+from src.global_variables import RIGHT, LEFT, UP, DOWN, NORTH, SOUTH, EAST, WEST
+from src.global_variables import screen_center
+from src.global_variables import zombies_objects_group
+from src.resources import load_sprite
+from src.weapons import Cold_weapon
+from src.weapons import COLD_WEAPON
+from src.weapons import Firearm
+from src.weapons import FIREARM
 
 # ==============================================================================
 global GENERIC, ABIGAIL, DEXTER, NANO, TOPO
@@ -44,12 +48,12 @@ TOPO = 4
 ZOMBIE = 5
 
 # ==============================================================================
-class Living_being(game_objects.Game_object):
+class Living_being(Game_object):
 	""" The class that represents all the living entities in the game"""
 
 	# ==========================================================================
 	def __init__(self, start_location=(50, 50), object_type='living_being'):
-		game_objects.Game_object.__init__(self, start_location, object_type)
+		Game_object.__init__(self, start_location, object_type)
 		self.collision_group = None
 		self.interact_group = None
 		self.status = None
@@ -88,7 +92,7 @@ class Living_being(game_objects.Game_object):
 			n = 2
 		else:
 			n = 3
-		self.image, a = resources.load_sprite(self.object_type, None,
+		self.image, a = load_sprite(self.object_type, None,
 												self.direction, n)
 
 	# ==========================================================================
@@ -163,7 +167,7 @@ class Living_being(game_objects.Game_object):
 	# ==========================================================================
 	def look(self, target):
 		""" Update the sprite for the being to always face the cursor"""
-		angle = geometry.angle_between(self.rect, target)
+		angle = angle_between(self.rect, target)
 
 		if angle >= 45 and angle <= 135:
 			new_direction = NORTH
@@ -185,9 +189,9 @@ class Living_being(game_objects.Game_object):
 
 		if weapon == None:
 			self.melee_attack(self.strength, self.melee_range)
-		elif weapon.type == weapons.COLD_WEAPON:
+		elif weapon.type == COLD_WEAPON:
 			self.melee_attack(weapon.strength, weapon.range)
-		elif weapon.type == weapons.FIREARM:
+		elif weapon.type == FIREARM:
 			weapon.attack(self.rect, self.direction, self.collision_group)
 
 	# ==========================================================================
@@ -263,7 +267,7 @@ class Living_being(game_objects.Game_object):
 		return pygame.Rect(x, y, width, height)
 
 # ==============================================================================
-def new_human(start_location=global_variables.screen_center, type=GENERIC):
+def new_human(start_location=screen_center, type=GENERIC):
 	""" This function returns Human corresponding to some character. It should
 	load that character base stats & stuff. Weapons, powerups and other stuff
 	that are mission specific should be setup at the level."""
@@ -282,27 +286,27 @@ def new_human(start_location=global_variables.screen_center, type=GENERIC):
 
 	if type == TOPO:
 		human.object_type = 'topo'
-		human.weapons[0] = weapons.Cold_weapon(40, 10, 'Knife')
-		human.weapons[1] = weapons.Firearm(40, 'AK-47')
-		human.collision_group = global_variables.chars_objects_group
+		human.weapons[0] = Cold_weapon(40, 10, 'Knife')
+		human.weapons[1] = Firearm(40, 'AK-47')
+		human.collision_group = chars_objects_group
 	elif type == NANO:
 		human.object_type = 'nano'
-		human.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
-		human.weapons[1] = weapons.Firearm(40, 'AK-47')
-		human.collision_group = global_variables.chars_objects_group
+		human.weapons[0] = Cold_weapon(40, 50, 'Knife')
+		human.weapons[1] = Firearm(40, 'AK-47')
+		human.collision_group = chars_objects_group
 	elif type == DEXTER:
 		human.object_type = 'dexter'
-		human.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
-		human.weapons[1] = weapons.Firearm(40, 'AK-47')
-		human.collision_group = global_variables.chars_objects_group
+		human.weapons[0] = Cold_weapon(40, 50, 'Knife')
+		human.weapons[1] = Firearm(40, 'AK-47')
+		human.collision_group = chars_objects_group
 	elif type == ABIGAIL:
 		human.object_type = 'abigail'
-		human.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
-		human.weapons[1] = weapons.Firearm(40, 'AK-47')
-		human.collision_group = global_variables.chars_objects_group
+		human.weapons[0] = Cold_weapon(40, 50, 'Knife')
+		human.weapons[1] = Firearm(40, 'AK-47')
+		human.collision_group = chars_objects_group
 	return human
 
-def new_zombie(start_location=global_variables.screen_center, type=ZOMBIE):
+def new_zombie(start_location=screen_center, type=ZOMBIE):
 	""" This function returns Human corresponding to some character. It should
 	load that character base stats & stuff. Weapons, powerups and other stuff
 	that are mission specific should be setup at the level."""
@@ -321,8 +325,8 @@ def new_zombie(start_location=global_variables.screen_center, type=ZOMBIE):
 
 	if type == ZOMBIE:
 		zombie.object_type = 'zombie'
-		zombie.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
-		zombie.weapons[1] = weapons.Firearm(40, 'AK-47')
-		zombie.collision_group = global_variables.zombies_objects_group
+		zombie.weapons[0] = Cold_weapon(40, 50, 'Knife')
+		zombie.weapons[1] = Firearm(40, 'AK-47')
+		zombie.collision_group = zombies_objects_group
 
 	return zombie

@@ -23,9 +23,8 @@ E-mail: topo@asustin.net
 Date: 2014-03-06
 """
 
-import geometry
-
-from global_variables import allsprites, screen_center
+from src.geometry import delta
+from src.global_variables import allsprites, screen_center
 
 # ==============================================================================
 def follow_char(character):
@@ -33,7 +32,7 @@ def follow_char(character):
 	object given in the 'character' parameter. Usually used to follow the player
 	but this is also useful when making in game cinematics during the campaing"""
 	newpos = (character.rect[0], character.rect[1])
-	distance = geometry.delta(screen_center, newpos)
+	distance = delta(screen_center, newpos)
 	if distance != (0,0):
 		distance = (-distance[0], -distance[1])
 		for spr in allsprites.sprites():

@@ -26,9 +26,8 @@ Date: 2013-11-06
 import pygame
 from pygame.locals import *
 
-import resources
-
-from global_variables import NORTH, SOUTH, EAST, WEST
+from src.resources import load_sprite
+from src.global_variables import NORTH, SOUTH, EAST, WEST
 
 # ==============================================================================
 class Game_object(pygame.sprite.Sprite):
@@ -37,7 +36,7 @@ class Game_object(pygame.sprite.Sprite):
 	# ==========================================================================
 	def __init__(self, location, object_type):
 		pygame.sprite.Sprite.__init__(self) # call Sprite initializer
-		self.image, self.rect = resources.load_sprite(object_type)
+		self.image, self.rect = load_sprite(object_type)
 		self.rect = self.rect.move(location)
 		self.object_type = object_type
 		self.life = 100
@@ -65,7 +64,7 @@ class Bullet(Game_object):
 
 		position = start_location
 		self.direction = direction
-		self.image, a = resources.load_sprite(self.object_type, None, self.direction)
+		self.image, a = load_sprite(self.object_type, None, self.direction)
 		self.speed = self.get_coordinate_speed(direction, speed)
 		self.collision_group = collision_group
 		self.strength = strength
