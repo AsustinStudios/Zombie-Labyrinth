@@ -27,3 +27,5 @@ nuke-pyc:
 
 tasks:
 	@echo 'clean                                    Delete temp files'
+	@echo 'developer-setup                          Setup virtualenv and install dependencies'
+	@echo 'pip-compile                              Update versions of python dependencies in requirements.txt'
