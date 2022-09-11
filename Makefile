@@ -7,6 +7,21 @@ DEFAULT: tasks
 
 clean: nuke-pyc
 
+developer-setup:
+	virtualenv --python=/usr/bin/python3 .virtualenv
+	pip install -r requirements.txt -r requirements-dev.txt
+	pip install -e .
+
+make pip-compile: pip-compile-app pip-compile-dev
+
+pip-compile-app:
+	@.virtualenv/bin/pip-compile --verbose --allow-unsafe --no-emit-trusted-host --upgrade --output-file requirements.txt requirements.in
+	git diff --color=always --exit-code requirements.txt
+
+pip-compile-dev:
+	@.virtualenv/bin/pip-compile --verbose --allow-unsafe --no-emit-trusted-host --upgrade --output-file requirements-dev.txt requirements-dev.in
+	git diff --color=always --exit-code requirements-dev.txt
+
 nuke-pyc:
 	@find src -name '*.pyc' -exec unlink '{}' \;
 
