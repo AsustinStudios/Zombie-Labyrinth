@@ -27,13 +27,13 @@ from src.global_variables import allsprites, preferences
 
 # ==============================================================================
 def look():
-	for dude in allsprites:
-		if dude.object_type == 'zombie':
-			dude.look((preferences.player.rect[0], preferences.player.rect[1]))
+    for dude in allsprites:
+        if dude.object_type == 'zombie':
+            dude.look((preferences.player.rect[0], preferences.player.rect[1]))
 
 # ==============================================================================
 def dumb_chase():
-	for dude in allsprites:
-		if dude.object_type == 'zombie':
-			dude.look((preferences.player.rect[0], preferences.player.rect[1]))
-			dude.move(get_direction_from_look(dude.direction))
+    for dude in allsprites:
+        if dude.object_type == 'zombie':
+            dude.look((preferences.player.rect[0], preferences.player.rect[1]))
+            dude.move(get_direction_from_look(dude.direction))

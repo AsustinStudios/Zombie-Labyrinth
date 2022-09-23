@@ -28,8 +28,8 @@ preferences.
 
 # ==============================================================================
 class Preferences():
-	""" This class manages the global and current execution game preferences."""
-	def __init__(self):
-		self.player = None
-		self.size = (1920, 1080)
-		self.fullscreen = True
+    """ This class manages the global and current execution game preferences."""
+    def __init__(self):
+        self.player = None
+        self.size = (1920, 1080)
+        self.fullscreen = True

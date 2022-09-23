@@ -29,24 +29,24 @@ from src.global_variables import preferences
 
 # ==============================================================================
 def prepare_engine(window_title=''):
-	# Initialize the engine, screen && background
-	pygame.init()
-	pygame.display.set_caption(window_title)
-	pygame.mouse.set_visible(True)
+    # Initialize the engine, screen && background
+    pygame.init()
+    pygame.display.set_caption(window_title)
+    pygame.mouse.set_visible(True)
 
-	# Play intro video
-	#movieplayer.main('/home/roberto/Videos/Banned Commercials - Microsoft Office XP (Banned Too Sexy).mpeg')
+    # Play intro video
+    #movieplayer.main('/home/roberto/Videos/Banned Commercials - Microsoft Office XP (Banned Too Sexy).mpeg')
 
-	# Initialize screen && drawing area
-	if preferences.fullscreen:
-		flags = pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE
-	else:
-		flags = pygame.DOUBLEBUF
+    # Initialize screen && drawing area
+    if preferences.fullscreen:
+        flags = pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE
+    else:
+        flags = pygame.DOUBLEBUF
 
-	screen = pygame.display.set_mode(preferences.size, flags)
+    screen = pygame.display.set_mode(preferences.size, flags)
 
-	background = pygame.Surface(screen.get_size())
-	background = background.convert()
-	background.fill((61, 61, 61))
+    background = pygame.Surface(screen.get_size())
+    background = background.convert()
+    background.fill((61, 61, 61))
 
-	return screen, background
+    return screen, background

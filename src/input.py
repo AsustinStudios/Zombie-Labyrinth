@@ -30,26 +30,26 @@ from src.global_variables import NORTH, SOUTH, EAST, WEST
 
 # ==============================================================================
 def get_directions(pressed_keys):
-	directions = {RIGHT:False, LEFT:False, UP:False, DOWN:False, }
-	if pressed_keys[K_d] or pressed_keys[K_RIGHT]:
-		directions[RIGHT] = True
-	if pressed_keys[K_a] or pressed_keys[K_LEFT]:
-		directions[LEFT] = True
-	if pressed_keys[K_s] or pressed_keys[K_DOWN]:
-		directions[DOWN] = True
-	if pressed_keys[K_w] or pressed_keys[K_UP]:
-		directions[UP] = True
-	return directions
+    directions = {RIGHT:False, LEFT:False, UP:False, DOWN:False, }
+    if pressed_keys[K_d] or pressed_keys[K_RIGHT]:
+        directions[RIGHT] = True
+    if pressed_keys[K_a] or pressed_keys[K_LEFT]:
+        directions[LEFT] = True
+    if pressed_keys[K_s] or pressed_keys[K_DOWN]:
+        directions[DOWN] = True
+    if pressed_keys[K_w] or pressed_keys[K_UP]:
+        directions[UP] = True
+    return directions
 
 # ==============================================================================
 def get_direction_from_look(look):
-	directions = {RIGHT:False, LEFT:False, UP:False, DOWN:False, }
-	if look == EAST:
-		directions[RIGHT] = True
-	if look == WEST:
-		directions[LEFT] = True
-	if look == SOUTH:
-		directions[DOWN] = True
-	if look == NORTH:
-		directions[UP] = True
-	return directions
+    directions = {RIGHT:False, LEFT:False, UP:False, DOWN:False, }
+    if look == EAST:
+        directions[RIGHT] = True
+    if look == WEST:
+        directions[LEFT] = True
+    if look == SOUTH:
+        directions[DOWN] = True
+    if look == NORTH:
+        directions[UP] = True
+    return directions
