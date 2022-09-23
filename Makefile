@@ -9,8 +9,9 @@ clean: nuke-pyc
 
 developer-setup:
 	virtualenv --python=/usr/bin/python3 .virtualenv
-	pip install -r requirements.txt -r requirements-dev.txt
-	pip install -e .
+	source .virtualenv/bin/activate
+	.virtualenv/bin/pip install -r requirements.txt -r requirements-dev.txt
+	.virtualenv/bin/pip install -e .
 
 make pip-compile: pip-compile-app pip-compile-dev
 
