@@ -111,20 +111,20 @@ class LivingBeing(GameObject):
         else:
             pass
 
-    def valid_movement(self, coordenates) -> bool:
+    def valid_movement(self, coordenates: tuple[float, float]) -> bool:
         if not self.collision_group:
             return True
 
         old_position = self.rect
-        new_position = self.rect.move(coordenates)
-        self.rect = new_position
+        self.rect = self.rect.move(coordenates)
 
         collision_list = spritecollide(self, self.collision_group, False)
         if len(collision_list) == 0 or (len(collision_list) == 1 and self in collision_list):
-            return True
+            is_valid = True
         else:
-            self.rect = old_position
-            return False
+            is_valid = False
+        self.rect = old_position
+        return is_valid
 
     def process_collisions(self):
         """ This method should detect when the agent is standing in some
@@ -263,7 +263,7 @@ def new_human(start_location=screen_center, type=GENERIC) -> LivingBeing:
     human.life = 100
 
     """ Trainable Stats"""
-    human.speed = 20
+    human.speed = 40
     human.strength = 20
     human.programming = 15
     human.data_sciencing = 15
