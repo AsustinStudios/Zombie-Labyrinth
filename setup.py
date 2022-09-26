@@ -56,7 +56,7 @@ def get_requirements(requirements_file: str) -> list[str]:
 
 
 setuptools.setup(
-    name='zombie-labyrinth',
+    name='zombie_labyrinth',
     version=version(),
     # don't use multi-line descriptions!
     description='2D TPS',
@@ -66,11 +66,11 @@ setuptools.setup(
     author_email='studios@asustin.net',
     maintainer='Roberto Lapuente',
     maintainer_email='roberto@lapuente.me',
-    packages=setuptools.find_packages(include=('src*',), exclude=('src.tests*')),
+    packages=setuptools.find_packages(include=('zombie_labyrinth*',), exclude=('zombie_labyrinth.tests*')),
     include_package_data=True,
     entry_points={
         'gui_scripts': [
-            'zombie-labyrinth = src.main:main',
+            'zombie-labyrinth = zombie_labyrinth.main:main',
         ]
     },
     install_requires=get_requirements('requirements.txt'),

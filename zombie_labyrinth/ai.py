@@ -22,8 +22,8 @@ Author: Roberto Lapuente Romo
 E-mail: roberto@lapuente.me
 Date: 2014-03-06
 """
-from src.input import get_direction_from_look
-from src.global_variables import allsprites, preferences
+from zombie_labyrinth.input import get_direction_from_look
+from zombie_labyrinth.global_variables import allsprites, preferences
 
 
 def look():

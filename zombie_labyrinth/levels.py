@@ -25,8 +25,8 @@ Date: 2013-11-05
 
 from pygame.sprite import Group
 
-from src.global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences
-from src.living_beings import new_human, new_zombie
+from zombie_labyrinth.global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences
+from zombie_labyrinth.living_beings import new_human, new_zombie
 
 
 global DEMO
@@ -37,7 +37,7 @@ DEMO = 0
 
 def load_demo(character):
     """ Load the map and starting settings for the game demo."""
-    from src.resources import load_map, play_song  # Avoid circular import
+    from zombie_labyrinth.resources import load_map, play_song  # Avoid circular import
 
     load_map('demo')
     play_song(True, 'lluvia')

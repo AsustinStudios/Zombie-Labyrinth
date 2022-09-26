@@ -33,7 +33,7 @@ from pygame import (
 )
 from pygame.surface import Surface
 
-from src.global_variables import preferences
+from zombie_labyrinth.global_variables import preferences
 
 
 def prepare_engine(window_title: str = '') -> tuple[Surface, Surface]:

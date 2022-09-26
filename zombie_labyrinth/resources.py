@@ -33,8 +33,8 @@ from pygame.constants import RLEACCEL
 from pygame.rect import Rect
 from pygame.surface import Surface
 
-from src.constants import Mode, Direction
-from src.global_variables import allsprites, chars_objects_group, zombies_objects_group
+from zombie_labyrinth.constants import Mode, Direction
+from zombie_labyrinth.global_variables import allsprites, chars_objects_group, zombies_objects_group
 
 
 def load_sprite(name, status=Mode.standard, direction=Direction.south, number=0, colorkey=None) -> tuple[Surface, Rect]:
@@ -98,7 +98,7 @@ def play_song(loop=False, song=None):
 def load_map(name):
     """ This Function loads all the level construction, create the objects and
     get them in their respective groups."""
-    from src.game_objects import GameObject  # Avoid circular import
+    from zombie_labyrinth.game_objects import GameObject  # Avoid circular import
 
     name = '%s.lvl' % name
     path = os.path.dirname(os.path.abspath(sys.argv[0]))
@@ -132,7 +132,7 @@ def load_level(level, character):
     """ This Should load missions from a text file or have a function for each
     mission or level. However, for the time being it just loads the default map
     and settings."""
-    from src.levels import load_demo, DEMO  # Avoid circular import
+    from zombie_labyrinth.levels import load_demo, DEMO  # Avoid circular import
 
     if level == DEMO:
         load_demo(character)

@@ -28,8 +28,8 @@ from pygame.rect import Rect
 from pygame.sprite import Sprite
 from pygame.sprite import spritecollide
 
-from src.resources import load_sprite
-from src.constants import Direction
+from zombie_labyrinth.resources import load_sprite
+from zombie_labyrinth.constants import Direction
 
 
 class GameObject(Sprite):

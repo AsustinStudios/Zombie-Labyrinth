@@ -34,7 +34,7 @@ from pygame.constants import (
     K_w
 )
 
-from src.constants import Direction
+from zombie_labyrinth.constants import Direction
 
 
 def get_directions(pressed_keys):

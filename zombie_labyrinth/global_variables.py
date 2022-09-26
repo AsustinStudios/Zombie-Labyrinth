@@ -28,7 +28,7 @@ from pygame.sprite import (
     OrderedUpdates
 )
 
-from src.preferences import Preferences
+from zombie_labyrinth.preferences import Preferences
 
 
 global screen_center, allsprites, chars_objects_group, zombies_objects_group, preferences

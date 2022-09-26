@@ -26,17 +26,17 @@ Date: 2013-11-15
 from pygame.rect import Rect
 from pygame.sprite import spritecollide
 
-from src.game_objects import GameObject
-from src.geometry import angle_between
-from src.global_variables import chars_objects_group
-from src.constants import Direction
-from src.global_variables import screen_center
-from src.global_variables import zombies_objects_group
-from src.resources import load_sprite
-from src.weapons import ColdWeapon
-from src.weapons import COLD_WEAPON
-from src.weapons import Firearm
-from src.weapons import FIREARM
+from zombie_labyrinth.game_objects import GameObject
+from zombie_labyrinth.geometry import angle_between
+from zombie_labyrinth.global_variables import chars_objects_group
+from zombie_labyrinth.constants import Direction
+from zombie_labyrinth.global_variables import screen_center
+from zombie_labyrinth.global_variables import zombies_objects_group
+from zombie_labyrinth.resources import load_sprite
+from zombie_labyrinth.weapons import ColdWeapon
+from zombie_labyrinth.weapons import COLD_WEAPON
+from zombie_labyrinth.weapons import Firearm
+from zombie_labyrinth.weapons import FIREARM
 
 
 global GENERIC, ABIGAIL, DEXTER, NANO, TOPO

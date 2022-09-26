@@ -23,8 +23,8 @@ E-mail: roberto@lapuente.me
 Date: 2014-03-06
 """
 
-from src.geometry import delta
-from src.global_variables import allsprites, screen_center
+from zombie_labyrinth.geometry import delta
+from zombie_labyrinth.global_variables import allsprites, screen_center
 
 
 def follow_char(character):

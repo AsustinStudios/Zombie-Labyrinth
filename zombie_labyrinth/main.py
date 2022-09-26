@@ -44,14 +44,14 @@ from pygame.constants import (
     QUIT
 )
 
-from src.ai import look
-from src.camera import follow_char
-from src.engine import prepare_engine
-from src.global_variables import allsprites, preferences
-from src.input import get_directions
-from src.levels import DEMO
-from src.living_beings import TOPO
-from src.resources import load_level
+from zombie_labyrinth.ai import look
+from zombie_labyrinth.camera import follow_char
+from zombie_labyrinth.engine import prepare_engine
+from zombie_labyrinth.global_variables import allsprites, preferences
+from zombie_labyrinth.input import get_directions
+from zombie_labyrinth.levels import DEMO
+from zombie_labyrinth.living_beings import TOPO
+from zombie_labyrinth.resources import load_level
 
 
 def main():

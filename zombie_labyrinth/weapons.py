@@ -23,8 +23,8 @@ E-mail: roberto@lapuente.me
 Date: 2013-11-26
 """
 
-from src.game_objects import Bullet
-from src.global_variables import allsprites
+from zombie_labyrinth.game_objects import Bullet
+from zombie_labyrinth.global_variables import allsprites
 
 global COLD_WEAPON, FIREARM
 
