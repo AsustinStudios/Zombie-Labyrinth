@@ -66,7 +66,7 @@ setuptools.setup(
     author_email='studios@asustin.net',
     maintainer='Roberto Lapuente',
     maintainer_email='roberto@lapuente.me',
-    packages=setuptools.find_packages(include=('src*',)),
+    packages=setuptools.find_packages(include=('src*',), exclude=('src.tests*')),
     include_package_data=True,
     entry_points={
         'gui_scripts': [
