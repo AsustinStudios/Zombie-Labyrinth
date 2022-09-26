@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
@@ -19,94 +19,90 @@
 
 """
 Author: Roberto Lapuente Romo
-E-mail: topo@asustin.net
+E-mail: roberto@lapuente.me
 Date: 2013-11-05
 """
 
-import sys, os
+import sys
+import os
 
-import pygame
-from pygame.locals import RLEACCEL
+from pygame import error
+from pygame import image
+from pygame import mixer
+from pygame.constants import RLEACCEL
+from pygame.rect import Rect
+from pygame.surface import Surface
 
-from src.global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences, SOUTH, STANDARD
+from src.constants import Mode, Direction
+from src.global_variables import allsprites, chars_objects_group, zombies_objects_group
 
 
-# ==============================================================================
-def load_sprite(name, status=None, direction=None, number=0, colorkey=None):
-    """ This Functions loads a png image and returns the image object and the
-    image rect"""
-    if direction == None:
-        direction = SOUTH
-    if status == None:
-        status = STANDARD
+def load_sprite(name, status=Mode.standard, direction=Direction.south, number=0, colorkey=None) -> tuple[Surface, Rect]:
+    """ This Functions loads a png image and returns the image object and the image rect"""
 
     path = os.path.dirname(os.path.abspath(sys.argv[0]))
-    fullname = os.path.join(path, '../..', 'resources', 'sprites', name, status,
-                            direction, '%s_%02d.png' % (name, number))
+    fullname = os.path.join(path, '../..', 'resources', 'sprites', name, status.value, direction.value, f'{name}_{number:02}.png')
     try:
-        image = pygame.image.load(fullname)
-    except pygame.error as message:
-        print('Cannot load image:', name)
-        raise SystemExit(message)
-    image = image.convert_alpha()
+        sprite = image.load(fullname)
+    except error as e:
+        raise SystemExit(f'Cannot load image: {name}') from e
+    sprite = sprite.convert_alpha()
     if colorkey is not None:
-        if colorkey is -1:
-            colorkey = image.get_at((0,0))
-        image.set_colorkey(colorkey, RLEACCEL)
-    return image, image.get_rect()
+        if colorkey == -1:
+            colorkey = sprite.get_at((0, 0))
+        sprite.set_colorkey(colorkey, RLEACCEL)
+    return sprite, sprite.get_rect()
 
-# ==============================================================================
+
 def load_sound(name):
     class NoneSound:
         def play(self): pass
-    if not pygame.mixer:
+    if not mixer:
         return NoneSound()
 
     name = '%s.mp3' % name
     path = os.path.dirname(os.path.abspath(sys.argv[0]))
     fullname = os.path.join(path, '../..', 'resources', 'sounds', name)
     try:
-        sound = pygame.mixer.Sound(fullname)
-    except pygame.error as message:
-        print(f'Cannot load sound: {fullname!r}')
-        raise SystemExit from message
+        sound = mixer.Sound(fullname)
+    except error as e:
+        raise SystemExit(f'Cannot load sound: {fullname!r}') from e
     return sound
 
-# ==============================================================================
+
 def load_song(name):
-    pygame.mixer.init()
+    mixer.init()
+
     class NoneSound:
         def play(self): pass
-    if not pygame.mixer:
+    if not mixer:
         return NoneSound()
 
     name = f'{name}.mp3'
     path = os.path.dirname(os.path.abspath(sys.argv[0]))
     fullname = os.path.join(path, '../..', 'resources', 'music', name)
     try:
-        pygame.mixer.music.load(fullname)
-    except pygame.error as message:
-        print(f'Cannot load sound: {fullname!r}')
-        raise SystemExit from message
+        mixer.music.load(fullname)
+    except error as e:
+        raise SystemExit(f'Cannot load sound: {fullname!r}') from e
 
-# ==============================================================================
+
 def play_song(loop=False, song=None):
-    if song != None:
+    if song is not None:
         load_song(song)
 
-    pygame.mixer.music.play(-1 if loop else 0)
+    mixer.music.play(-1 if loop else 0)
 
-# ==============================================================================
+
 def load_map(name):
     """ This Function loads all the level construction, create the objects and
     get them in their respective groups."""
-    from src.game_objects import Game_object  # Avoid circular import
+    from src.game_objects import GameObject  # Avoid circular import
 
     name = '%s.lvl' % name
     path = os.path.dirname(os.path.abspath(sys.argv[0]))
     fullname = os.path.join(path, '../..', 'resources', 'levels', name)
-    terrain_type = {    'F':'floor',
-                        'W':'wall'}
+    terrain_type = {'F': 'floor', 'W': 'wall'}
 
     file = open(fullname, 'r')
     line = file.readline()
@@ -119,8 +115,8 @@ def load_map(name):
             elem = elem.split(':')
             type = elem[0]
             life = int(elem[1])
-            pos = (j*64, i*64+20) # The +20 is to account for the HUD space
-            new_obj = Game_object(pos, terrain_type[type])
+            pos = (j*64, i*64+20)  # The +20 is to account for the HUD space
+            new_obj = GameObject(pos, terrain_type[type])
             new_obj.life = life
             allsprites.add(new_obj)
             if type == 'W':
@@ -130,7 +126,7 @@ def load_map(name):
         line = file.readline()
         i += 1
 
-# ==============================================================================
+
 def load_level(level, character):
     """ This Should load missions from a text file or have a function for each
     mission or level. However, for the time being it just loads the default map

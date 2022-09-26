@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
@@ -19,14 +19,14 @@
 
 """
 Author: Roberto Lapuente Romo
-E-mail: topo@asustin.net
+E-mail: roberto@lapuente.me
 Date: 2013-11-05
 
 This file contains the preferences of the current execution and global game
 preferences.
 """
 
-# ==============================================================================
+
 class Preferences():
     """ This class manages the global and current execution game preferences."""
     def __init__(self):

@@ -20,20 +20,22 @@
 """
 Author: Roberto Lapuente Romo
 E-mail: roberto@lapuente.me
-Date: 2013-11-26
+Date: 2022-09-26
 """
 
-from pygame.sprite import (
-    Group,
-    OrderedUpdates
-)
-
-from src.preferences import Preferences
+from enum import Enum
 
 
-global screen_center, allsprites, chars_objects_group, zombies_objects_group, preferences
-screen_center = (600, 300)
-allsprites = OrderedUpdates()
-chars_objects_group = Group()
-zombies_objects_group = Group()
-preferences = Preferences()
+class Direction(Enum):
+    right = 0
+    left = 1
+    up = 2
+    down = 3
+    north = 'north'
+    east = 'east'
+    south = 'south'
+    west = 'west'
+
+
+class Mode(Enum):
+    standard = 'standard'

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
@@ -19,11 +19,9 @@
 
 """
 Author: Roberto Lapuente Romo
-E-mail: topo@asustin.net
+E-mail: roberto@lapuente.me
 Date: 2013-11-05
 """
-
-import sys, os
 
 import pygame
 from pygame.locals import *
@@ -31,13 +29,13 @@ from pygame.locals import *
 from src.global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences
 from src.living_beings import new_human, new_zombie
 
-# ==============================================================================
+
 global DEMO
 """ Global constants defining all the possible levels of the game. Each constant
 should have a corresponding function that loads that level."""
 DEMO = 0
 
-# ==============================================================================
+
 def load_demo(character):
     """ Load the map and starting settings for the game demo."""
     from src.resources import load_map, play_song  # Avoid circular import
@@ -46,15 +44,15 @@ def load_demo(character):
     play_song(True, 'lluvia')
 
     character = new_human((96, 90), character)
-    powerup = new_human((100,750))
+    powerup = new_human((100, 750))
 
     interact_group = pygame.sprite.Group()
     interact_group.add(powerup)
     character.interact_group = interact_group
 
-    zombies = (new_zombie((300,400)), new_zombie((900,600)),
-            new_zombie((600,600)), new_zombie((600,400)),
-            new_zombie((650,500)), new_zombie((900,300)))
+    zombies = (new_zombie((300, 400)), new_zombie((900, 600)),
+               new_zombie((600, 600)), new_zombie((600, 400)),
+               new_zombie((650, 500)), new_zombie((900, 300)))
     chars_objects_group.add(zombies)
     zombies_objects_group.add(zombies, character)
 

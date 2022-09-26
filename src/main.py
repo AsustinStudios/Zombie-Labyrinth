@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
@@ -19,7 +19,7 @@
 
 """
 Author: Roberto Lapuente Romo
-E-mail: topo@asustin.net
+E-mail: roberto@lapuente.me
 Date: 2013-11-05
 """
 
@@ -39,7 +39,7 @@ from src.levels import DEMO
 from src.living_beings import TOPO
 from src.resources import load_level
 
-# ==============================================================================
+
 def main():
     process_cli_options()
 
@@ -50,15 +50,15 @@ def main():
 
     return status
 
-# ==============================================================================
+
 def main_loop(screen, background, run_ai, camera_effect):
     font = pygame.font.Font(None, 20)
-    hud = pygame.Surface((screen.get_size()[0],20))
+    hud = pygame.Surface((screen.get_size()[0], 20))
     clock = pygame.time.Clock()
     pygame.key.set_repeat(10, 20)
 
     while True:
-        clock.tick(60)
+        clock.tick(120)  # Set target FPS
         fps = clock.get_fps()
 
         # Loose condition
@@ -66,7 +66,7 @@ def main_loop(screen, background, run_ai, camera_effect):
             return 0
 
         # Handle Input Events
-        for event in pygame.event.get(): # TODO: Get the input event control outside of the main loop
+        for event in pygame.event.get():  # TODO: Get the input event control outside of the main loop
             if event.type == QUIT:
                 return 0
             elif event.type == KEYDOWN:
@@ -82,7 +82,7 @@ def main_loop(screen, background, run_ai, camera_effect):
                     elif screen.get_size() == (1920, 1080):
                         new_size = (1280, 720)
                     if screen.get_flags() & pygame.FULLSCREEN:
-                        screen = pygame.display.set_mode(new_size, pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE)
+                        screen = pygame.display.set_mode(new_size, pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
                     else:
                         screen = pygame.display.set_mode(new_size, pygame.DOUBLEBUF)
                     background = pygame.Surface(screen.get_size())
@@ -93,7 +93,7 @@ def main_loop(screen, background, run_ai, camera_effect):
                     if screen.get_flags() & pygame.FULLSCREEN:
                         screen = pygame.display.set_mode(screen.get_size(), pygame.DOUBLEBUF)
                     else:
-                        screen = pygame.display.set_mode(screen.get_size(), pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE)
+                        screen = pygame.display.set_mode(screen.get_size(), pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
             elif event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     preferences.player.attack(0)
@@ -116,7 +116,7 @@ def main_loop(screen, background, run_ai, camera_effect):
         hud_text = 'F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit                                                              FPS: %i | Life: %i | Weapons: %s | Status: %s'
         wp = (str(preferences.player.weapons[0]), str(preferences.player.weapons[1]))
         text = font.render(hud_text % (fps, preferences.player.life, wp,
-                                    preferences.player.status), 1, (255,255,255))
+                                       preferences.player.status), 1, (255, 255, 255))
         textpos = text.get_rect(x=5, y=3)
         hud.blit(text, textpos)
 
@@ -125,12 +125,11 @@ def main_loop(screen, background, run_ai, camera_effect):
         allsprites.draw(screen)
         screen.blit(hud, (0, 0))
 
-
         pygame.display.flip()
 
     # Game Over
 
-# ==============================================================================
+
 def process_cli_options():
     """ Process the command line interface options and return a Preferences
     object"""
@@ -159,8 +158,10 @@ def process_cli_options():
     preferences.size = (options.x, options.y)
     preferences.fullscreen = options.fullscreen
 
-# ==============================================================================
+
 if __name__ == '__main__':
-    if not pygame.font: print('Warning, fonts disabled')
-    if not pygame.mixer: print('Warning, sound disabled')
+    if not pygame.font:
+        print('Warning, fonts disabled')
+    if not pygame.mixer:
+        print('Warning, sound disabled')
     sys.exit(main())

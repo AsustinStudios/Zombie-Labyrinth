@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
@@ -19,19 +19,19 @@
 
 """
 Author: Roberto Lapuente Romo
-E-mail: topo@asustin.net
+E-mail: roberto@lapuente.me
 Date: 2014-03-06
 """
 from src.input import get_direction_from_look
 from src.global_variables import allsprites, preferences
 
-# ==============================================================================
+
 def look():
     for dude in allsprites:
         if dude.object_type == 'zombie':
             dude.look((preferences.player.rect[0], preferences.player.rect[1]))
 
-# ==============================================================================
+
 def dumb_chase():
     for dude in allsprites:
         if dude.object_type == 'zombie':

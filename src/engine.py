@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
@@ -19,33 +19,41 @@
 
 """
 Author: Roberto Lapuente Romo
-E-mail: topo@asustin.net
+E-mail: roberto@lapuente.me
 Date: 2014-03-06
 """
 
-import pygame
+from pygame import (
+    display,
+    DOUBLEBUF,
+    FULLSCREEN,
+    HWSURFACE,
+    init,
+    mouse
+)
+from pygame.surface import Surface
 
 from src.global_variables import preferences
 
-# ==============================================================================
-def prepare_engine(window_title=''):
+
+def prepare_engine(window_title: str = '') -> tuple[Surface, Surface]:
     # Initialize the engine, screen && background
-    pygame.init()
-    pygame.display.set_caption(window_title)
-    pygame.mouse.set_visible(True)
+    init()
+    display.set_caption(window_title)
+    mouse.set_visible(True)
 
     # Play intro video
-    #movieplayer.main('/home/roberto/Videos/Banned Commercials - Microsoft Office XP (Banned Too Sexy).mpeg')
+    # movieplayer.main('/home/roberto/Videos/Banned Commercials - Microsoft Office XP (Banned Too Sexy).mpeg')
 
     # Initialize screen && drawing area
     if preferences.fullscreen:
-        flags = pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE
+        flags = FULLSCREEN | DOUBLEBUF | HWSURFACE
     else:
-        flags = pygame.DOUBLEBUF
+        flags = DOUBLEBUF
 
-    screen = pygame.display.set_mode(preferences.size, flags)
+    screen = display.set_mode(preferences.size, flags)
 
-    background = pygame.Surface(screen.get_size())
+    background = Surface(screen.get_size())
     background = background.convert()
     background.fill((61, 61, 61))
 
