@@ -1,5 +1,8 @@
 autopep8
 flake8
+ipykernel  # Needed for jupyter on vscode
+ipython
 mypy
 pip-tools
 setuptools
+types-setuptools

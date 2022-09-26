@@ -6,6 +6,7 @@ PYTHON = /usr/bin/env PYTHONPATH=. $(shell pwd)/.virtualenv/bin/python
 DEFAULT: tasks
 
 clean: nuke-pyc
+	@rm -r zombie_labyrinth.egg-info
 
 developer-setup:
 	virtualenv --python=/usr/bin/python3 .virtualenv
@@ -24,7 +25,7 @@ pip-compile-dev:
 	git diff --color=always --exit-code requirements-dev.txt
 
 nuke-pyc:
-	@find src -name '*.pyc' -exec unlink '{}' \;
+	@find zombie_labyrinth -name '*.pyc' -exec unlink '{}' \;
 
 tasks:
 	@echo 'clean                                    Delete temp files'
