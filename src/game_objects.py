@@ -59,9 +59,8 @@ class Bullet(GameObject):
     def __init__(self, start_location, direction, collision_group, speed=200, strength=10, object_type='bullet'):
         super().__init__(start_location, object_type)
 
-        position = start_location
         self.direction = direction
-        self.image, a = load_sprite(self.object_type, direction=self.direction)
+        self.image, _ = load_sprite(self.object_type, direction=self.direction)
         self.speed = self.get_coordinate_speed(direction, speed)
         self.collision_group = collision_group
         self.strength = strength

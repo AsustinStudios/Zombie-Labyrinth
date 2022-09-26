@@ -23,8 +23,7 @@ E-mail: roberto@lapuente.me
 Date: 2013-11-05
 """
 
-import pygame
-from pygame.locals import *
+from pygame.sprite import Group
 
 from src.global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences
 from src.living_beings import new_human, new_zombie
@@ -46,7 +45,7 @@ def load_demo(character):
     character = new_human((96, 90), character)
     powerup = new_human((100, 750))
 
-    interact_group = pygame.sprite.Group()
+    interact_group = Group()
     interact_group.add(powerup)
     character.interact_group = interact_group
 

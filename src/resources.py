@@ -41,7 +41,8 @@ def load_sprite(name, status=Mode.standard, direction=Direction.south, number=0,
     """ This Functions loads a png image and returns the image object and the image rect"""
 
     path = os.path.dirname(os.path.abspath(sys.argv[0]))
-    fullname = os.path.join(path, '../..', 'resources', 'sprites', name, status.value, direction.value, f'{name}_{number:02}.png')
+    fullname = os.path.join(path, '../..', 'resources', 'sprites', name,
+                            status.value, direction.value, f'{name}_{number:02}.png')
     try:
         sprite = image.load(fullname)
     except error as e:

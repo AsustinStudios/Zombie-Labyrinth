@@ -23,7 +23,16 @@ E-mail: roberto@lapuente.me
 Date: 2013-11-06
 """
 
-from pygame.locals import K_a, K_d, K_DOWN, K_LEFT, K_RIGHT, K_s, K_UP, K_w
+from pygame.constants import (
+    K_a,
+    K_d,
+    K_DOWN,
+    K_LEFT,
+    K_RIGHT,
+    K_s,
+    K_UP,
+    K_w
+)
 
 from src.constants import Direction
 

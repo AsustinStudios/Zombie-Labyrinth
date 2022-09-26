@@ -26,9 +26,23 @@ Date: 2013-11-05
 import sys
 from optparse import OptionParser
 
-import pygame
-from pygame.locals import K_a, K_d, K_s, K_w, K_DOWN, K_ESCAPE, K_F1, K_F2, K_LEFT
-from pygame.locals import K_RIGHT, K_UP, KEYDOWN, MOUSEBUTTONDOWN, QUIT
+import pygame  # TODO: Replace import with just what we need
+from pygame.constants import (
+    K_a,
+    K_d,
+    K_DOWN,
+    K_ESCAPE,
+    K_F1,
+    K_F2,
+    K_LEFT,
+    K_RIGHT,
+    K_s,
+    K_UP,
+    K_w,
+    KEYDOWN,
+    MOUSEBUTTONDOWN,
+    QUIT
+)
 
 from src.ai import look
 from src.camera import follow_char
@@ -82,7 +96,8 @@ def main_loop(screen, background, run_ai, camera_effect):
                     elif screen.get_size() == (1920, 1080):
                         new_size = (1280, 720)
                     if screen.get_flags() & pygame.FULLSCREEN:
-                        screen = pygame.display.set_mode(new_size, pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
+                        screen = pygame.display.set_mode(new_size, pygame.FULLSCREEN |
+                                                         pygame.DOUBLEBUF | pygame.HWSURFACE)
                     else:
                         screen = pygame.display.set_mode(new_size, pygame.DOUBLEBUF)
                     background = pygame.Surface(screen.get_size())
@@ -93,7 +108,8 @@ def main_loop(screen, background, run_ai, camera_effect):
                     if screen.get_flags() & pygame.FULLSCREEN:
                         screen = pygame.display.set_mode(screen.get_size(), pygame.DOUBLEBUF)
                     else:
-                        screen = pygame.display.set_mode(screen.get_size(), pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
+                        screen = pygame.display.set_mode(screen.get_size(), pygame.FULLSCREEN |
+                                                         pygame.DOUBLEBUF | pygame.HWSURFACE)
             elif event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     preferences.player.attack(0)
@@ -112,11 +128,16 @@ def main_loop(screen, background, run_ai, camera_effect):
         allsprites.update()
 
         # Display Current FPS (HUD)
-        hud.fill((22, 22, 22))
-        hud_text = 'F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit                                                              FPS: %i | Life: %i | Weapons: %s | Status: %s'
         wp = (str(preferences.player.weapons[0]), str(preferences.player.weapons[1]))
-        text = font.render(hud_text % (fps, preferences.player.life, wp,
-                                       preferences.player.status), 1, (255, 255, 255))
+        hud.fill((22, 22, 22))
+        hud_text = (
+            'F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit'
+            '                                                     '
+            f'FPS: {fps:4.0f} | Life: {preferences.player.life} | '
+            f'Weapons: {wp} | Status: {preferences.player.status}'
+        )
+
+        text = font.render(hud_text, 1, (255, 255, 255))
         textpos = text.get_rect(x=5, y=3)
         hud.blit(text, textpos)
 
