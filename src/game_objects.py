@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
@@ -19,86 +19,80 @@
 
 """
 Author: Roberto Lapuente Romo
-E-mail: topo@asustin.net
+E-mail: roberto@lapuente.me
 Date: 2013-11-06
 """
 
-import pygame
-from pygame.locals import *
 
-import resources
+from pygame.rect import Rect
+from pygame.sprite import Sprite
+from pygame.sprite import spritecollide
 
-from global_variables import NORTH, SOUTH, EAST, WEST
+from src.resources import load_sprite
+from src.constants import Direction
 
-# ==============================================================================
-class Game_object(pygame.sprite.Sprite):
-	""" The super class that represents all objects on the game on the game"""
 
-	# ==========================================================================
-	def __init__(self, location, object_type):
-		pygame.sprite.Sprite.__init__(self) # call Sprite initializer
-		self.image, self.rect = resources.load_sprite(object_type, None)
-		self.rect = self.rect.move(location)
-		self.object_type = object_type
-		self.life = 100
+class GameObject(Sprite):
+    """ The super class that represents all objects on the game on the game"""
 
-	# ==========================================================================
-	def update(self):
-		""" Update the Object"""
-		pass
+    def __init__(self, location, object_type):
+        super().__init__()
+        self.image, self.rect = load_sprite(object_type)
+        self.rect: Rect = self.rect.move(location)
+        self.object_type = object_type
+        self.life: int = 100
+        self.direction = Direction.south
+        self.animation_count = 0
 
-	# ==========================================================================
-	def receive_damage(self, damage):
-		""" Receive damage, process it and apply it to life"""
-		self.life -= damage
+    def update(self):
+        """ Update the Object"""
+        pass
 
-# ==============================================================================
-class Bullet(Game_object):
-	""" The super class that represents proyectiles in the game."""
+    def receive_damage(self, damage):
+        """ Receive damage, process it and apply it to life"""
+        self.life -= damage
 
-	# ==========================================================================
-	def __init__(self, start_location, direction, collision_group, speed=50,
-					strength=10, object_type='bullet'):
-		Game_object.__init__(self, start_location,
-							'%s_%s' % (object_type, direction))
 
-		position = start_location
-		self.speed = self.get_coordinate_speed(direction, speed)
-		self.collision_group = collision_group
-		self.strength = strength
+class Bullet(GameObject):
+    """ The super class that represents proyectiles in the game."""
 
-	# ==========================================================================
-	def update(self):
-		""" Update the Object"""
-		self.move()
-		self.process_collisions()
+    def __init__(self, start_location, direction, collision_group, speed=200, strength=10, object_type='bullet'):
+        super().__init__(start_location, object_type)
 
-	# ==========================================================================
-	def process_collisions(self):
-		collision_list = pygame.sprite.spritecollide(self,
-													self.collision_group, False)
-		if len(collision_list) != 0:
-			self.kill()
-			for obj in collision_list:
-				obj.receive_damage(self.strength)
+        self.direction = direction
+        self.image, _ = load_sprite(self.object_type, direction=self.direction)
+        self.speed = self.get_coordinate_speed(direction, speed)
+        self.collision_group = collision_group
+        self.strength = strength
 
-	# ==========================================================================
-	def move(self):
-		""" Move around the being depending on the direction"""
-		self.rect.move_ip(self.speed)
+    def update(self):
+        """ Update the Object"""
+        self.move()
+        self.process_collisions()
 
-	# ==========================================================================
-	def get_coordinate_speed(self, direction, speed):
-		x, y = 0, 0
+    def process_collisions(self):
+        collision_list = spritecollide(self, self.collision_group, False)
+        if len(collision_list) != 0:
+            self.kill()
+            for obj in collision_list:
+                obj.receive_damage(self.strength)
 
-		if direction == NORTH:
-			y = -speed/10
-		elif direction == EAST:
-			x = speed/10
-		elif direction == SOUTH:
-			y = speed/10
-		elif direction == WEST:
-			x = -speed/10
+    def move(self):
+        """ Move around the being depending on the direction"""
+        self.rect.move_ip(self.speed)
 
-		return (x, y)
+    def get_coordinate_speed(self, direction, speed):
+        """ Receives a speed and returns the (x,y) px pair needed by the
+        rect.move function to move at the received speed"""
+        x, y = 0, 0
 
+        if direction == Direction.north:
+            y = -speed/10
+        elif direction == Direction.east:
+            x = speed/10
+        elif direction == Direction.south:
+            y = speed/10
+        elif direction == Direction.west:
+            x = -speed/10
+
+        return (x, y)

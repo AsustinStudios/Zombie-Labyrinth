@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
@@ -19,35 +19,21 @@
 
 """
 Author: Roberto Lapuente Romo
-E-mail: topo@asustin.net
+E-mail: roberto@lapuente.me
 Date: 2013-11-26
 """
 
-import pygame
+from pygame.sprite import (
+    Group,
+    OrderedUpdates
+)
 
-import preferences
+from src.preferences import Preferences
 
-# ==============================================================================
-global screen_center, allsprites, objects_group, preferences
-screen_center = (600,300)
-allsprites = pygame.sprite.OrderedUpdates()
-objects_group = pygame.sprite.Group()
-preferences = preferences.Preferences()
 
-# ==============================================================================
-global RIGHT, LEFT, UP, DOWN, NORTH, SOUTH, EAST, WEST
-
-RIGHT = 0
-LEFT = 1
-UP = 2
-DOWN = 3
-NORTH = 'north'
-EAST = 'east'
-SOUTH = 'south'
-WEST = 'west'
-
-# ==============================================================================
-global COLD_WEAPON, FIREARM
-
-COLD_WEAPON = 0
-FIREARM = 1
+global screen_center, allsprites, chars_objects_group, zombies_objects_group, preferences
+screen_center = (600, 300)
+allsprites = OrderedUpdates()
+chars_objects_group = Group()
+zombies_objects_group = Group()
+preferences = Preferences()

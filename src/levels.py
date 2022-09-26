@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
@@ -19,37 +19,42 @@
 
 """
 Author: Roberto Lapuente Romo
-E-mail: topo@asustin.net
+E-mail: roberto@lapuente.me
 Date: 2013-11-05
 """
 
-import sys, os
+from pygame.sprite import Group
 
-import pygame
-from pygame.locals import *
+from src.global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences
+from src.living_beings import new_human, new_zombie
 
-import resources
-import weapons
-import living_beings
 
-from global_variables import allsprites, objects_group, preferences
+global DEMO
+""" Global constants defining all the possible levels of the game. Each constant
+should have a corresponding function that loads that level."""
+DEMO = 0
 
-# ==============================================================================
-def load_demo():
-	""" Load the map and starting settings for the game demo."""
-	resources.load_map('demo')
-	resources.play_song(True, 'lluvia')
 
-	topo = living_beings.Human((2000,2000), 'topo')
-	topo.weapons[0] = weapons.Cold_weapon(40, 50, 'Knife')
-	topo.weapons[1] = weapons.Firearm(40, 'AK-47')
-	topo.collision_group = objects_group
+def load_demo(character):
+    """ Load the map and starting settings for the game demo."""
+    from src.resources import load_map, play_song  # Avoid circular import
 
-	zombies = (living_beings.Zombie((400,400)), living_beings.Zombie((200,200)),
-			living_beings.Zombie((600,600)), living_beings.Zombie((600,400)),
-			living_beings.Zombie((600,200)), living_beings.Zombie((900,300)))
-	objects_group.add(zombies)
+    load_map('demo')
+    play_song(True, 'lluvia')
 
-	allsprites.add(zombies, topo)
+    character = new_human((96, 90), character)
+    powerup = new_human((100, 750))
 
-	preferences.player = topo
+    interact_group = Group()
+    interact_group.add(powerup)
+    character.interact_group = interact_group
+
+    zombies = (new_zombie((300, 400)), new_zombie((900, 600)),
+               new_zombie((600, 600)), new_zombie((600, 400)),
+               new_zombie((650, 500)), new_zombie((900, 300)))
+    chars_objects_group.add(zombies)
+    zombies_objects_group.add(zombies, character)
+
+    allsprites.add(zombies, powerup, character)
+
+    preferences.player = character

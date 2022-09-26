@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
@@ -19,141 +19,170 @@
 
 """
 Author: Roberto Lapuente Romo
-E-mail: topo@asustin.net
+E-mail: roberto@lapuente.me
 Date: 2013-11-05
 """
 
 import sys
 from optparse import OptionParser
 
-import pygame
-from pygame.locals import *
+import pygame  # TODO: Replace import with just what we need
+from pygame.constants import (
+    K_a,
+    K_d,
+    K_DOWN,
+    K_ESCAPE,
+    K_F1,
+    K_F2,
+    K_LEFT,
+    K_RIGHT,
+    K_s,
+    K_UP,
+    K_w,
+    KEYDOWN,
+    MOUSEBUTTONDOWN,
+    QUIT
+)
+
+from src.ai import look
+from src.camera import follow_char
+from src.engine import prepare_engine
+from src.global_variables import allsprites, preferences
+from src.input import get_directions
+from src.levels import DEMO
+from src.living_beings import TOPO
+from src.resources import load_level
 
 
-import ai
-import camera
-import engine
-import input
-import resources
-
-from global_variables import allsprites, preferences
-
-# ==============================================================================
 def main():
-	process_cli_options()
+    process_cli_options()
 
-	screen, background = engine.prepare_engine('Zombie Attack!')
-	resources.load_level('demo')
+    screen, background = prepare_engine('Zombie Attack!')
+    load_level(DEMO, TOPO)
 
-	status = main_loop(screen, background, ai.main_ai, camera.follow_char)
+    status = main_loop(screen, background, look, follow_char)
 
-	return status
+    return status
 
-# ==============================================================================
+
 def main_loop(screen, background, run_ai, camera_effect):
-	font = pygame.font.Font(None, 20)
-	hud = pygame.Surface((screen.get_size()[0],20))
-	clock = pygame.time.Clock()
-	pygame.key.set_repeat(10, 20)
+    font = pygame.font.Font(None, 20)
+    hud = pygame.Surface((screen.get_size()[0], 20))
+    clock = pygame.time.Clock()
+    pygame.key.set_repeat(10, 20)
 
-	while True:
-		clock.tick(60)
-		fps = clock.get_fps()
+    while True:
+        clock.tick(120)  # Set target FPS
+        fps = clock.get_fps()
 
-		# Handle Input Events
-		for event in pygame.event.get(): # TODO: Get the input event control outside of the main loop
-			if event.type == QUIT:
-				return 0
-			elif event.type == KEYDOWN:
-				if event.key == K_ESCAPE:
-					return 0
-				elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
-					keys = pygame.key.get_pressed()
-					preferences.player.move(input.get_directions(keys))
-				elif event.key == K_F1:
-					# Toggle FULL HD
-					if screen.get_size() == (1280, 720):
-						screen = pygame.display.set_mode((1920, 1080), screen.get_flags())
-						background = pygame.Surface(screen.get_size())
-						background = background.convert()
-						background.fill((61, 61, 61))
-					elif screen.get_size() == (1920, 1080):
-						screen = pygame.display.set_mode((1280, 720), screen.get_flags())
-						background = pygame.Surface(screen.get_size())
-						background = background.convert()
-						background.fill((61, 61, 61))
-				elif event.key == K_F2:
-					# Toggle Fullscreen
-					if screen.get_flags() & pygame.FULLSCREEN:
-						screen = pygame.display.set_mode(screen.get_size(),pygame.DOUBLEBUF)
-					else:
-						screen = pygame.display.set_mode(screen.get_size(),pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.HWSURFACE)
-			elif event.type == MOUSEBUTTONDOWN:
-				if event.button == 1:
-					preferences.player.attack(0)
-				elif event.button == 3:
-					preferences.player.attack(1)
+        # Loose condition
+        if preferences.player.life <= 0:
+            return 0
 
-		pos = pygame.mouse.get_pos()	# TODO: Human Object must be bindable to
-		preferences.player.look(pos)	# a device or a target must be specifyable.
+        # Handle Input Events
+        for event in pygame.event.get():  # TODO: Get the input event control outside of the main loop
+            if event.type == QUIT:
+                return 0
+            elif event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    return 0
+                elif event.key in (K_RIGHT, K_LEFT, K_UP, K_DOWN, K_d, K_a, K_w, K_s):
+                    keys = pygame.key.get_pressed()
+                    preferences.player.move(get_directions(keys))
+                elif event.key == K_F1:
+                    # Toggle FULL HD
+                    if screen.get_size() == (1280, 720):
+                        new_size = (1920, 1080)
+                    elif screen.get_size() == (1920, 1080):
+                        new_size = (1280, 720)
+                    if screen.get_flags() & pygame.FULLSCREEN:
+                        screen = pygame.display.set_mode(new_size, pygame.FULLSCREEN |
+                                                         pygame.DOUBLEBUF | pygame.HWSURFACE)
+                    else:
+                        screen = pygame.display.set_mode(new_size, pygame.DOUBLEBUF)
+                    background = pygame.Surface(screen.get_size())
+                    background = background.convert()
+                    background.fill((61, 61, 61))
+                elif event.key == K_F2:
+                    # Toggle Fullscreen
+                    if screen.get_flags() & pygame.FULLSCREEN:
+                        screen = pygame.display.set_mode(screen.get_size(), pygame.DOUBLEBUF)
+                    else:
+                        screen = pygame.display.set_mode(screen.get_size(), pygame.FULLSCREEN |
+                                                         pygame.DOUBLEBUF | pygame.HWSURFACE)
+            elif event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    preferences.player.attack(0)
+                elif event.button == 3:
+                    preferences.player.attack(1)
 
-		run_ai()
+        pos = pygame.mouse.get_pos()    # TODO: Human Object must be bindable to
+        preferences.player.look(pos)    # a device or a target must be specifyable.
 
-		# Mantener la cámara en el centro del nivel
-		camera_effect(preferences.player)
+        run_ai()
 
-		# Update all the sprites
-		allsprites.update()
+        # Mantener la cámara en el centro del nivel
+        camera_effect(preferences.player)
 
-		# Display Current FPS (HUD)
-		hud.fill((22, 22, 22))
-		hud_text = 'F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit                                                                                   FPS: %i | Life: %i | Weapons: %s'
-		wp = (str(preferences.player.weapons[0]), str(preferences.player.weapons[1]))
-		text = font.render(hud_text % (fps, preferences.player.life, wp), 1, (255,255,255))
-		textpos = text.get_rect(x=5, y=3)
-		hud.blit(text, textpos)
+        # Update all the sprites
+        allsprites.update()
 
-		# Draw the entire scene
-		screen.blit(background, (0, 0))
-		allsprites.draw(screen)
-		screen.blit(hud, (0, 0))
+        # Display Current FPS (HUD)
+        wp = (str(preferences.player.weapons[0]), str(preferences.player.weapons[1]))
+        hud.fill((22, 22, 22))
+        hud_text = (
+            'F1: Toggle HD  |  F2: Toggle Fullscreen  |  ESC: Quit'
+            '                                                     '
+            f'FPS: {fps:4.0f} | Life: {preferences.player.life} | '
+            f'Weapons: {wp} | Status: {preferences.player.status}'
+        )
+
+        text = font.render(hud_text, 1, (255, 255, 255))
+        textpos = text.get_rect(x=5, y=3)
+        hud.blit(text, textpos)
+
+        # Draw the entire scene
+        screen.blit(background, (0, 0))
+        allsprites.draw(screen)
+        screen.blit(hud, (0, 0))
+
+        pygame.display.flip()
+
+    # Game Over
 
 
-		pygame.display.flip()
-
-	# Game Over
-
-# ==============================================================================
 def process_cli_options():
-	""" Process the command line interface options and return a Preferences
-	object"""
-	parser = OptionParser(usage='Configuration options')
-	parser.add_option('--height ', '-y',
-					  dest='y',
-					  type='int',
-					  metavar='Height',
-					  default="720",
-					  help='Window height')
-	parser.add_option('--width', '-x',
-					  dest='x',
-					  type='int',
-					  metavar='width',
-					  default='1280',
-					  help='Window wdth')
-	parser.add_option('--fullscreen', '-f',
-					  dest='fullscreen',
-					  action="store_true",
-					  metavar='Fullscreen',
-					  default=False,
-					  help='Weather or not window should start on fullscreen mode.')
-	options, args = parser.parse_args()
+    """ Process the command line interface options and return a Preferences
+    object"""
+    parser = OptionParser(usage='Configuration options')
+    parser.add_option('--height ', '-y',
+                      dest='y',
+                      type='int',
+                      metavar='Height',
+                      default="1080",
+                      help='Window height')
+    parser.add_option('--width', '-x',
+                      dest='x',
+                      type='int',
+                      metavar='width',
+                      default='1920',
+                      help='Window wdth')
+    parser.add_option('--fullscreen', '-f',
+                      dest='fullscreen',
+                      action="store_true",
+                      metavar='Fullscreen',
+                      default=False,
+                      help='Weather or not window should start on fullscreen mode.')
+    options, args = parser.parse_args()
 
-	# Assign options to preferences
-	preferences.size = (options.x, options.y)
-	preferences.fullscreen = options.fullscreen
+    # Assign options to preferences
+    preferences.size = (options.x, options.y)
+    preferences.fullscreen = options.fullscreen
 
-# ==============================================================================
+
 if __name__ == '__main__':
-	if not pygame.font: print 'Warning, fonts disabled'
-	if not pygame.mixer: print 'Warning, sound disabled'
-	sys.exit(main())
+    if not pygame.font:
+        print('Warning, fonts disabled')
+    if not pygame.mixer:
+        print('Warning, sound disabled')
+    sys.exit(main())

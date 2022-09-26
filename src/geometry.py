@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #    Zombie Labyrinth
@@ -19,36 +19,35 @@
 
 """
 Author: Roberto Lapuente Romo
-E-mail: topo@asustin.net
+E-mail: roberto@lapuente.me
 Date: 2013-11-06
 """
 
 import math
 
-# ==============================================================================
+
 def delta(p1, p2):
-	""" Returns a (x, y) coordenate with the distance in each coordenate between
-	p1 and p2"""
-	delta_x = p2[0] - p1[0]
-	delta_y = p2[1] - p1[1]
+    """ Returns a (x, y) coordenate with the distance in each coordenate between
+    p1 and p2"""
+    delta_x = p2[0] - p1[0]
+    delta_y = p2[1] - p1[1]
 
-	return (delta_x, delta_y)
+    return (delta_x, delta_y)
 
-# ==============================================================================
-def angle_between(p1, p2):
-	""" Returns the angle in degrees between p1 and p2"""
-	x, y = delta(p1, p2)
-	angle = math.degrees(math.atan2(y, x))
 
-	return - angle
+def angle_between(p1, p2) -> float:
+    """ Returns the angle in degrees between p1 and p2"""
+    x, y = delta(p1, p2)
+    angle = math.degrees(math.atan2(y, x))
 
-# ==============================================================================
-def distance(p1, p2):
-	"Returns the distance between p1 and p2"
-	x, y = delta(p1, p2)
-	a = y * y
-	b = x * x
-	c = math.sqrt(a + b)
+    return -angle
 
-	return c
 
+def distance(p1, p2) -> float:
+    "Returns the distance between p1 and p2"
+    x, y = delta(p1, p2)
+    a = y * y
+    b = x * x
+    c = math.sqrt(a + b)
+
+    return c
