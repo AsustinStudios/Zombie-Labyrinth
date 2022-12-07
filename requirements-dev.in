@@ -1,5 +1,6 @@
 autopep8
 flake8
 mypy
+pip  # To keep the version of pip updated
 pip-tools
 setuptools
