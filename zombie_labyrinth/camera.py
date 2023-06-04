@@ -17,20 +17,18 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Author: Roberto Lapuente Romo
-E-mail: roberto@lapuente.me
-Date: 2014-03-06
-"""
 
 from zombie_labyrinth.geometry import delta
 from zombie_labyrinth.global_variables import allsprites, screen_center
 
 
 def follow_char(character):
-    """ This function moves the camera so that it will always stay on top of the
+    """Make the camera follow the character.
+
+    This function moves the camera so that it will always stay on top of the
     object given in the 'character' parameter. Usually used to follow the player
-    but this is also useful when making in game cinematics during the campaing"""
+    but this is also useful when making in game cinematics during the campaing.
+    """
     newpos = (character.rect[0], character.rect[1])
     distance = delta(screen_center, newpos)
     if distance != (0, 0):
@@ -40,6 +38,10 @@ def follow_char(character):
 
 
 def fancy_new_cam(character):
-    """ Similar to the 'follow_char' but this camera should work like the cam in
+    """Make the camera follow the character.
+
+    Similar to the 'follow_char' but this camera should work like the cam in
     'Zelda: Minish Cap' when you reach the end of a room, the camera stays still
-    and the    char gets to move all the way to the end of the screen"""
+    and the    char gets to move all the way to the end of the screen.
+    """
+    pass

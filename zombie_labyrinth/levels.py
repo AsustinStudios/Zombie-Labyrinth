@@ -17,17 +17,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Author: Roberto Lapuente Romo
-E-mail: roberto@lapuente.me
-Date: 2013-11-05
-"""
 
 from pygame.sprite import Group
 
-from zombie_labyrinth.global_variables import allsprites, chars_objects_group, zombies_objects_group, preferences
+from zombie_labyrinth.global_variables import allsprites, chars_objects_group, preferences, zombies_objects_group
 from zombie_labyrinth.living_beings import new_human, new_zombie
-
 
 global DEMO
 """ Global constants defining all the possible levels of the game. Each constant
@@ -36,7 +30,7 @@ DEMO = 0
 
 
 def load_demo(character):
-    """ Load the map and starting settings for the game demo."""
+    """Load the map and starting settings for the game demo."""
     from zombie_labyrinth.resources import load_map, play_song  # Avoid circular import
 
     load_map('demo')

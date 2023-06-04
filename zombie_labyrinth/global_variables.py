@@ -17,19 +17,10 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Author: Roberto Lapuente Romo
-E-mail: roberto@lapuente.me
-Date: 2013-11-26
-"""
 
-from pygame.sprite import (
-    Group,
-    OrderedUpdates
-)
+from pygame.sprite import Group, OrderedUpdates
 
 from zombie_labyrinth.preferences import Preferences
-
 
 global screen_center, allsprites, chars_objects_group, zombies_objects_group, preferences
 screen_center = (600, 300)

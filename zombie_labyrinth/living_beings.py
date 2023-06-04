@@ -17,27 +17,16 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Author: Roberto Lapuente Romo
-E-mail: roberto@lapuente.me
-Date: 2013-11-15
-"""
 
 from pygame.rect import Rect
 from pygame.sprite import spritecollide
 
+from zombie_labyrinth.constants import Direction
 from zombie_labyrinth.game_objects import GameObject
 from zombie_labyrinth.geometry import angle_between
-from zombie_labyrinth.global_variables import chars_objects_group
-from zombie_labyrinth.constants import Direction
-from zombie_labyrinth.global_variables import screen_center
-from zombie_labyrinth.global_variables import zombies_objects_group
+from zombie_labyrinth.global_variables import chars_objects_group, screen_center, zombies_objects_group
 from zombie_labyrinth.resources import load_sprite
-from zombie_labyrinth.weapons import ColdWeapon
-from zombie_labyrinth.weapons import COLD_WEAPON
-from zombie_labyrinth.weapons import Firearm
-from zombie_labyrinth.weapons import FIREARM
-
+from zombie_labyrinth.weapons import COLD_WEAPON, FIREARM, ColdWeapon, Firearm
 
 global GENERIC, ABIGAIL, DEXTER, NANO, TOPO
 GENERIC = 0
@@ -49,7 +38,7 @@ ZOMBIE = 5
 
 
 class LivingBeing(GameObject):
-    """ The class that represents all the living entities in the game"""
+    """The class that represents all the living entities in the game."""
 
     def __init__(self, start_location=(50, 50), object_type='living_being'):
         super().__init__(start_location, object_type)
@@ -73,7 +62,7 @@ class LivingBeing(GameObject):
         self.inventory = []
 
     def update(self):
-        """ Update the Object"""
+        """Update the Object."""
         self.process_collisions()
         self.monitor_life()
 
@@ -91,7 +80,7 @@ class LivingBeing(GameObject):
         self.image, a = load_sprite(self.object_type, direction=self.direction, number=n)
 
     def move(self, directions):
-        """ Move around the being depending on the direction"""
+        """Move around the being depending on the direction."""
         move = [0, 0]
 
         if directions[Direction.right]:
@@ -127,9 +116,12 @@ class LivingBeing(GameObject):
         return is_valid
 
     def process_collisions(self):
-        """ This method should detect when the agent is standing in some
+        """Calculate the effects of the collisions with other objects.
+
+        This method should detect when the agent is standing in some
         terrain that affects it stats, weapons and items that can be picked up
-        or powerups that modify the agents stats. """
+        or powerups that modify the agents stats.
+        """
         if not self.interact_group:
             self.status = ''
             return
@@ -154,7 +146,7 @@ class LivingBeing(GameObject):
         self.kill()
 
     def look(self, target):
-        """ Update the sprite for the being to always face the cursor"""
+        """Update the sprite for the being to always face the cursor."""
         angle = angle_between(self.rect, target)
 
         if angle >= 45 and angle <= 135:
@@ -171,7 +163,7 @@ class LivingBeing(GameObject):
             self.direction = new_direction
 
     def attack(self, current_weapon=0):
-        """ Call the attack method of the default weapon"""
+        """Call the attack method of the default weapon."""
         weapon = self.weapons[current_weapon]
 
         if weapon is None:
@@ -182,7 +174,7 @@ class LivingBeing(GameObject):
             weapon.attack(self.rect, self.direction, self.collision_group)
 
     def melee_attack(self, strength, range):
-        """ Attack with your own hands"""
+        """Attack with your own hands."""
         if self.collision_group:
             sprite_position = self.rect
             melee_rect = self.create_melee_rect(range)
@@ -194,8 +186,7 @@ class LivingBeing(GameObject):
                 enemy.receive_damage(strength)
 
     def create_melee_rect(self, range):
-        """ Create a new rect object that represents the range in which you can
-        do melee damage"""
+        """Create a new rect object that represents the range in which you can do melee damage."""
         # Original Values
         original_x = self.rect[0]
         original_y = self.rect[1]
@@ -252,9 +243,12 @@ class LivingBeing(GameObject):
 
 
 def new_human(start_location=screen_center, type=GENERIC) -> LivingBeing:
-    """ This function returns Human corresponding to some character. It should
+    """Human Constructor.
+
+    This function returns Human corresponding to some character. It should
     load that character base stats & stuff. Weapons, powerups and other stuff
-    that are mission specific should be setup at the level."""
+    that are mission specific should be setup at the level.
+    """
     human = LivingBeing(start_location, 'human')
 
     """ Permanent Stats"""
@@ -292,9 +286,12 @@ def new_human(start_location=screen_center, type=GENERIC) -> LivingBeing:
 
 
 def new_zombie(start_location=screen_center, type=ZOMBIE) -> LivingBeing:
-    """ This function returns Human corresponding to some character. It should
+    """Zombie Conxtructor.
+
+    This function returns Human corresponding to some character. It should
     load that character base stats & stuff. Weapons, powerups and other stuff
-    that are mission specific should be setup at the level."""
+    that are mission specific should be setup at the level.
+    """
     zombie = LivingBeing(start_location, 'zombie')
 
     """ Permanent Stats"""

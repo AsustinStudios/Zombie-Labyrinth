@@ -17,18 +17,12 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Author: Roberto Lapuente Romo
-E-mail: roberto@lapuente.me
-Date: 2013-11-06
-"""
 
 import math
 
 
 def delta(p1, p2):
-    """ Returns a (x, y) coordenate with the distance in each coordenate between
-    p1 and p2"""
+    """Return a (x, y) coordenate with the distance in each coordenate between p1 and p2."""
     delta_x = p2[0] - p1[0]
     delta_y = p2[1] - p1[1]
 
@@ -36,7 +30,7 @@ def delta(p1, p2):
 
 
 def angle_between(p1, p2) -> float:
-    """ Returns the angle in degrees between p1 and p2"""
+    """Return the angle in degrees between p1 and p2."""
     x, y = delta(p1, p2)
     angle = math.degrees(math.atan2(y, x))
 
@@ -44,7 +38,7 @@ def angle_between(p1, p2) -> float:
 
 
 def distance(p1, p2) -> float:
-    "Returns the distance between p1 and p2"
+    """Return the distance between p1 and p2."""
     x, y = delta(p1, p2)
     a = y * y
     b = x * x

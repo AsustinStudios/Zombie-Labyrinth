@@ -17,23 +17,17 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Author: Roberto Lapuente Romo
-E-mail: roberto@lapuente.me
-Date: 2013-11-06
-"""
 
 
 from pygame.rect import Rect
-from pygame.sprite import Sprite
-from pygame.sprite import spritecollide
+from pygame.sprite import Sprite, spritecollide
 
-from zombie_labyrinth.resources import load_sprite
 from zombie_labyrinth.constants import Direction
+from zombie_labyrinth.resources import load_sprite
 
 
 class GameObject(Sprite):
-    """ The super class that represents all objects on the game on the game"""
+    """The super class that represents all objects on the game on the game."""
 
     def __init__(self, location, object_type):
         super().__init__()
@@ -45,16 +39,16 @@ class GameObject(Sprite):
         self.animation_count = 0
 
     def update(self):
-        """ Update the Object"""
+        """Update the Object."""
         pass
 
     def receive_damage(self, damage):
-        """ Receive damage, process it and apply it to life"""
+        """Receive damage, process it and apply it to life."""
         self.life -= damage
 
 
 class Bullet(GameObject):
-    """ The super class that represents proyectiles in the game."""
+    """The super class that represents proyectiles in the game."""
 
     def __init__(self, start_location, direction, collision_group, speed=200, strength=10, object_type='bullet'):
         super().__init__(start_location, object_type)
@@ -66,7 +60,7 @@ class Bullet(GameObject):
         self.strength = strength
 
     def update(self):
-        """ Update the Object"""
+        """Update the Object."""
         self.move()
         self.process_collisions()
 
@@ -78,12 +72,11 @@ class Bullet(GameObject):
                 obj.receive_damage(self.strength)
 
     def move(self):
-        """ Move around the being depending on the direction"""
+        """Move around the being depending on the direction."""
         self.rect.move_ip(self.speed)
 
     def get_coordinate_speed(self, direction, speed):
-        """ Receives a speed and returns the (x,y) px pair needed by the
-        rect.move function to move at the received speed"""
+        """Receives a speed and returns the (x,y) pair needed by `rect.move()` to move at the received speed."""
         x, y = 0, 0
 
         if direction == Direction.north:

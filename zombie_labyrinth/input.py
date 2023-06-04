@@ -17,22 +17,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Author: Roberto Lapuente Romo
-E-mail: roberto@lapuente.me
-Date: 2013-11-06
-"""
 
-from pygame.constants import (
-    K_a,
-    K_d,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
-    K_s,
-    K_UP,
-    K_w
-)
+from pygame.constants import K_DOWN, K_LEFT, K_RIGHT, K_UP, K_a, K_d, K_s, K_w
 
 from zombie_labyrinth.constants import Direction
 

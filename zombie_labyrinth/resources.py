@@ -17,29 +17,21 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Author: Roberto Lapuente Romo
-E-mail: roberto@lapuente.me
-Date: 2013-11-05
-"""
 
-import sys
 import os
+import sys
 
-from pygame import error
-from pygame import image
-from pygame import mixer
+from pygame import error, image, mixer
 from pygame.constants import RLEACCEL
 from pygame.rect import Rect
 from pygame.surface import Surface
 
-from zombie_labyrinth.constants import Mode, Direction
+from zombie_labyrinth.constants import Direction, Mode
 from zombie_labyrinth.global_variables import allsprites, chars_objects_group, zombies_objects_group
 
 
 def load_sprite(name, status=Mode.standard, direction=Direction.south, number=0, colorkey=None) -> tuple[Surface, Rect]:
-    """ This Functions loads a png image and returns the image object and the image rect"""
-
+    """Load a png image and returns the image object and the image rect."""
     path = os.path.dirname(os.path.abspath(sys.argv[0]))
     fullname = os.path.join(path, '../..', 'resources', 'sprites', name,
                             status.value, direction.value, f'{name}_{number:02}.png')
@@ -96,8 +88,7 @@ def play_song(loop=False, song=None):
 
 
 def load_map(name):
-    """ This Function loads all the level construction, create the objects and
-    get them in their respective groups."""
+    """Load all the level construction, create the objects and get them in their respective groups."""
     from zombie_labyrinth.game_objects import GameObject  # Avoid circular import
 
     name = '%s.lvl' % name
@@ -129,10 +120,13 @@ def load_map(name):
 
 
 def load_level(level, character):
-    """ This Should load missions from a text file or have a function for each
+    """Load a level from a file.
+
+    This Should load missions from a text file or have a function for each
     mission or level. However, for the time being it just loads the default map
-    and settings."""
-    from zombie_labyrinth.levels import load_demo, DEMO  # Avoid circular import
+    and settings.
+    """
+    from zombie_labyrinth.levels import DEMO, load_demo  # Avoid circular import
 
     if level == DEMO:
         load_demo(character)

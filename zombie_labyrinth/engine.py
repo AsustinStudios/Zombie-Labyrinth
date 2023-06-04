@@ -17,20 +17,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Author: Roberto Lapuente Romo
-E-mail: roberto@lapuente.me
-Date: 2014-03-06
-"""
 
-from pygame import (
-    display,
-    DOUBLEBUF,
-    FULLSCREEN,
-    HWSURFACE,
-    init,
-    mouse
-)
+from pygame import DOUBLEBUF, FULLSCREEN, HWSURFACE, display, init, mouse
 from pygame.surface import Surface
 
 from zombie_labyrinth.global_variables import preferences

@@ -17,31 +17,26 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Author: Roberto Lapuente Romo
-E-mail: roberto@lapuente.me
-Date: 2013-11-05
-"""
 
 import sys
 from optparse import OptionParser
 
 import pygame  # TODO: Replace import with just what we need
 from pygame.constants import (
-    K_a,
-    K_d,
     K_DOWN,
     K_ESCAPE,
     K_F1,
     K_F2,
     K_LEFT,
     K_RIGHT,
-    K_s,
     K_UP,
-    K_w,
     KEYDOWN,
     MOUSEBUTTONDOWN,
-    QUIT
+    QUIT,
+    K_a,
+    K_d,
+    K_s,
+    K_w,
 )
 
 from zombie_labyrinth.ai import look
@@ -152,14 +147,13 @@ def main_loop(screen, background, run_ai, camera_effect):
 
 
 def process_cli_options():
-    """ Process the command line interface options and return a Preferences
-    object"""
+    """Process the command line interface options and return a Preferences object."""
     parser = OptionParser(usage='Configuration options')
     parser.add_option('--height ', '-y',
                       dest='y',
                       type='int',
                       metavar='Height',
-                      default="1080",
+                      default='1080',
                       help='Window height')
     parser.add_option('--width', '-x',
                       dest='x',
@@ -169,7 +163,7 @@ def process_cli_options():
                       help='Window wdth')
     parser.add_option('--fullscreen', '-f',
                       dest='fullscreen',
-                      action="store_true",
+                      action='store_true',
                       metavar='Fullscreen',
                       default=False,
                       help='Weather or not window should start on fullscreen mode.')

@@ -17,11 +17,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Author: Roberto Lapuente Romo
-E-mail: roberto@lapuente.me
-Date: 2013-11-26
-"""
 
 from zombie_labyrinth.game_objects import Bullet
 from zombie_labyrinth.global_variables import allsprites
@@ -33,7 +28,7 @@ FIREARM = 1
 
 
 class Weapon():
-    """ The class that represents the weapons in the game"""
+    """The class that represents the weapons in the game."""
 
     def __init__(self, type, strength, name):
         self.type = type
@@ -45,7 +40,7 @@ class Weapon():
 
 
 class ColdWeapon(Weapon):
-    """ The class that represents the white arms in the game"""
+    """The class that represents the white arms in the game."""
 
     def __init__(self, strength=10, range=20, name='Cold_weapon'):
         super().__init__(COLD_WEAPON, strength, name)
@@ -53,7 +48,7 @@ class ColdWeapon(Weapon):
 
 
 class Firearm(Weapon):
-    """ The class that represents the firearms in the game"""
+    """The class that represents the firearms in the game."""
 
     def __init__(self, strength=10, name='Firearm'):
         super().__init__(FIREARM, strength, name)
