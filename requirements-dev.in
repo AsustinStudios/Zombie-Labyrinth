@@ -1,9 +1,12 @@
+-c requirements.txt
+
 autopep8
-flake8
 ipykernel  # Needed for jupyter on vscode
 ipython
 mypy
 pip  # To keep the version of pip updated
 pip-tools
+pytest
+ruff
 setuptools
 types-setuptools
