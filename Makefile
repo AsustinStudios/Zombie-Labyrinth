@@ -15,14 +15,19 @@ developer-setup:
 	.virtualenv/bin/pip install -e .
 
 make pip-compile: pip-compile-app pip-compile-dev
+	git diff --color=always --exit-code requirements.txt requirements-dev.txt
 
-pip-compile-app:
-	@.virtualenv/bin/pip-compile --verbose --allow-unsafe --no-emit-trusted-host --upgrade --output-file requirements.txt requirements.in
+pip-compile-app: __pip-compile-app
 	git diff --color=always --exit-code requirements.txt
 
-pip-compile-dev:
-	@.virtualenv/bin/pip-compile --verbose --allow-unsafe --no-emit-trusted-host --upgrade --output-file requirements-dev.txt requirements-dev.in
+__pip-compile-app:
+	@.virtualenv/bin/pip-compile --verbose --allow-unsafe --no-emit-trusted-host --upgrade --output-file requirements.txt requirements.in
+
+pip-compile-dev: __pip-compile-app
 	git diff --color=always --exit-code requirements-dev.txt
+
+__pip-compile-dev:
+	@.virtualenv/bin/pip-compile --verbose --allow-unsafe --no-emit-trusted-host --upgrade --output-file requirements-dev.txt requirements-dev.in
 
 nuke-pyc:
 	@find zombie_labyrinth -name '*.pyc' -exec unlink '{}' \;

@@ -1,6 +1,6 @@
 # Zombie-Labyrinth
 
-Zombie Labyrinth is a 2D TPS (Third Person Shooter) with a perspective similar to the one found on a Pokemon or Zelda game for Game Boy. It's about a software programmer (you can play with multiple characters) that is working on the central office of a bank (BBUVA) in Mexico City, when the Zombie apocalipsis begins. He must hack his way through BBUVA corporate office and fight against countles zombies, bank employees and bank bureaucracy in order to get out alive.
+Zombie Labyrinth is a 2D TPS (Third Person Shooter) with a perspective similar to the one found on a Pokemon or Zelda game for Game Boy. It's about a software programmer (you can play with multiple characters) that is working on the central office of a bank (BBUBA) in Mexico City, when the Zombie apocalipsis begins. He must hack his way through BBUBA corporate office and fight against countles zombies, bank employees and bank bureaucracy in order to get out alive.
 
 Zombie Labyrinth aims to bring the epicness and awesomness of Metal Slug and merge it with the 15th generation Hi-Def graphics of games like Pokemon Silver Version; or the never aging The Legend of Zelda, the original 1986 release.
 
@@ -12,7 +12,7 @@ Zombie Labyrinth is supoused to support Linux, Windows and OSX, however at this 
 1. Start by [downloading the code](https://github.com/AsustinStudios/Zombie-Labyrinth/archive/master.zip) or cloning the git repo: `git clone git@github.com:AsustinStudios/Zombie-Labyrinth.git`.
 2. Install [Python 2.7](http://www.python.org/download) and the [Pygame](http://www.pygame.org/download.shtml) version corresponding to your OS and Python version. On most debian-based Linux just do `sudo apt-get install python-pygame`.
 3. Make sure you know how to call python from the command line.
-4. Enter the project directory and run python `src/main.py`.
+4. Enter the project directory and run `python src/main.py`.
 5. Play the game! :D
   * Use `WASD` to move around, left-click for melee attack & righ-click to shoot.
   * `ESC` to exit the game.
@@ -21,7 +21,7 @@ Zombie Labyrinth is supoused to support Linux, Windows and OSX, however at this 
 
 ## Contributing
 
-At this moment there are so many ways someone can contribute to the project. Not only the programming is important, we also are looking for people to help with the icons, the art, the music, the documentation, and optimizing the code. If you are interested in helping out in any way please contact us at studios@asustin.net explaining how do you want to help and we'll get in touch with you as soon as possible or just follow this steps:
+At this moment there are so many ways someone can contribute to the project. Not only the programming is important, we also are looking for people to help with the game design, icons, the art, the music, the documentation, and optimizing the code. If you are interested in helping out in any way please contact us at studios@asustin.net explaining how do you want to help and we'll get in touch with you as soon as possible or just follow this steps:
 
 1. Choose or create an [issue](https://github.com/AsustinStudios/Zombie-Labyrinth/issues).
 2. Start by downloading the git repo `git clone git@github.com:AsustinStudios/Zombie-Labyrinth.git`.
