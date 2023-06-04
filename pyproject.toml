@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=67", "setuptools-git-versioning"]
+build-backend = "setuptools.build_meta"
+
+[project]
+requires-python = ">=3.10, <4"
+dynamic = ["dependencies", "optional-dependencies", "version"]
+name = "zombie_labyrinth"
+description = "Zombie Labyrinth. A 2D TPS"
+maintainers = [{ name = "Roberto Lapuente", email = "roberto@lapuente.me" }]
+license = { text = "GPLv3" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10"
+]
+
+[project.scripts]
+zombie-labyrinth = "zombie_labyrinth.main:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+optional-dependencies = { tests = { file = ["requirements-dev.txt"] } }
+
+[tool.setuptools.packages.find]
+include = ["zombie_labyrinth*"]
+exclude = ["zombie_labyrinth.tests*"]
+
+[tool.setuptools-git-versioning]
+enabled = true
+dev_template = "{tag}.post{ccount}"
+dirty_template = "{tag}.post{ccount}+dirty"
+
+# Ruff #########################################################################
+
+[tool.ruff]
+select = ["B", "E", "F", "W", "I001", "Q", "N", "D"]
+ignore = [
+    "D203", "D213",
+    "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107",  # TODO: Add docstrings
+]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.flake8-quotes]
+inline-quotes = "single"
+
+# MyPy #########################################################################
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disable_error_code = ["anotation-unchecked"]
+
+[tool.mypy.overrides]
+module = [
+    "coloredlogs.*",
+    "docker.*"
+]
+
+# Tests ########################################################################
+
+[tool.pytest.ini_options]
+
+[tool.coverage.run]
+source = ["zombie_labyrinth"]
+omit = ["zombie_labyrinth/tests/*"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 55
+show_missing = true
